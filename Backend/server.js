@@ -1,7 +1,9 @@
 const express = require("express");
 const cors = require("cors");
-const {MongoClient}= require('mongodb');
+const {MongoClient, MongoKerberosError}= require('mongodb');
 const bodyParser= require("body-parser");
+const mongoose = require('mongoose');
+const uuid = require('uuid');
 
 const uri="mongodb+srv://chloej1699:SnowBird11@cluster0.8ihubjl.mongodb.net/"
 const port = process.env.PORT || 5000;
@@ -41,12 +43,44 @@ app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
 });
 
-
+app.post('/postAccident', async(req, res) =>{
+  const collection = client.db("PracticeDB").collection("Users");
+  const {requested,
+    employeeName,
+    employeeId,
+    addressCode,
+    dateOfAccident,
+    timeOfAccident,
+    accidentInformation,
+    refusal} = req.body;
+  try {
+    let form = new mongoose.Schema({
+      requested,
+      employeeName,
+      employeeId,
+      addressCode,
+      dateOfAccident,
+      timeOfAccident,
+      accidentInformation,
+      refusal
+    });
+    const Form= mongoose.model('Form', formSchema);
+    await Form.save();
+    return res.json({
+      message: 'Form added successfully!',
+    });
+  } catch (error) {
+    console.log(error)
+    return res.json({
+      message: 'An error occured!',
+    });
+  }
+});
 
 app.get('/db', async (req, res) => {
   try {
       await client.connect();
-      const collection = client.db("PracticeDB").collection("Users");
+      const collection = client.db("PracticeDB").collection("PostAccidentForm");
       if(collection){
         console.log("found collection")
       }
