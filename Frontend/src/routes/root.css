@@ -1,0 +1,19 @@
+.main {
+  height: 80%;
+}
+
+.formContainer {
+  display:flex;
+  gap: 5%;
+  margin: -10% auto auto auto;
+  width: fit-content;
+  align-items: center;
+  height: 100%;
+}
+
+@media only screen and (max-width: 812px) {
+  .formContainer {
+    flex-direction: column;
+    margin: auto;
+  }
+}

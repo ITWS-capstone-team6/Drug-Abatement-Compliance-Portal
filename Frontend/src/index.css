@@ -12,20 +12,33 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;  
+
+  --primary: #001629;
+  --accent-dark: #005daa;
+  --accent-light: #6eaad8;
+  --background-1: #bbd7ed;
+  --background-2: #eff6fb;
+  
+
+
 }
 
 * {
   margin: 0;
   padding: 0;
+  color: var(--primary);
 }
+
+
+
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: var(--accent-dark);
   text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
+  color: var(--accent-light);
 }
 
 body {
