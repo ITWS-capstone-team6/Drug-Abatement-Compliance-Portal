@@ -3,9 +3,11 @@ const cors = require("cors");
 const {MongoClient}= require('mongodb');
 const bodyParser= require("body-parser");
 
-const uri= process.env.ATLAS_URI;
+const uri="mongodb+srv://chloej1699:SnowBird11@cluster0.8ihubjl.mongodb.net/"
 const port = process.env.PORT || 5000;
 
+
+//check
 require("dotenv").config({ path: "./config.env" });
 const app = express();
 
