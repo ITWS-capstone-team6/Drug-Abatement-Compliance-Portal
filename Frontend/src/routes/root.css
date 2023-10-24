@@ -1,18 +1,27 @@
-.main {
+.formContainer {
   height: 80%;
 }
 
-.formContainer {
+.note {
+  padding: 1vw 0;
+}
+
+.note span {
+  font-weight: bold;
+}
+
+.formContent {
   display:flex;
-  gap: 5%;
-  margin: -10% auto auto auto;
-  width: fit-content;
+  /* gap: 5%; */
+  /* margin: -10% auto auto auto; */
+  /* width: fit-content; */
   align-items: center;
   height: 100%;
+  justify-content: space-between;
 }
 
 @media only screen and (max-width: 812px) {
-  .formContainer {
+  .formContent {
     flex-direction: column;
     margin: auto;
   }

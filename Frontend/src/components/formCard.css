@@ -1,11 +1,12 @@
 .card {
-  width: 25vw;
-  height: 20vh;
+  width: 30vw;
+  height: 30vh;
   /* border: 1px solid var(--accent-dark); */
   border-radius: 12px;
   box-sizing: border-box;
   padding: 15px;
   background-color: var(--background-2);
+  margin-bottom: 2vw;
 }
 
 .card:hover {
@@ -18,4 +19,10 @@
 
 .desc {
   
+}
+
+@media only screen and (max-width: 812px) {
+  .card {
+    width: 85vw;
+  }
 }
