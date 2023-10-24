@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 import "./navbar.css"
 import { useEffect, useState } from "react";
-import logo from '../assets/United-Airlines-logo.png';
+import logo from '../assets/United-Airlines-Logo.png';
 
 export default function Navbar() {
   const [name, setName] = useState("First Last");
