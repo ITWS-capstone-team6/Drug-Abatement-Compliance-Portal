@@ -31,11 +31,10 @@ app.use(cors())
 
 // Get MongoDB driver connection
 const dbo = require("./conn.js");
-const client = new MongoClient(uri);
+const client = new MongoClient(uri, {useUnifiedTopology: true,});
 
  
 app.listen(port, () => {
-  // Perform a database connection when server starts
   dbo.connectToDatabase(function (err) {
     if (err) console.error(err);
  
@@ -44,55 +43,25 @@ app.listen(port, () => {
 });
 
 app.post('/postAccident', async(req, res) =>{
-  const collection = client.db("PracticeDB").collection("PostAccidentForm");
-  const {requested,
-    employeeName,
-    employeeId,
-    addressCode,
-    dateOfAccident,
-    timeOfAccident,
-    accidentInformation,
-    refusal} = req.body;
   try {
-    let form = new mongoose.Schema({
-      requested: {
-        type: String,
-        required: true
-    },
-      employeeName: {
-        type: String,
-        required: true
-    },
-      employeeId: {
-        type: String,
-        required: true
-    },
-      addressCode: {
-        type: String,
-        required: true
-    },
-      dateOfAccident: {
-        type: String,
-        required: true
-    },
-      timeOfAccident: {
-        type: String,
-        required: true
-    },
-      accidentInformation: {
-        type: String,
-        required: true
-    },
-      refusal: {
-        type: String,
-        required: true
-    }
-    });
-    const Form= mongoose.model('Form', form);
-    collection.save(Form);
-    return res.json({
-      message: 'Form added successfully!',
-    });
+   await client.connect();
+   const collection = client.db("PracticeDB").collection("PostAccidentForm");
+   console.log("body: ")
+   console.log(req.body)
+   let newForm = {
+    requested : req.body.requested,
+    employeeName : req.body.employeeName,
+    employeeId : req.body.employeeId,
+    addressCode : req.body.addressCode,
+    dateOfAccident : req.body.dateOfAccident,
+    timeOfAccident : req.body.timeOfAccident,
+    accidentInformation : req.body.accidentInformation,
+    refusal : req.body.refusal
+   }
+   console.log("newForm: ")
+   console.log(newForm)
+   await collection.insertOne(newForm)
+   res.json(200)
   } catch (error) {
     console.log(error)
     return res.json({
