@@ -35,7 +35,7 @@
 a {
   font-weight: 500;
   color: var(--accent-dark);
-  text-decoration: inherit;
+  /* text-decoration: inherit; */
 }
 a:hover {
   color: var(--accent-light);

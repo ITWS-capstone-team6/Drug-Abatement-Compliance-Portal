@@ -1,4 +1,7 @@
 .card {
+  position: relative;
+  /* display: flex;
+  flex-direction: column; */
   width: 30vw;
   height: 30vh;
   /* border: 1px solid var(--accent-dark); */
@@ -7,10 +10,20 @@
   padding: 15px;
   background-color: var(--background-2);
   margin-bottom: 2vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .card:hover {
   outline: 1px solid var(--background-1);
+}
+
+.openForm {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 1.5vw;
 }
 
 .name {
