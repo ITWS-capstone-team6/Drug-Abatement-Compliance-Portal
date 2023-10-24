@@ -8,7 +8,6 @@ const uuid = require('uuid');
 const uri="mongodb+srv://chloej1699:SnowBird11@cluster0.8ihubjl.mongodb.net/"
 const port = process.env.PORT || 5000;
 
-
 //check
 require("dotenv").config({ path: "./config.env" });
 const app = express();
@@ -26,14 +25,10 @@ app.use(cors())
      next();
    });
 
-
-//next: clean up record.js and conn.js -- not rlly being used
-
 // Get MongoDB driver connection
 const dbo = require("./conn.js");
 const client = new MongoClient(uri, {useUnifiedTopology: true,});
 
- 
 app.listen(port, () => {
   dbo.connectToDatabase(function (err) {
     if (err) console.error(err);
@@ -56,7 +51,8 @@ app.post('/postAccident', async(req, res) =>{
     dateOfAccident : req.body.dateOfAccident,
     timeOfAccident : req.body.timeOfAccident,
     accidentInformation : req.body.accidentInformation,
-    refusal : req.body.refusal
+    refusal : req.body.refusal,
+    notConducted: req.body.notConducted
    }
    console.log("newForm: ")
    console.log(newForm)
