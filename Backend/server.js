@@ -44,7 +44,7 @@ app.listen(port, () => {
 });
 
 app.post('/postAccident', async(req, res) =>{
-  const collection = client.db("PracticeDB").collection("Users");
+  const collection = client.db("PracticeDB").collection("PostAccidentForm");
   const {requested,
     employeeName,
     employeeId,
@@ -55,17 +55,41 @@ app.post('/postAccident', async(req, res) =>{
     refusal} = req.body;
   try {
     let form = new mongoose.Schema({
-      requested,
-      employeeName,
-      employeeId,
-      addressCode,
-      dateOfAccident,
-      timeOfAccident,
-      accidentInformation,
-      refusal
+      requested: {
+        type: String,
+        required: true
+    },
+      employeeName: {
+        type: String,
+        required: true
+    },
+      employeeId: {
+        type: String,
+        required: true
+    },
+      addressCode: {
+        type: String,
+        required: true
+    },
+      dateOfAccident: {
+        type: String,
+        required: true
+    },
+      timeOfAccident: {
+        type: String,
+        required: true
+    },
+      accidentInformation: {
+        type: String,
+        required: true
+    },
+      refusal: {
+        type: String,
+        required: true
+    }
     });
-    const Form= mongoose.model('Form', formSchema);
-    await Form.save();
+    const Form= mongoose.model('Form', form);
+    collection.save(Form);
     return res.json({
       message: 'Form added successfully!',
     });
@@ -80,7 +104,7 @@ app.post('/postAccident', async(req, res) =>{
 app.get('/db', async (req, res) => {
   try {
       await client.connect();
-      const collection = client.db("PracticeDB").collection("PostAccidentForm");
+      const collection = client.db("PracticeDB").collection("Users");
       if(collection){
         console.log("found collection")
       }
