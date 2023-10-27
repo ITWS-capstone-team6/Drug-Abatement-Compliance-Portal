@@ -16,16 +16,23 @@ export default function Root() {
 
   return (
     <>
-      <div className="main">
-      <h1>Forms</h1>
-      <div className="formContainer">
-        {formInfo.map((info, index) => {
-            return <Link key={index} to={info.link}>
-                <FormCard name={info.name} desc={info.desc} />
-              </Link>
-        })}
-      </div>
-      </div>
+        <div className="formContainer">
+          <h1>Forms</h1>
+          <div className='note'>
+            <p>All sections of the Reasonable Cause/Suspicion Test Request must be completed for each employee and 
+            <span> emailed immediately</span> to <a href='mailto:AfterHoursDA@United.com'>AfterHoursDA@United.com</a> <span>before</span> a test can be authorized.</p>
+            <p>Once you have emailed this form, call Drug Abatement at (800) 421-6260.</p>
+          </div>
+          
+          <div className="formContent">
+            {formInfo.map((info, index) => {
+              return <div>
+                  <FormCard name={info.name} desc={info.desc} index={index} link={info.link} />
+                </div>
+            })}
+          </div>
+          
+        </div>
     </>
   );
 }
