@@ -1,7 +1,7 @@
 const { MongoClient } = require("mongodb");
 
 // MongoDB connection URI, replace with your own URI
-const mongoURI = process.env.ATLAS_URI;
+const mongoURI = "mongodb+srv://chloej1699:SnowBird11@cluster0.8ihubjl.mongodb.net/"
 
 // MongoDB client instance
 let client;
