@@ -39,9 +39,8 @@
 a {
   font-weight: 500;
   color: var(--accent-dark);
-  /* text-decoration: inherit; */
-  /*color: #040b89;*/
-  /*text-decoration: inherit;*/
+  color: #040b89;
+  text-decoration: inherit;
 }
 a:hover {
   color: var(--accent-light);

@@ -9,7 +9,7 @@ export default function FormCard({name, desc, index, link}) {
     
       <div className="card">
         <div>
-          <h2 className="name">
+          <h2 className="name" style={{ fontWeight: 'bold' }}>
             {name}
           </h2>
           <hr/>
