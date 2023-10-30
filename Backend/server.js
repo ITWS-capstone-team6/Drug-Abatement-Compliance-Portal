@@ -97,6 +97,60 @@ app.post('/postIncident', async(req, res) =>{
   }
 });
 
+app.post('/reasonableCause', async(req, res) =>{
+  try {
+   await client.connect();
+   const collection = client.db("PracticeDB").collection("reasonableCause");
+   console.log("body: ")
+   console.log(req.body)
+   let newForm = {
+    requested: req.body.requested,
+    employeeName: req.body.employeeName,
+    employeeId: req.body.employeeId,
+    addressCode: req.body.addressCode,
+    dateOfAccident: req.body.dateOfAccident,
+    timeOfAccident: req.body.timeOfAccident,
+    accidentInformation: req.body.accidentInformation,
+    refusal: req.body.refusal,
+    notConducted: req.body.notConducted,
+    behaviorCheckboxes: {
+      stumbling: req.body.stumbling,
+      unsteadyGait: req.body.unsteadyGait,
+      drowsy: req.body.drowsy,
+      agitated: req.body.agitated,
+      hostile: req.body.hostile,
+      irritable: req.body.irritable,
+      depressed: req.body.depressed,
+      unresponsive: req.body.unresponsive,
+      clumsy: req.body.clumsy
+    },
+    appearanceCheckboxes: {
+      flushedComplexion: req.body.flushedComplexion,
+      excessiveSweating: req.body.excessiveSweating,
+      coldClammySweats: req.body.coldClammySweats,
+      bloodshotEyes: req.body.bloodshotEyes,
+      tearyWateryEyes: req.body.tearyWateryEyes,
+      dilatedPupils: req.body.dilatedPupils,
+      constrictedPupils: req.body.constrictedPupils,
+      unfocusedStare: req.body.unfocusedStare
+    },
+    bodyOdorCheckboxes: {
+      alcohol: req.body.alcohol,
+      marijuana: req.body.marijuana
+    }
+   }
+   console.log("newForm: ")
+   console.log(newForm)
+   await collection.insertOne(newForm)
+   res.json(200)
+  } catch (error) {
+    console.log(error)
+    return res.json({
+      message: 'An error occured!',
+    });
+  }
+});
+
 app.get('/db', async (req, res) => {
   try {
       await client.connect();
