@@ -120,7 +120,7 @@ export default function PostInjury() {
         {Object.keys(formData.behaviorCheckboxes).map(key => (
           <div className="mb-2 flex items-center" key={key}>
             <input type="checkbox" id={key} name={`behaviorCheckboxes-${key}`} checked={formData.behaviorCheckboxes[key]} onChange={handleInputChange}/>
-            <label htmlFor={key} className="ml-2">{key.replace(/([A-Z])/, ' $1').trim()}</label>
+            <label htmlFor={key} className="m-2">{key.replace(/([A-Z])/, ' $1').trim()}</label>
           </div>
         ))}
       </div>
@@ -129,7 +129,7 @@ export default function PostInjury() {
         {Object.keys(formData.appearanceCheckboxes).map(key => (
         <div className="mb-2 flex items-center" key={key}>
             <input type="checkbox" id={key} name={`appearanceCheckboxes-${key}`} checked={formData.appearanceCheckboxes[key]} onChange={handleInputChange} />
-            <label htmlFor={key} className="ml-2">{key.replace(/([A-Z])/g, ' $1').trim()}</label>
+            <label htmlFor={key} className="m-2">{key.replace(/([A-Z])/g, ' $1').trim()}</label>
         </div>
         ))}
       </div>
@@ -138,7 +138,7 @@ export default function PostInjury() {
         {Object.keys(formData.bodyOdorCheckboxes).map(key => (
         <div className="mb-2 flex items-center" key={key}>
           <input type="checkbox" id={key} name={`bodyOdorCheckboxes-${key}`} checked={formData.bodyOdorCheckboxes[key]} onChange={handleInputChange}/>
-          <label htmlFor={key} className="ml-2">{key.replace(/([A-Z])/g, ' $1').trim()}</label>
+          <label htmlFor={key} className="m-2">{key.replace(/([A-Z])/g, ' $1').trim()}</label>
         </div>
         ))}
       </div>
