@@ -4,6 +4,8 @@ import React, { useState } from "react";
 
 export default function PostAccident() {
     const [formData, setFormData] = useState({
+      dot: "",
+      nonDot:"",
       requested: "true",
       employeeName: "",
       employeeId: "",
@@ -44,8 +46,20 @@ export default function PostAccident() {
 
   return <>
 <form class= "postAccidentForm" className="container mx-auto" onSubmit={handleSubmit}>
-  <h2 className="text-2xl font-semibold mb-6">Drug and Alcohol Test Required for Post-Injury Incident Testing</h2>
-
+  <h2 className="text-2xl font-semibold mb-6">Drug and Alcohol Test Required for Post Accident Testing</h2>
+  <div className="mb-4">
+  <label className="block mb-2 font-semibold">Check Requested Test:</label>
+  <div className="flex items-center">
+      <div className="mr-4">
+        <input type="checkbox" id="dot" name="dot" checked={formData.isDotChecked} onChange={handleInputChange}/>
+        <label htmlFor="dot" className="ml-2">DOT</label>
+      </div>
+      <div>
+        <input type="checkbox" id="nondot" name="nondot" checked={formData.isNonDotChecked} onChange={handleInputChange}/>
+        <label htmlFor="nondot" className="ml-2">NONDOT</label>
+      </div>
+    </div>
+  </div>
   <div class="employeeInfo">
 
     <div class="flex mb-4">
