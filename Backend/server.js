@@ -44,6 +44,37 @@ app.post('/postAccident', async(req, res) =>{
    console.log("body: ")
    console.log(req.body)
    let newForm = {
+    dot: req.body.dot,
+    nondot: req.body.dot,
+    requested : req.body.requested,
+    employeeName : req.body.employeeName,
+    employeeId : req.body.employeeId,
+    addressCode : req.body.addressCode,
+    dateOfAccident : req.body.dateOfAccident,
+    timeOfAccident : req.body.timeOfAccident,
+    accidentInformation : req.body.accidentInformation,
+    refusal : req.body.refusal,
+    notConducted: req.body.notConducted
+   }
+   console.log("newForm: ")
+   console.log(newForm)
+   await collection.insertOne(newForm)
+   res.json(200)
+  } catch (error) {
+    console.log(error)
+    return res.json({
+      message: 'An error occured!',
+    });
+  }
+});
+
+app.post('/postIncident', async(req, res) =>{
+  try {
+   await client.connect();
+   const collection = client.db("PracticeDB").collection("PostIncidentForm");
+   console.log("body: ")
+   console.log(req.body)
+   let newForm = {
     requested : req.body.requested,
     employeeName : req.body.employeeName,
     employeeId : req.body.employeeId,
