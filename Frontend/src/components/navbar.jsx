@@ -12,6 +12,7 @@ import logo from '../assets/United-Airlines-Logo.png';
 export default function Navbar() {
   const [name, setName] = useState("First Last");
 
+
   useEffect(() => {
     setName("firstname lastname");
     // todo: change this to be an api call or something instead
@@ -24,7 +25,7 @@ export default function Navbar() {
     <ul id="navbar">
       <li className="logo">
         <Link to="">
-          <img src={logo} alt="United logo"/>
+          <img src={logo} alt="United Airlines logo"/>
         </Link>
       </li>
       <li>
