@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Context } from '../context';
 import './layout.css'
 import Login from "./login";
+import SignUp from "./signUp";
 
 export default function Layout() {
 
@@ -13,7 +14,7 @@ export default function Layout() {
     <>
     <Context.Provider value={[loggedIn, setLoggedIn]}>
       <div className="main-content">
-        {loggedIn === false && <Login />}
+        {(loggedIn === false && <Login />) || <SignUp/>}
         {loggedIn &&
           <>
           <Navbar />

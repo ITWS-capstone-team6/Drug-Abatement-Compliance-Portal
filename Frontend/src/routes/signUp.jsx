@@ -7,7 +7,7 @@ import UserPool from "../UserPool";
 import * as AmazonCognitoIdentity from 'amazon-cognito-identity-js';
 import {CognitoUserPool} from "amazon-cognito-identity-js";
 //const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
-export default function Login() {
+export default function SignUp() {
     
     const [loggedIn, setLoggedIn] = useContext(Context);
     const [email, setEmail]= useState("");
@@ -15,6 +15,24 @@ export default function Login() {
     const poolData={
         UserPoolId: "us-east-2_nfCwrEzsY",
         ClientId:"3jdtpq0oaklkgg2k2kk1ajkka6"
+    }
+
+    function openModal(cognitoUser){
+        document.getElementById('confirmationCodeModal').style.display= 'block';
+        const confirmationCode= document.getElementById('confirmationCodeInput').value;
+        cognitoUser.confirmRegistration(confirmationCode, true, function(err, result) {
+            if (err) {
+                console.log(err.message);
+            }else{
+                console.log('Successfully verified code!');
+                closeModal();
+            }
+            
+        });
+    }
+
+    function closeModal(){
+        document.getElementById('confirmationCodeModal').style.display= 'none';
     }
 
     function handleLogin(e) {
@@ -32,7 +50,8 @@ export default function Login() {
                 console.log(err);
             }
             else{
-                const confirmationCode= prompt("Please enter the confirmation code that has been sent to your email.")
+                //const confirmationCode= prompt("Please enter the confirmation code that has been sent to your email.")
+                openModal(cognitoUser);
             }
         })
     };
@@ -42,6 +61,15 @@ export default function Login() {
         
         <div class="loginForm">
             <img src={logo} alt="United Airlines logo"/>
+            {/* <!-- HTML structure for confirmation code input --> */}
+            <div id="confirmationCodeModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal()">&times;</span>
+                    <p>Please enter the confirmation code that has been sent to your email.</p>
+                    <input type="text" id="confirmationCodeInput" placeholder="Confirmation Code"/>
+                    <button onclick="submitConfirmationCode()">Submit</button>
+                </div>
+            </div>
             <form class="px-8" onSubmit={handleLogin}>
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
