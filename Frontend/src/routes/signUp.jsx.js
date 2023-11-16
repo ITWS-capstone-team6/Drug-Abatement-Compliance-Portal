@@ -12,6 +12,7 @@ export default function SignUp() {
     const [loggedIn, setLoggedIn] = useContext(Context);
     const [email, setEmail]= useState("");
     const [password, setPassword]= useState("");
+    const [confirm, setConfirmPassword]= useState("");
     const poolData={
         UserPoolId: "us-east-2_nfCwrEzsY",
         ClientId:"3jdtpq0oaklkgg2k2kk1ajkka6"
@@ -73,7 +74,7 @@ export default function SignUp() {
             <form class="px-8" onSubmit={handleLogin}>
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
-                        Email
+                        Emails
                     </label>
                     <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={email} htmlFor="username" id="username" type="text" placeholder="Username" reqquired onChange={(event)=> setEmail(event.target.value)}/>
                 </div>
@@ -84,7 +85,7 @@ export default function SignUp() {
                     <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" value={password} htmlFor="password" id="password" type="password" placeholder="***********" required onChange={(event)=> setPassword(event.target.value)}/>
                 </div>
                 <div class="mb-6">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="setConfirmPassword">
                         Confirm Password
                     </label>
                     <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" value={password} htmlFor="password" id="password" type="password" placeholder="***********" required onChange={(event)=> setPassword(event.target.value)}/>
