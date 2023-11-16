@@ -1,0 +1,36 @@
+.loginForm img {
+    width: 20vw;
+    height: auto;
+    margin: auto;
+    padding-bottom: 2vh;
+}
+
+.loginForm {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -40%);
+}
+.loginForm form {
+    width: 30vw;
+    margin: auto;
+}
+
+.loginForm button {
+    margin: auto;
+}
+
+@media only screen and (max-width: 812px) {
+    .loginForm {
+        padding-top: 25vh;
+    }
+
+    .loginForm form {
+        width: 80vw;
+        height: 80vh;
+    }
+
+    .loginForm img {
+        width: 55vw;
+    }
+}
