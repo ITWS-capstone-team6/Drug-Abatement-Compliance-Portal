@@ -9,12 +9,16 @@ import SignUp from "./signUp";
 export default function Layout() {
 
   const [loggedIn, setLoggedIn] = useState(false);
+  const [showLogin, setShowLogin] = useState(true); 
+  const toggleShowLogin = () => setShowLogin(!showLogin); // Add this line
   
   return (
     <>
-    <Context.Provider value={[loggedIn, setLoggedIn]}>
+    <Context.Provider value={[loggedIn, setLoggedIn, showLogin, setShowLogin]}>
       <div className="main-content">
-        {(loggedIn === false && <Login />) || <SignUp/>}
+        {
+          !loggedIn && (showLogin ? <Login toggleShowLogin={toggleShowLogin} /> : <SignUp toggleShowLogin={toggleShowLogin} />)
+        }
         {loggedIn &&
           <>
           <Navbar />

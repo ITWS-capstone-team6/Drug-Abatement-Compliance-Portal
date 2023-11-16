@@ -7,7 +7,7 @@ import UserPool from "../UserPool";
 import * as AmazonCognitoIdentity from 'amazon-cognito-identity-js';
 import {CognitoUserPool} from "amazon-cognito-identity-js";
 //const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
-export default function SignUp() {
+export default function SignUp({ toggleShowLogin }) {
     
     const [loggedIn, setLoggedIn] = useContext(Context);
     const [email, setEmail]= useState("");
@@ -54,49 +54,51 @@ export default function SignUp() {
                 openModal(cognitoUser);
             }
         })
-    };
+    }
 
     return <>
-    <div class="content">
-        
-        <div class="loginForm">
+    <div className="content">
+        <div className="loginForm">
             <img src={logo} alt="United Airlines logo"/>
             {/* <!-- HTML structure for confirmation code input --> */}
-            <div id="confirmationCodeModal" class="modal">
-                <div class="modal-content">
-                    <span class="close" onclick="closeModal()">&times;</span>
+            <div id="confirmationCodeModal" className="modal">
+                <div className="modal-content">
+                    <span className="close" onClick="closeModal()">&times;</span>
                     <p>Please enter the confirmation code that has been sent to your email.</p>
                     <input type="text" id="confirmationCodeInput" placeholder="Confirmation Code"/>
-                    <button onclick="submitConfirmationCode()">Submit</button>
+                    <button onClick="submitConfirmationCode()">Submit</button>
                 </div>
             </div>
-            <form class="px-8" onSubmit={handleLogin}>
-                <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+            <form className="px-8" onSubmit={handleLogin}>
+                <div className="mb-4">
+                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
                         Email
                     </label>
-                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={email} htmlFor="username" id="username" type="text" placeholder="Username" reqquired onChange={(event)=> setEmail(event.target.value)}/>
+                    <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={email} htmlFor="username" id="username" type="text" placeholder="Username" required onChange={(event)=> setEmail(event.target.value)}/>
                 </div>
-                <div class="mb-6">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+                <div className="mb-6">
+                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
                         Password
                     </label>
-                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" value={password} htmlFor="password" id="password" type="password" placeholder="***********" required onChange={(event)=> setPassword(event.target.value)}/>
+                    <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" value={password} htmlFor="password" id="password" type="password" placeholder="***********" required onChange={(event)=> setPassword(event.target.value)}/>
                 </div>
-                <div class="mb-6">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+                <div className="mb-6">
+                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
                         Confirm Password
                     </label>
-                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" value={password} htmlFor="password" id="password" type="password" placeholder="***********" required onChange={(event)=> setPassword(event.target.value)}/>
+                    <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" value={password} htmlFor="password" id="password" type="password" placeholder="***********" required onChange={(event)=> setPassword(event.target.value)}/>
                 </div>
-                <div class="flex items-center justify-between">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                <div className="flex items-center justify-between">
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
                         Sign Up
                     </button>
                 </div>
+                <span className="text-sm text-blue-500 underline cursor-pointer" onClick={toggleShowLogin}>
+                    Log In
+                </span>
             </form>
         </div>
     </div>
     </>
 
-};
+}
