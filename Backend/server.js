@@ -37,6 +37,7 @@ app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
 });
 
+
 app.post('/postAccident', async(req, res) =>{
   try {
    await client.connect();
