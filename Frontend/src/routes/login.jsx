@@ -10,14 +10,15 @@ import {CognitoUserPool} from "amazon-cognito-identity-js";
 export default function Login({ toggleShowLogin }) {
     
     const [loggedIn, setLoggedIn] = useContext(Context);
+    const [userId, setUserId] = useContext(Context);
     const [email, setEmail]= useState("");
     const [password, setPassword]= useState("");
     const navigate= useNavigate();
+    useEffect(() => {
+        console.log(userId);
+    }, [userId]);
     const handleSignUpClick = () => {
-        // Use navigate to go to the "/signUp" route
-        // console.log(showLogin);
         toggleShowLogin();
-        // navigate('/signUp');
     };
     const poolData={
         UserPoolId: "us-east-2_nfCwrEzsY",
@@ -43,10 +44,11 @@ export default function Login({ toggleShowLogin }) {
         cognitoUser.authenticateUser(authenticationDetails, {
             onSuccess: function (result){
                 console.log('user credentials have been authenticated')
-                //potentially use this to log in db
                 var idToken= result.getIdToken().getJwtToken();
-                console.log(idToken);
-                //getCognitoIdentityCredentials();
+                //SET USERID NOT WORKING
+                setUserId(idToken);
+                console.log(userId);
+                //console.log(idToken);
                 setLoggedIn(true);
             },
             onFailure: function(err){

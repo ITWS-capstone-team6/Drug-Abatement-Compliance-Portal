@@ -12,11 +12,12 @@ export default function Layout() {
   const [showLogin, setShowLogin] = useState(true); 
   const [signedUp, setSignedUp] = useState(false);
   const toggleShowLogin = () => setShowLogin(!showLogin); // Add this line
-  
+  const[userId, setUserId] = useState("empty");
+
   
   return (
     <>
-    <Context.Provider value={[loggedIn, setLoggedIn, showLogin, setShowLogin, signedUp, setSignedUp]}>
+    <Context.Provider value={[loggedIn, setLoggedIn, showLogin, setShowLogin, signedUp, setSignedUp, userId, setUserId]}>
       <div className="main-content">
         {
           !loggedIn && (showLogin ? <Login toggleShowLogin={toggleShowLogin} /> : <SignUp toggleShowLogin={toggleShowLogin} />)
