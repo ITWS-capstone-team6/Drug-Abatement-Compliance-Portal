@@ -46,7 +46,7 @@ export default function Login({ toggleShowLogin }) {
                 //potentially use this to log in db
                 var idToken= result.getIdToken().getJwtToken();
                 console.log(idToken);
-                getCognitoIdentityCredentials();
+                //getCognitoIdentityCredentials();
                 setLoggedIn(true);
             },
             onFailure: function(err){

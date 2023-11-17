@@ -6,9 +6,10 @@ import { useContext, useEffect, useState } from 'react';
 import UserPool from "../UserPool";
 import * as AmazonCognitoIdentity from 'amazon-cognito-identity-js';
 import {CognitoUserPool} from "amazon-cognito-identity-js";
-export default function SignUp() {
+export default function SignUp({toggleShowSignUp}) {
     
     const [loggedIn, setLoggedIn] = useContext(Context);
+    const [signedUp, setSignedUp] = useContext(Context);
     const [email, setEmail]= useState("");
     const [password, setPassword]= useState("");
     const [confirmPassword, setConfirmPassword]= useState("");
@@ -34,6 +35,7 @@ export default function SignUp() {
                 console.log(err.message);
             }else{
                 console.log('Successfully verified code!');
+                setSignedUp(true);
                 closeModal();
                 //HERE HAVE IT ROUTE TO HOME PAGE WITH USER CREDS
             }

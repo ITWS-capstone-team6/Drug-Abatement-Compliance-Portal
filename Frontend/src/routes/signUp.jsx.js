@@ -7,9 +7,9 @@ import UserPool from "../UserPool";
 import * as AmazonCognitoIdentity from 'amazon-cognito-identity-js';
 import {CognitoUserPool} from "amazon-cognito-identity-js";
 //const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
-export default function SignUp() {
+export default function SignUp({toggleShowSignUp}) {
     
-    const [loggedIn, setLoggedIn] = useContext(Context);
+    const [signedUp, setSignedUp] = useContext(Context);
     const [email, setEmail]= useState("");
     const [password, setPassword]= useState("");
     const [confirm, setConfirmPassword]= useState("");
@@ -26,6 +26,7 @@ export default function SignUp() {
                 console.log(err.message);
             }else{
                 console.log('Successfully verified code!');
+                setSignedUp(true);
                 closeModal();
             }
             
