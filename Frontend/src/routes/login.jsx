@@ -1,23 +1,32 @@
 import './login.css'
 import logo from '../assets/United-Airlines-Logo.png';
 import { useNavigate} from 'react-router';
-import { Context } from '../context';
-import { useContext, useEffect, useState } from 'react';
+import { useState } from 'react';
 import UserPool from "../UserPool";
 import * as AmazonCognitoIdentity from 'amazon-cognito-identity-js';
 import {CognitoUserPool} from "amazon-cognito-identity-js";
 //const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
-export default function Login({ toggleShowLogin }) {
+import { useAtom } from 'jotai';
+
+import { loggedInAtom, loginStateAtom } from '../state/login';
+
+const view = {
+    LOGIN: true,
+    SIGNUP: false,
+};
+
+export default function Login() {
     
-    const [loggedIn, setLoggedIn] = useContext(Context);
     const [email, setEmail]= useState("");
     const [password, setPassword]= useState("");
+
+    const [loggedIn, setLoggedIn] = useAtom(loggedInAtom);
+    const [, setLoginState] = useAtom(loginStateAtom);
+
     const navigate= useNavigate();
-    const handleSignUpClick = () => {
-        // Use navigate to go to the "/signUp" route
-        // console.log(showLogin);
-        toggleShowLogin();
-        // navigate('/signUp');
+    const toggleLoginState = () => {
+        setLoginState(view.SIGNUP); // change to signup
+        navigate('/signUp');
     };
     const poolData={
         UserPoolId: "us-east-2_nfCwrEzsY",
@@ -80,7 +89,7 @@ export default function Login({ toggleShowLogin }) {
                     </button>
                     
                 </div>
-                <span className="text-sm text-blue-500 underline cursor-pointer" onClick={toggleShowLogin}>
+                <span className="text-sm text-blue-500 underline cursor-pointer" onClick={toggleLoginState}>
                     Sign Up
                 </span>
             </form>

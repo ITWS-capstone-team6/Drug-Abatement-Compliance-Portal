@@ -1,23 +1,27 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/navbar";
-import { useContext, useEffect, useState } from 'react';
-import { Context } from '../context';
 import './layout.css'
 import Login from "./login";
 import SignUp from "./signUp";
 
+import { useAtom } from 'jotai';
+import { loggedInAtom, loginStateAtom } from '../state/login';
+const view = {
+  LOGIN: true,
+  SIGNUP: false,
+};
 export default function Layout() {
 
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [showLogin, setShowLogin] = useState(true); 
-  const toggleShowLogin = () => setShowLogin(!showLogin); // Add this line
+
+  const [loggedIn] = useAtom(loggedInAtom);
+  const [loginState] = useAtom(loginStateAtom);
+
   
   return (
     <>
-    <Context.Provider value={[loggedIn, setLoggedIn, showLogin, setShowLogin]}>
       <div className="main-content">
         {
-          !loggedIn && (showLogin ? <Login toggleShowLogin={toggleShowLogin} /> : <SignUp toggleShowLogin={toggleShowLogin} />)
+          !loggedIn && (loginState === view.LOGIN ? <Login /> : <SignUp/>)
         }
         {loggedIn &&
           <>
@@ -25,11 +29,7 @@ export default function Layout() {
           <Outlet />
           </>
         }
-        
       </div>
-    </Context.Provider>
-      
-      
     </>
   );
 }
