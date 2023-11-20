@@ -57,6 +57,7 @@ export default function Login() {
                 console.log(idToken);
                 getCognitoIdentityCredentials();
                 setLoggedIn(true);
+                navigate("/");
             },
             onFailure: function(err){
                 console.log(err.message);
