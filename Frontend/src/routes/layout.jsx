@@ -8,7 +8,7 @@ import SignUp from "./signUp";
 
 export default function Layout() {
 
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
   const [showLogin, setShowLogin] = useState(true); 
   const toggleShowLogin = () => setShowLogin(!showLogin); // Add this line
   

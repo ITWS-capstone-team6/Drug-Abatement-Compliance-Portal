@@ -1,0 +1,31 @@
+.dashboard {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 75vh;
+}
+
+.forms {
+    width: 30vw;
+    overflow-y: scroll;
+}
+.show-form {
+    width: 60vw;
+    justify-content: center;
+}
+.form-content {
+    display: flex;
+    flex-direction: row;
+    /* width: 90vw; */
+    justify-content: space-between;
+    position:relative;
+    padding-top: 3vh;
+    padding-bottom: 3vh;
+    margin: auto;
+}
+
+.date {
+    top:0;
+    right: 0;
+    position: absolute;
+}
