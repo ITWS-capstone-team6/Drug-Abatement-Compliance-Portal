@@ -7,7 +7,7 @@ export default function AdminDashboard() {
     
     const [requests, setRequests] = useState([])
 
-    // switch to useState to set filter fields from db?
+    // switch to useState to fetch filter fields from db?
     const request_status = ["Status", "Pending", "Approved", "Denied"];
     const form_type = ["Type", "Post Accident", "Post-Injury Incident", "Reasonable Cause/Suspicion"];
 
@@ -19,6 +19,7 @@ export default function AdminDashboard() {
         getRequests()
     }, [])
 
+    // Temp solution, switch to api call
     const getRequests = () => {
         fetch('/sampleRequests.json')
         .then((data) => data.json())
