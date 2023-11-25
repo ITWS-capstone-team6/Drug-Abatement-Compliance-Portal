@@ -97,7 +97,7 @@ export default function SignUp({toggleShowSignUp}) {
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="setConfirmPassword">
                         Confirm Password
                     </label>
-                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" value={confirmPassword} htmlFor="confirmPassword" id="confirmPassword" type="confirmPassword" placeholder="***********" required onChange={(event)=> setConfirmPassword(event.target.value)}/>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" value={confirmPassword} htmlFor="confirmPassword" id="confirmPassword" type="password" placeholder="***********" required onChange={(event)=> setConfirmPassword(event.target.value)}/>
                 </div>
                 <div class="flex items-center justify-between">
                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" onClick={(e) => openModal(e)}>
