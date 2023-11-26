@@ -1,7 +1,7 @@
 import './login.css'
 import logo from '../assets/United-Airlines-Logo.png';
 import { useNavigate} from 'react-router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import UserPool from "../UserPool";
 import * as AmazonCognitoIdentity from 'amazon-cognito-identity-js';
 import {CognitoUserPool} from "amazon-cognito-identity-js";
@@ -17,6 +17,7 @@ const view = {
 
 export default function Login() {
     
+    const [userId, setUserId] = useState("");
     const [email, setEmail]= useState("");
     const [password, setPassword]= useState("");
 
@@ -28,6 +29,9 @@ export default function Login() {
         setLoginState(view.SIGNUP); // change to signup
         navigate('/signUp');
     };
+    useEffect(() => {
+        console.log(userId);
+    }, [userId]);
     const poolData={
         UserPoolId: "us-east-2_nfCwrEzsY",
         ClientId:"3jdtpq0oaklkgg2k2kk1ajkka6"
@@ -52,10 +56,11 @@ export default function Login() {
         cognitoUser.authenticateUser(authenticationDetails, {
             onSuccess: function (result){
                 console.log('user credentials have been authenticated')
-                //potentially use this to log in db
                 var idToken= result.getIdToken().getJwtToken();
-                console.log(idToken);
-                getCognitoIdentityCredentials();
+                //SET USERID NOT WORKING
+                setUserId(idToken);
+                console.log(userId);
+                //console.log(idToken);
                 setLoggedIn(true);
                 navigate("/");
             },

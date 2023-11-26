@@ -30,7 +30,7 @@ export default function Layout() {
         {
           !loggedIn && (loginState === view.LOGIN ? <Login /> : <SignUp/>)
         }
-        {loggedIn &&
+        {(loggedIn) &&
           <>
           <Navbar />
           <Outlet />
