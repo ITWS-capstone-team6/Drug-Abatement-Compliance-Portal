@@ -10,6 +10,7 @@ export default function SignUp({toggleShowSignUp}) {
     
     const [loggedIn, setLoggedIn] = useContext(Context);
     const [signedUp, setSignedUp] = useContext(Context);
+    const[idToken, setIdToken]= useContext(Context);
     const [email, setEmail]= useState("");
     const [password, setPassword]= useState("");
     const [confirmPassword, setConfirmPassword]= useState("");
@@ -31,11 +32,33 @@ export default function SignUp({toggleShowSignUp}) {
         console.log(userData)
         const confirmationCode= document.getElementById('confirmationCodeInput').value;
         cognitoUser.confirmRegistration(confirmationCode, true, function(err, result) {
+            var authenticationData={
+                Username: email,
+                Password: password
+            }
+            console.log(authenticationData)
             if (err) {
                 console.log(err.message);
             }else{
                 console.log('Successfully verified code!');
+                var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(authenticationData);
+                cognitoUser.authenticateUser(authenticationDetails, {
+                    onSuccess: function (result){
+                        console.log('user credentials have been authenticated')
+                        var userToken= result.getIdToken().getJwtToken();
+                        console.log(userToken);
+                        setIdToken(userToken);
+                        setLoggedIn(true);
+                    },
+                    onFailure: function(err){
+                        console.log(err.message);
+                    }
+                })
+                var idToken = result.getIdToken().getJwtToken();
+                setIdToken(idToken);
+                console.log("id token: " + idToken)
                 setSignedUp(true);
+                console.log(signedUp);
                 closeModal();
                 //HERE HAVE IT ROUTE TO HOME PAGE WITH USER CREDS
             }

@@ -1,5 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import "./root.css";
+import { Context } from '../context';
+import { useContext, useEffect, useState } from 'react';
 
 import FormCard from "../components/formCard";
 
@@ -13,6 +15,13 @@ const formInfo = [
 
 
 export default function Root() {
+  const [loggedIn, setLoggedIn] = useContext(Context);
+  const [signedUp, setSignedUp] = useContext(Context);
+  const[idToken, setIdToken]= useContext(Context);
+  console.log("in the root page, testing context variables: ")
+  console.log("logged in: " + loggedIn);
+  console.log("signed up: " + signedUp);
+  console.log("idToken:" + idToken);
 
   return (
     <>
