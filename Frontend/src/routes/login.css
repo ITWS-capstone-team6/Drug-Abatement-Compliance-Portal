@@ -34,3 +34,7 @@
         width: 55vw;
     }
 }
+
+#confirmationCodeModal {
+    display: none;
+  }

@@ -1,24 +1,49 @@
 import './login.css'
 import logo from '../assets/United-Airlines-Logo.png';
 import { useNavigate} from 'react-router';
-import { Context } from '../context';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import UserPool from "../UserPool";
 import * as AmazonCognitoIdentity from 'amazon-cognito-identity-js';
 import {CognitoUserPool} from "amazon-cognito-identity-js";
 //const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
-export default function Login({ toggleShowLogin }) {
+import { useAtom } from 'jotai';
+import {userIdStateAtom, userNameStateAtom, userEmailStateAtom} from '../state/userInfo';
+
+import { loggedInAtom, loginStateAtom } from '../state/login';
+
+const view = {
+    LOGIN: true,
+    SIGNUP: false,
+};
+
+const userInfoAtom = {
+    id: 123,
+    name: 'First Last',
+    email: 'example@united.com',
+}
+
+export default function Login() {
     
-    const [loggedIn, setLoggedIn] = useContext(Context);
     const [email, setEmail]= useState("");
     const [password, setPassword]= useState("");
+
+    const [loggedIn, setLoggedIn] = useAtom(loggedInAtom);
+    const [, setLoginState] = useAtom(loginStateAtom);
+
+    //global user variable
+    const [userId]= useAtom(userIdStateAtom);
+    const [, setUserIdState]= useAtom(userIdStateAtom)
+    const [globalEmail]= useAtom(userEmailStateAtom);
+    const [, setUserEmailState]= useAtom(userEmailStateAtom);
+
     const navigate= useNavigate();
-    const handleSignUpClick = () => {
-        // Use navigate to go to the "/signUp" route
-        // console.log(showLogin);
-        toggleShowLogin();
-        // navigate('/signUp');
+    const toggleLoginState = () => {
+        setLoginState(view.SIGNUP); // change to signup
+        navigate('/signUp');
     };
+    useEffect(() => {
+        console.log(userId);
+    }, [userId]);
     const poolData={
         UserPoolId: "us-east-2_nfCwrEzsY",
         ClientId:"3jdtpq0oaklkgg2k2kk1ajkka6"
@@ -43,11 +68,14 @@ export default function Login({ toggleShowLogin }) {
         cognitoUser.authenticateUser(authenticationDetails, {
             onSuccess: function (result){
                 console.log('user credentials have been authenticated')
-                //potentially use this to log in db
                 var idToken= result.getIdToken().getJwtToken();
-                console.log(idToken);
-                getCognitoIdentityCredentials();
+                //sets userID to global variable (but only for session) - email as well
+                userInfoAtom.id= idToken;
+                setUserIdState(userInfoAtom.id);
+                userInfoAtom.email= email;
+                setUserEmailState(email);
                 setLoggedIn(true);
+                navigate("/");
             },
             onFailure: function(err){
                 console.log(err.message);
@@ -80,7 +108,7 @@ export default function Login({ toggleShowLogin }) {
                     </button>
                     
                 </div>
-                <span className="text-sm text-blue-500 underline cursor-pointer" onClick={toggleShowLogin}>
+                <span className="text-sm text-blue-500 underline cursor-pointer" onClick={toggleLoginState}>
                     Sign Up
                 </span>
             </form>
