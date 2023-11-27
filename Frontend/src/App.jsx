@@ -8,6 +8,7 @@ import PostAccident from "./routes/postAccident";
 import ReasonableCauseSuspicion from "./routes/reasonableCauseSuspicion";
 import Login from "./routes/login";
 import SignUp from "./routes/signUp";
+import AdminDashboard from "./routes/adminDashboard";
 import "./App.css"
 export default function App() {
 
@@ -22,7 +23,8 @@ export default function App() {
             <Route path="/postInjuryIncident" element={<PostInjuryIncident />} />
             <Route path="/reasonableCauseSuspicion" element={<ReasonableCauseSuspicion />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/signUp" element={<SignUp/>}/> 
+            <Route path="/signUp" element={<SignUp/>}/>
+            <Route path="/admin-dashboard" element={<AdminDashboard />} />
           </Route>
         </Routes>
       </BrowserRouter>
