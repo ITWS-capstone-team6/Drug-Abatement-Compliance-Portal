@@ -1,38 +1,48 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/navbar";
-import { useContext, useEffect, useState } from 'react';
-import { Context } from '../context';
 import './layout.css'
 import Login from "./login";
 import SignUp from "./signUp";
 
+import { useAtom } from 'jotai';
+import { loggedInAtom, loginStateAtom } from '../state/login';
+import {userIdStateAtom, userEmailStateAtom} from '../state/userInfo';
+import { useEffect } from "react";
+
+const view = {
+  LOGIN: true,
+  SIGNUP: false,
+};
 export default function Layout() {
 
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [showLogin, setShowLogin] = useState(true); 
-  const [signedUp, setSignedUp] = useState(false);
-  const toggleShowLogin = () => setShowLogin(!showLogin); // Add this line
-  const[userId, setUserId] = useState("empty");
 
+  const [loggedIn] = useAtom(loggedInAtom);
+  const [loginState] = useAtom(loginStateAtom);
+
+  const [userId] = useAtom(userIdStateAtom);
+  const [userEmail]= useAtom(userEmailStateAtom);
+
+  useEffect(() => {
+    console.log("user is now logged in. this is where we would query for the user info from mongo now")
+    // fetch call to api with the query being the user id
+    //  api returns user info from database
+  }, [loggedIn]);
   
+  console.log("should show logged in userID: " + userId)
+  console.log("email of user: " + userEmail)
   return (
     <>
-    <Context.Provider value={[loggedIn, setLoggedIn, showLogin, setShowLogin, signedUp, setSignedUp, userId, setUserId]}>
       <div className="main-content">
         {
-          !loggedIn && (showLogin ? <Login toggleShowLogin={toggleShowLogin} /> : <SignUp toggleShowLogin={toggleShowLogin} />)
+          !loggedIn && (loginState === view.LOGIN ? <Login /> : <SignUp/>)
         }
-        {(loggedIn || signedUp) &&
+        {(loggedIn) &&
           <>
           <Navbar />
           <Outlet />
           </>
         }
-        
       </div>
-    </Context.Provider>
-      
-      
     </>
   );
 }

@@ -14,6 +14,7 @@
     "amazon-cognito-identity-js": "^6.3.7",
     "autoprefixer": "^10.4.16",
     "aws-sdk": "^2.1494.0",
+    "jotai": "^2.5.1",
     "postcss": "^8.4.31",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
