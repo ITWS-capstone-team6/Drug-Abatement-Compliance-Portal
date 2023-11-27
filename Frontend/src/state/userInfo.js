@@ -5,3 +5,7 @@ export const userInfoAtom = atom({
     name: 'First Last',
     email: 'example@united.com',
 })
+
+export const userIdStateAtom= atom(userInfoAtom.id);
+export const userNameStateAtom= atom(userInfoAtom.name);
+export const userEmailStateAtom=atom(userInfoAtom.email);

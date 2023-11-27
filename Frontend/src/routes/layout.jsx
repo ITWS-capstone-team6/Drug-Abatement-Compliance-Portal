@@ -6,7 +6,9 @@ import SignUp from "./signUp";
 
 import { useAtom } from 'jotai';
 import { loggedInAtom, loginStateAtom } from '../state/login';
+import {userIdStateAtom, userEmailStateAtom} from '../state/userInfo';
 import { useEffect } from "react";
+
 const view = {
   LOGIN: true,
   SIGNUP: false,
@@ -17,6 +19,8 @@ export default function Layout() {
   const [loggedIn] = useAtom(loggedInAtom);
   const [loginState] = useAtom(loginStateAtom);
 
+  const [userId] = useAtom(userIdStateAtom);
+  const [userEmail]= useAtom(userEmailStateAtom);
 
   useEffect(() => {
     console.log("user is now logged in. this is where we would query for the user info from mongo now")
@@ -24,6 +28,8 @@ export default function Layout() {
     //  api returns user info from database
   }, [loggedIn]);
   
+  console.log("should show logged in userID: " + userId)
+  console.log("email of user: " + userEmail)
   return (
     <>
       <div className="main-content">

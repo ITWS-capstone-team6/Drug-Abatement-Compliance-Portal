@@ -7,6 +7,7 @@ import * as AmazonCognitoIdentity from 'amazon-cognito-identity-js';
 import {CognitoUserPool} from "amazon-cognito-identity-js";
 //const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
 import { useAtom } from 'jotai';
+import {userIdStateAtom, userNameStateAtom, userEmailStateAtom} from '../state/userInfo';
 
 import { loggedInAtom, loginStateAtom } from '../state/login';
 
@@ -15,14 +16,25 @@ const view = {
     SIGNUP: false,
 };
 
+const userInfoAtom = {
+    id: 123,
+    name: 'First Last',
+    email: 'example@united.com',
+}
+
 export default function Login() {
     
-    const [userId, setUserId] = useState("");
     const [email, setEmail]= useState("");
     const [password, setPassword]= useState("");
 
     const [loggedIn, setLoggedIn] = useAtom(loggedInAtom);
     const [, setLoginState] = useAtom(loginStateAtom);
+
+    //global user variable
+    const [userId]= useAtom(userIdStateAtom);
+    const [, setUserIdState]= useAtom(userIdStateAtom)
+    const [globalEmail]= useAtom(userEmailStateAtom);
+    const [, setUserEmailState]= useAtom(userEmailStateAtom);
 
     const navigate= useNavigate();
     const toggleLoginState = () => {
@@ -57,10 +69,11 @@ export default function Login() {
             onSuccess: function (result){
                 console.log('user credentials have been authenticated')
                 var idToken= result.getIdToken().getJwtToken();
-                //SET USERID NOT WORKING
-                setUserId(idToken);
-                console.log(userId);
-                //console.log(idToken);
+                //sets userID to global variable (but only for session) - email as well
+                userInfoAtom.id= idToken;
+                setUserIdState(userInfoAtom.id);
+                userInfoAtom.email= email;
+                setUserEmailState(email);
                 setLoggedIn(true);
                 navigate("/");
             },
