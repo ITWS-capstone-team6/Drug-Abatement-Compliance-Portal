@@ -8,7 +8,6 @@ const uuid = require('uuid');
 const uri="mongodb+srv://chloej1699:SnowBird11@cluster0.8ihubjl.mongodb.net/"
 const port = process.env.PORT || 5000;
 
-//check
 require("dotenv").config({ path: "./config.env" });
 const app = express();
 

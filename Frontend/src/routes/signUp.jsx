@@ -3,10 +3,9 @@ import logo from '../assets/United-Airlines-Logo.png';
 import { useNavigate } from 'react-router';
 import UserPool from "../UserPool";
 import * as AmazonCognitoIdentity from 'amazon-cognito-identity-js';
-//const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
 import {useState} from 'react';
 import {useAtom} from 'jotai';
-import jwtDecode from 'jwt-decode'; // Update the import statement
+import jwtDecode from 'jwt-decode'; 
 import {userIdStateAtom, userNameStateAtom, userEmailStateAtom} from '../state/userInfo';
 
 import { loggedInAtom, loginStateAtom } from '../state/login';
@@ -59,7 +58,7 @@ export default function SignUp() {
     }
 
     function toggleLoginState() {
-        setLoginState(view.LOGIN); // change to login
+        setLoginState(view.LOGIN);
         navigate('/login');
     }
 
@@ -101,9 +100,9 @@ export default function SignUp() {
                         setUserEmailState(email);
                         setLoggedIn(true);
                         navigate("/");
-                        //put api to add user to db here
+                        //adding user to db here
                         const decodedToken= jwtDecode(idToken);
-                        const awsUserId= decodedToken.sub; //userId
+                        const awsUserId= decodedToken.sub;
                         var userFormData={
                             idNumber: awsUserId,
                             emailAddress: email
@@ -115,7 +114,6 @@ export default function SignUp() {
                     }
                 })
                 closeModal();
-                //HERE HAVE IT ROUTE TO HOME PAGE WITH USER CREDS
             }
         });
     }
