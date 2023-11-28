@@ -1,7 +1,7 @@
 import { useLocation, useNavigate} from 'react-router-dom';
 import React, { useState } from "react";
 import {userIdStateAtom, userEmailStateAtom} from '../state/userInfo';
-import jwtDecode from 'jwt-decode'; // Update the import statement
+import jwtDecode from 'jwt-decode'; 
 import { useAtom } from 'jotai';
 
 export default function PostAccident() {

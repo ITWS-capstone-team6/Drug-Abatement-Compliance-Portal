@@ -6,6 +6,7 @@ import * as AmazonCognitoIdentity from 'amazon-cognito-identity-js';
 //const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
 import {useState} from 'react';
 import {useAtom} from 'jotai';
+import jwtDecode from 'jwt-decode'; // Update the import statement
 import {userIdStateAtom, userNameStateAtom, userEmailStateAtom} from '../state/userInfo';
 
 import { loggedInAtom, loginStateAtom } from '../state/login';
@@ -36,6 +37,27 @@ export default function SignUp() {
     const [, setUserEmailState]= useAtom(userEmailStateAtom);
     
     const navigate = useNavigate();
+
+    async function apiCall(formData){
+        try {
+          const response = await fetch("http://localhost:5000/newUser", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(formData)
+          });
+    
+          if (response.ok) {
+            console.log("Form submitted successfully!");
+          } else {
+            console.error("Error submitting form");
+          }
+        } catch (error) {
+          console.error("Network error:", error);
+        }
+    }
+
     function toggleLoginState() {
         setLoginState(view.LOGIN); // change to login
         navigate('/login');
@@ -80,6 +102,13 @@ export default function SignUp() {
                         setLoggedIn(true);
                         navigate("/");
                         //put api to add user to db here
+                        const decodedToken= jwtDecode(idToken);
+                        const awsUserId= decodedToken.sub; //userId
+                        var userFormData={
+                            idNumber: awsUserId,
+                            emailAddress: email
+                        }
+                        apiCall(userFormData);
                     },
                     onFailure: function(err){
                         console.log(err.message);

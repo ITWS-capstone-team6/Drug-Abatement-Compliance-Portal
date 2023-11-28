@@ -37,6 +37,27 @@ app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
 });
 
+app.post('/newUser', async(req, res) =>{
+  try {
+   await client.connect();
+   const collection = client.db("PracticeDB").collection("Users");
+   console.log("body: ")
+   console.log(req.body)
+   let newForm = {
+    awsUserId: req.body.idNumber,
+    email: req.body.emailAddress,
+   }
+   console.log("newForm: ")
+   console.log(newForm)
+   await collection.insertOne(newForm)
+   res.json(200)
+  } catch (error) {
+    console.log(error)
+    return res.json({
+      message: 'An error occured!',
+    });
+  }
+});
 
 app.post('/postAccident', async(req, res) =>{
   try {
