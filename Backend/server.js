@@ -17,7 +17,7 @@ app.use(cors())
    .use(express.json())
    .use(bodyParser.urlencoded({extended:true}))
    .use(function (req, res, next) {
-     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000', 'http://127.0.0.1:5173/');
      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
      res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
      res.setHeader('Access-Control-Allow-Credentials', true);
@@ -78,6 +78,8 @@ app.post('/postIncident', async(req, res) =>{
    console.log("body: ")
    console.log(req.body)
    let newForm = {
+    awsUserId: req.body.idNumber,
+    email: req.body.email,
     requested : req.body.requested,
     employeeName : req.body.employeeName,
     employeeId : req.body.employeeId,
@@ -107,6 +109,8 @@ app.post('/reasonableCause', async(req, res) =>{
    console.log("body: ")
    console.log(req.body)
    let newForm = {
+    awsUserId: req.body.idNumber,
+    email: req.body.email,
     requested: req.body.requested,
     employeeName: req.body.employeeName,
     employeeId: req.body.employeeId,
@@ -142,9 +146,9 @@ app.post('/reasonableCause', async(req, res) =>{
       marijuana: req.body.marijuana
     }
    }
-   console.log("newForm: ")
-   console.log(newForm)
-   await collection.insertOne(newForm)
+  //  console.log("newForm: ")
+  //  console.log(newForm)
+   await collection.insertOne(req.body)
    res.json(200)
   } catch (error) {
     console.log(error)

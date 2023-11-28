@@ -5,8 +5,6 @@ import jwtDecode from 'jwt-decode'; // Update the import statement
 import { useAtom } from 'jotai';
 
 export default function PostAccident() {
-
-    //const [userEmail]= useAtom(userEmailStateAtom);
     const [userId] = useAtom(userIdStateAtom);
     const [userEmail]= useAtom(userEmailStateAtom);
     const decodedToken= jwtDecode(userId);
