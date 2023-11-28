@@ -6,12 +6,19 @@ import * as AmazonCognitoIdentity from 'amazon-cognito-identity-js';
 //const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
 import {useState} from 'react';
 import {useAtom} from 'jotai';
-import {loggedInAtom, loginStateAtom} from '../state/login';
+import {userIdStateAtom, userNameStateAtom, userEmailStateAtom} from '../state/userInfo';
 
+import { loggedInAtom, loginStateAtom } from '../state/login';
 const view = {
     LOGIN: true,
     SIGNUP: false,
 };
+
+const userInfoAtom = {
+    id: 123,
+    name: 'First Last',
+    email: 'example@united.com',
+}
 export default function SignUp() {
     // local variables
     const [email, setEmail]= useState("");
@@ -19,8 +26,14 @@ export default function SignUp() {
     const [confirmPassword, setConfirmPassword]= useState("");
 
     // global variables
-    const [loggedIn] = useAtom(loggedInAtom);
+    const [loggedIn, setLoggedIn] = useAtom(loggedInAtom);
     const [, setLoginState] = useAtom(loginStateAtom);
+
+    //global user variable
+    const [userId]= useAtom(userIdStateAtom);
+    const [, setUserIdState]= useAtom(userIdStateAtom)
+    const [globalEmail]= useAtom(userEmailStateAtom);
+    const [, setUserEmailState]= useAtom(userEmailStateAtom);
     
     const navigate = useNavigate();
     function toggleLoginState() {
@@ -43,7 +56,12 @@ export default function SignUp() {
             Username: email,
             Pool: UserPool
         }
+        var authenticationData={
+            Username: email,
+            Password: password
+        }
         var cognitoUser= new AmazonCognitoIdentity.CognitoUser(userData);
+        var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(authenticationData);
         console.log(userData)
         const confirmationCode= document.getElementById('confirmationCodeInput').value;
         cognitoUser.confirmRegistration(confirmationCode, true, function(err) {
@@ -51,10 +69,25 @@ export default function SignUp() {
                 console.log(err.message);
             }else{
                 console.log('Successfully verified code!');
+                cognitoUser.authenticateUser(authenticationDetails, {
+                    onSuccess: function (result){
+                        console.log('user credentials have been authenticated')
+                        var idToken= result.getIdToken().getJwtToken();
+                        userInfoAtom.id= idToken;
+                        setUserIdState(userInfoAtom.id);
+                        userInfoAtom.email= email;
+                        setUserEmailState(email);
+                        setLoggedIn(true);
+                        navigate("/");
+                        //put api to add user to db here
+                    },
+                    onFailure: function(err){
+                        console.log(err.message);
+                    }
+                })
                 closeModal();
                 //HERE HAVE IT ROUTE TO HOME PAGE WITH USER CREDS
             }
-            
         });
     }
 
