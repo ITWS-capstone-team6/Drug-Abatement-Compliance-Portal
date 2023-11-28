@@ -45,8 +45,10 @@ app.post('/postAccident', async(req, res) =>{
    console.log("body: ")
    console.log(req.body)
    let newForm = {
+    awsUserId:req.body.idNumber,
+    email: req.body.email,
     dot: req.body.dot,
-    nondot: req.body.dot,
+    nondot: req.body.nondot,
     requested : req.body.requested,
     employeeName : req.body.employeeName,
     employeeId : req.body.employeeId,

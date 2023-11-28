@@ -15,9 +15,8 @@ export default function Navbar() {
 
   const decodedToken= jwtDecode(userId);
   const awsUserId= decodedToken.sub; //userId
-  const username= decodedToken.username;
   console.log("aws user id: " + awsUserId);
-  console.log("username: " + username);
+  console.log("username: " + userEmail);
 
   return (
     <ul id="navbar">
