@@ -1,5 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import React, { useState } from "react";
+import {userIdStateAtom, userNameStateAtom, userEmailStateAtom} from '../state/userInfo';
 
 
 export default function PostAccident() {

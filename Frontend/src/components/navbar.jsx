@@ -5,21 +5,19 @@ import { useEffect, useState } from "react";
 import logo from '../assets/United-Airlines-Logo.png';
 import { useAtom } from 'jotai';
 import { userInfoAtom } from "../state/userInfo";
-
+import {userIdStateAtom, userEmailStateAtom} from '../state/userInfo';
+import jwtDecode from 'jwt-decode'; // Update the import statement
 
 export default function Navbar() {
-  const [name, setName] = useState("First Last");
   const [userInfo] = useAtom(userInfoAtom);
+  const [userEmail]= useAtom(userEmailStateAtom);
+  const [userId] = useAtom(userIdStateAtom);
 
-  useEffect(() => {
-    // setName("firstname lastname");
-    // todo: change this to be an api call or something instead
-    //  maybe figure out global state with react so we dont need to do 
-    //   redundant api calls for every component
-    setName(`${userInfo["name"]}`)
-    console.log(userInfo)
-  }, [userInfo])
-
+  const decodedToken= jwtDecode(userId);
+  const awsUserId= decodedToken.sub; //userId
+  const username= decodedToken.username;
+  console.log("aws user id: " + awsUserId);
+  console.log("username: " + username);
 
   return (
     <ul id="navbar">
@@ -29,7 +27,7 @@ export default function Navbar() {
         </Link>
       </li>
       <li>
-        <h4>{name}</h4>
+        <h4>Hello, {userEmail}</h4>
       </li>
     </ul>
   );
