@@ -144,7 +144,7 @@ export default function AdminDashboard() {
                             {selectedRequestPending ? <div className="button-group">
                                 <button type="button" className="approve" onClick={()=>handleRequest("Approved")}>Approve</button>
                                 <button type="button" className="deny" onClick={()=>handleRequest("Denied")}>Deny</button>
-                            </div> : <p>This request is <span style={{fontWeight: 'bold'}}>{selectedRequest.status}</span>.</p>}
+                            </div> : <p style={{ fontSize: '1.3em', textDecoration: 'underline', color: '#002FA7', textAlign: 'center'}}>This request is <span style={{fontWeight: 'bold'}}>{selectedRequest.status}</span>.</p>}
                             
                         </div> 
                             : <p style={{ fontSize: '1.5em', textAlign: 'center'}}>Select a form to read</p>}

@@ -40,8 +40,6 @@
     overflow-y: scroll;
 }
 .button-group {
-    position: absolute;
-    bottom:5%;
     height: 8vh;
     text-align: center;
 }
