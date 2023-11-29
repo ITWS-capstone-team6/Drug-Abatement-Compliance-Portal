@@ -1,0 +1,24 @@
+.adminForm {
+    padding-bottom: 3vh;
+}
+.adminFormField {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.insideField {
+    display: flex;
+    flex-direction: row;
+    min-width: 20vw;
+}
+
+.key {
+    font-weight: bold;
+    margin-right: 0.5vw;
+}
+
+.key span {
+    display: block;
+    font-weight: normal;
+}

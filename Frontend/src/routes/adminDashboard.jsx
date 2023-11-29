@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import React  from 'react';
 import "./adminDashboard.css"
-
+import AdminForm from "../components/adminForm"
 
 export default function AdminDashboard() {
     
@@ -14,6 +14,7 @@ export default function AdminDashboard() {
     const [selectedStatus, setSelectedStatus] = useState(null);
     const [selectedType, setSelectedType] = useState(null);
     const [selectedRequest, setSelectedRequest] = useState(null);
+    const [selectedRequestPending, setSelectedRequestPending] = useState(null);
 
     useEffect(() => {
         getRequests()
@@ -85,6 +86,15 @@ export default function AdminDashboard() {
         }
     }
 
+    const selectRequest = (request) => {
+        setSelectedRequest(request)
+        if (request.status === "Pending") {
+            setSelectedRequestPending(true)
+        } else {
+            setSelectedRequestPending(false)
+        }
+    }
+
     const handleRequest = (status) => {
         let temp = JSON.parse(JSON.stringify(selectedRequest))
         let temp2 = [...requests]
@@ -116,25 +126,28 @@ export default function AdminDashboard() {
             <div className="dashboard">
                 <div className="forms">
                     {requests.map((request, i) => (
-                        <div className="form-content" onClick={()=>setSelectedRequest(request)}>
+                        <div className="form-content" onClick={()=>selectRequest(request)}>
                             <div>
-                            <p style={{ fontSize: '1.5em' }}>{request.type}</p> 
-                            <p>Submitted Date: {request.managementRepDate}</p>
+                                <p style={{ fontSize: '1.5vw' }}>{request.type}</p> 
+                                <p>Submitted By: {request.managementRepName}</p>
+                                <p>Submitted Date: {request.managementRepDate}</p>
                             </div>
-                            <p className="date">Submitted By: {request.managementRepName}</p>
                         </div>
                     ))}
                 </div>
                 <div className="show-form">
                     {selectedRequest ? 
                         <div>
-                            {Object.entries(selectedRequest).map(([key, value]) => (
-                                <p>{key}: {value}</p>
-                            ))}
-                            <button type="button" onClick={()=>handleRequest("Approved")}>Approve</button>
-                            <button type="button" onClick={()=>handleRequest("Denied")}>Deny</button>
+                            <div className="admin-form">
+                                <AdminForm request={selectedRequest} />
+                            </div>
+                            {selectedRequestPending ? <div className="button-group">
+                                <button type="button" className="approve" onClick={()=>handleRequest("Approved")}>Approve</button>
+                                <button type="button" className="deny" onClick={()=>handleRequest("Denied")}>Deny</button>
+                            </div> : <p>This request is <span style={{fontWeight: 'bold'}}>{selectedRequest.status}</span>.</p>}
+                            
                         </div> 
-                            : <p style={{ fontSize: '1.5em' }}>Select a form to read</p>}
+                            : <p style={{ fontSize: '1.5em', textAlign: 'center'}}>Select a form to read</p>}
                         
                 </div>
             </div>
