@@ -6,7 +6,7 @@ import AdminForm from "../components/adminForm"
 export default function AdminDashboard() {
     
     const [requests, setRequests] = useState([])
-
+    const [orig_requests, setOrigRequest] = useState([])
     // switch to useState to fetch filter fields from db?
     const request_status = ["Status", "Pending", "Approved", "Denied"];
     const form_type = ["Type", "Post Accident", "Post-Injury Incident", "Reasonable Cause/Suspicion"];
@@ -26,7 +26,9 @@ export default function AdminDashboard() {
         .then((data) => data.json())
         .then((data) => {
             console.log(data)
-            setRequests(data)})
+            setRequests(data)
+            setOrigRequest(data)
+        })
     }
 
     const handleRequestStatusChange = (e) => {
@@ -39,7 +41,7 @@ export default function AdminDashboard() {
         }
     
         if (selectedType === null && status === "Status") {
-            setRequests(orig_requests);
+            getRequests();
         }
         else {
             let new_requests = []
