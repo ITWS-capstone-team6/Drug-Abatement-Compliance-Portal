@@ -1,9 +1,21 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import React, { useState } from "react";
+import {userIdStateAtom, userEmailStateAtom} from '../state/userInfo';
+import jwtDecode from 'jwt-decode'; // Update the import statement
+import { useAtom } from 'jotai';
 
 
 export default function PostInjury() {
+  const [userId] = useAtom(userIdStateAtom);
+  const [userEmail]= useAtom(userEmailStateAtom);
+  const decodedToken= jwtDecode(userId);
+  const awsUserId= decodedToken.sub; //userId
+  console.log("aws userid: " + awsUserId);
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
+    idNumber: awsUserId,
+    email: userEmail,
     requested: "true",
     employeeName: "",
     employeeId: "",
@@ -59,6 +71,8 @@ export default function PostInjury() {
       } catch (error) {
         console.error("Network error:", error);
       }
+      alert("Thanks for submitting!");
+      navigate(-1);
     }
 
     const handleInputChange = (e) => {

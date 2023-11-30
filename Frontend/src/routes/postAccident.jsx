@@ -1,9 +1,20 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate} from 'react-router-dom';
 import React, { useState } from "react";
-
+import {userIdStateAtom, userEmailStateAtom} from '../state/userInfo';
+import jwtDecode from 'jwt-decode'; 
+import { useAtom } from 'jotai';
 
 export default function PostAccident() {
+    const [userId] = useAtom(userIdStateAtom);
+    const [userEmail]= useAtom(userEmailStateAtom);
+    const decodedToken= jwtDecode(userId);
+    const awsUserId= decodedToken.sub; //userId
+    console.log("aws userid: " + awsUserId);
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
+      idNumber: awsUserId,
+      email: userEmail,
       dot: "",
       nonDot:"",
       requested: "true",
@@ -16,6 +27,9 @@ export default function PostAccident() {
       refusal: "",
       notConducted: ""
     });
+    
+    console.log("aws user id: " + awsUserId);
+    console.log("username: " + userEmail);
 
     const handleSubmit = async (e) => {
       e.preventDefault();
@@ -36,6 +50,8 @@ export default function PostAccident() {
       } catch (error) {
         console.error("Network error:", error);
       }
+      alert("Thanks for submitting!");
+      navigate(-1);
     }
 
     const handleInputChange = (e) => {

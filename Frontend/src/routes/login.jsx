@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import UserPool from "../UserPool";
 import * as AmazonCognitoIdentity from 'amazon-cognito-identity-js';
 import {CognitoUserPool} from "amazon-cognito-identity-js";
-//const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
 import { useAtom } from 'jotai';
 import {userIdStateAtom, userNameStateAtom, userEmailStateAtom} from '../state/userInfo';
 
@@ -38,7 +37,7 @@ export default function Login() {
 
     const navigate= useNavigate();
     const toggleLoginState = () => {
-        setLoginState(view.SIGNUP); // change to signup
+        setLoginState(view.SIGNUP); 
         navigate('/signUp');
     };
     useEffect(() => {
