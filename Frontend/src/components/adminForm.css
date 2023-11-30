@@ -10,7 +10,7 @@
 .insideField {
     display: flex;
     flex-direction: row;
-    min-width: 20vw;
+    min-width: 25vw;
 }
 
 .key {
@@ -21,4 +21,15 @@
 .key span {
     display: block;
     font-weight: normal;
+}
+
+.title {
+    text-decoration: underline;
+    font-size: 1.3vw;
+}
+
+@media only screen and (max-width: 812px) {
+    .title {
+        font-size: 4.5vw;
+    }
 }

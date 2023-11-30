@@ -74,7 +74,7 @@ export default function AdminPostAccidentAndInjury({request}) {
             </div>
             
             <br />
-            <p className='key' style={{textDecoration: 'underline', fontSize: '1.3vw'}}>Authorizing Management Representative:</p>
+            <p className='key title'>Authorizing Management Representative:</p>
             <div className="adminFormField">
                 <div className="insideField">
                     <p className='key'>Name:</p>

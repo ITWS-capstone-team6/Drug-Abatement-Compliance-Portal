@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import React  from 'react';
+import _ from 'lodash';
 import "./adminDashboard.css"
 import AdminForm from "../components/adminForm"
 
@@ -84,17 +85,22 @@ export default function AdminDashboard() {
                     new_requests.push(orig_requests[i]);
                 }
             }
-            setRequests(new_requests)
+            setRequests(new_requests);
         }
     }
 
     const selectRequest = (request) => {
-        setSelectedRequest(request)
-        if (request.status === "Pending") {
-            setSelectedRequestPending(true)
+        if (!_.isEqual(request, selectedRequest)) {
+            setSelectedRequest(request)
+            if (request.status === "Pending") {
+                setSelectedRequestPending(true)
+            } else {
+                setSelectedRequestPending(false)
+            }
         } else {
-            setSelectedRequestPending(false)
+            setSelectedRequest(null)
         }
+        
     }
 
     const handleRequest = (status) => {
@@ -112,7 +118,7 @@ export default function AdminDashboard() {
     }
 
     return (
-        <div>
+        <>
             <form className='filter-form d-flex'>
                 <select defaultValue={'Status'} className='form-select w-auto' onChange={handleRequestStatusChange.bind(this)}>
                     {request_status.map((e, i) =>(
@@ -128,11 +134,11 @@ export default function AdminDashboard() {
             <div className="dashboard">
                 <div className="forms">
                     {requests.map((request, i) => (
-                        <div className="form-content" onClick={()=>selectRequest(request)}>
+                        <div className={`form-content ${_.isEqual(request, selectedRequest) ? "selected-req" : ""}`} onClick={()=>selectRequest(request)}>
                             <div>
-                                <p style={{ fontSize: '1.5vw' }}>{request.type}</p> 
-                                <p>Submitted By: {request.managementRepName}</p>
-                                <p>Submitted Date: {request.managementRepDate}</p>
+                                <p className='form-type'>{request.type}</p> 
+                                <p className='submit-info'>Submitter: {request.managementRepName}</p>
+                                <p className='submit-info'>Date: {request.managementRepDate}</p>
                             </div>
                         </div>
                     ))}
@@ -149,10 +155,10 @@ export default function AdminDashboard() {
                             </div> : <p style={{ fontSize: '1.3em', textDecoration: 'underline', color: '#002FA7', textAlign: 'center'}}>This request is <span style={{fontWeight: 'bold'}}>{selectedRequest.status}</span>.</p>}
                             
                         </div> 
-                            : <p style={{ fontSize: '1.5em', textAlign: 'center'}}>Select a form to read</p>}
+                            : <div className="no-form"><p>Select a form to read</p></div>}
                         
                 </div>
             </div>
-        </div>
+        </>
     )
 }

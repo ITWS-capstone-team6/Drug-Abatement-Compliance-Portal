@@ -39,7 +39,7 @@ export default function AdminReasonable({request}) {
             </div>
             <br />
             <div>
-                <p className="key" style={{textDecoration: 'underline', fontSize: '1.3vw'}}>Reasonable Suspicion/Cause Indicators</p>
+                <p className="key title">Reasonable Suspicion/Cause Indicators</p>
                 <div className="adminFormField">
                     <div className="insideField">
                         <p className='key'>Behavior:</p>
@@ -109,7 +109,7 @@ export default function AdminReasonable({request}) {
             </div>
             
             <br />
-            <p className='key' style={{textDecoration: 'underline', fontSize: '1.3vw'}}>Primary Trained Management Representative:</p>
+            <p className='key title'>Primary Trained Management Representative:</p>
             <div className="adminFormField">
                 <div className="insideField">
                     <p className='key'>Name:</p>

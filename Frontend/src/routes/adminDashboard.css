@@ -1,7 +1,6 @@
 .dashboard {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     height: 78vh;
 }
 
@@ -14,27 +13,38 @@
 }
 
 .forms {
+    display: flex;
+    flex-direction: column;
     width: 25vw;
+    height: 78vh;
     overflow-y: scroll;
 }
 
 .show-form {
     position: relative;
-    width: 70vw;
+    width: 72vw;
+    margin-left: 3vw;
     justify-content: center;
 }
 
 .form-content {
     display: flex;
     flex-direction: row;
-    /* width: 90vw; */
     justify-content: space-between;
     position:relative;
-    margin: auto;
-    margin-bottom: 3vh;
     border-bottom: 1px solid black;
+    min-width: 20vw;
+    padding-top: 1vh;
+    padding-left: 1vw;
 }
 
+.form-type {
+    font-size: 1.5vw;
+}
+
+.submit-info {
+    font-size: 1vw;
+}
 .admin-form {
     height: 70vh;
     overflow-y: scroll;
@@ -45,7 +55,7 @@
 }
 
 .approve {
-    background-color: #002FA7 !important;
+    background-color: var(--united-blue) !important;
     color: white;
     margin-right: 2vw;
 }
@@ -54,13 +64,52 @@
     background-color: #9ca4b8 !important;
     color: white;
 }
+
+.no-form {
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    height: 78vh; 
+}
+
+.no-form p {
+    font-weight: bold;
+    color: rgb(90, 88, 88);
+}
+
+.selected-req {
+    background-color:rgb(226, 229, 239);
+}
 @media only screen and (max-width: 812px) {
+    .dashboard {
+        height: 85vh;
+    }
+    .forms {
+        width: 30vw;
+        height: 85vh;
+    }
+    .admin-form {
+        height: 75vh;
+    }
+    .form-content {
+        min-width: 30vw;
+    }
+    .show-form {
+        width: 65vw;
+    }
     .date {
         font-size: 2vw;
     }
-
     .button-group {
+        position: absolute;
         bottom: 0;
-        left: 20%;
+    }
+
+    .form-type {
+        font-size: 3.5vw;
+    }
+
+    .submit-info {
+        font-size: 3vw;
     }
 }
