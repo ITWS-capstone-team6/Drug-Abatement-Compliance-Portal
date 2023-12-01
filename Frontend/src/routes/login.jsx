@@ -76,20 +76,21 @@ export default function Login() {
                 console.log('user credentials have been authenticated')
                 var idToken= result.getIdToken().getJwtToken();
                 const decodedToken= jwtDecode(idToken);
-                console.log(decodedToken["cognito:groups"][0]);
+                // console.log(decodedToken["cognito:groups"][0]);
                 const awsUserId= decodedToken.sub;
                 userInfoAtom.id= idToken;
                 setUserIdState(userInfoAtom.id);
                 userInfoAtom.email= email;
                 setUserEmailState(email);
                 setLoggedIn(true);
-                if(decodedToken["cognito:groups"][0] == "Admin"){
-                    console.log("logging in as admin")
-                    navigate("/admin-dashboard")
-                }else{
-                    navigate("/");
+                if(decodedToken["cognito:groups"] != "undefined" && decodedToken["cognito:groups"] != null){
+                    if(decodedToken["cognito:groups"][0] == "Admin"){
+                        console.log("logging in as admin")
+                        navigate("/admin-dashboard")
+                    }else{
+                        navigate("/");
+                    }
                 }
-                
             },
             onFailure: function(err){
                 console.log(err.message);
