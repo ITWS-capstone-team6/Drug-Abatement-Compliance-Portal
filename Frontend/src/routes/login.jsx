@@ -6,6 +6,7 @@ import UserPool from "../UserPool";
 import * as AmazonCognitoIdentity from 'amazon-cognito-identity-js';
 import {CognitoUserPool} from "amazon-cognito-identity-js";
 import { useAtom } from 'jotai';
+import jwtDecode from 'jwt-decode'; 
 import {userIdStateAtom, userNameStateAtom, userEmailStateAtom} from '../state/userInfo';
 
 import { loggedInAtom, loginStateAtom } from '../state/login';
@@ -22,7 +23,9 @@ const userInfoAtom = {
 }
 
 export default function Login() {
-    
+    const AWS = require('aws-sdk');
+    AWS.config.update({ region: 'us-east-2' });
+    const cognito = new AWS.CognitoIdentityServiceProvider()
     const [email, setEmail]= useState("");
     const [password, setPassword]= useState("");
 
@@ -72,7 +75,26 @@ export default function Login() {
             onSuccess: function (result){
                 console.log('user credentials have been authenticated')
                 var idToken= result.getIdToken().getJwtToken();
+                const decodedToken= jwtDecode(idToken);
+                const awsUserId= decodedToken.sub;
                 //sets userID to global variable (but only for session) - email as well
+                //check if user belongs to admin here
+                //if yes - navigate("/admin-dashboard")
+                const params= {
+                    AccessToken: decodedToken,
+                };
+                cognito.getUser(params, (err, data) => {
+                    const groups= data.Groups;
+                    if(groups.includes('Admin')){
+                        console.log("user belongs to admin group")
+                    }else{
+                        console.log("not in admin group")
+                    }
+
+                    if(err){
+                        console.error("error fetchin user", err);
+                    }
+                })
                 userInfoAtom.id= idToken;
                 setUserIdState(userInfoAtom.id);
                 userInfoAtom.email= email;
