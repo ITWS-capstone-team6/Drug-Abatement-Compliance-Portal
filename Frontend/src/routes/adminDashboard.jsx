@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react"
-import "./adminDashboard.css"
 
+import _ from 'lodash';
+import "./adminDashboard.css"
+import AdminForm from "../components/adminForm"
 
 export default function AdminDashboard() {
     
     const [requests, setRequests] = useState([])
-
+    const [orig_requests, setOrigRequest] = useState([])
     // switch to useState to fetch filter fields from db?
     const request_status = ["Status", "Pending", "Approved", "Denied"];
     const form_type = ["Type", "Post Accident", "Post-Injury Incident", "Reasonable Cause/Suspicion"];
@@ -13,6 +15,7 @@ export default function AdminDashboard() {
     const [selectedStatus, setSelectedStatus] = useState(null);
     const [selectedType, setSelectedType] = useState(null);
     const [selectedRequest, setSelectedRequest] = useState(null);
+    const [selectedRequestPending, setSelectedRequestPending] = useState(null);
 
     useEffect(() => {
         getRequests()
@@ -24,7 +27,9 @@ export default function AdminDashboard() {
         .then((data) => data.json())
         .then((data) => {
             console.log(data)
-            setRequests(data)})
+            setRequests(data)
+            setOrigRequest(data)
+        })
     }
 
     const handleRequestStatusChange = (e) => {
@@ -37,7 +42,7 @@ export default function AdminDashboard() {
         }
     
         if (selectedType === null && status === "Status") {
-            setRequests(orig_requests);
+            getRequests();
         }
         else {
             let new_requests = []
@@ -80,8 +85,22 @@ export default function AdminDashboard() {
                     new_requests.push(orig_requests[i]);
                 }
             }
-            setRequests(new_requests)
+            setRequests(new_requests);
         }
+    }
+
+    const selectRequest = (request) => {
+        if (!_.isEqual(request, selectedRequest)) {
+            setSelectedRequest(request)
+            if (request.status === "Pending") {
+                setSelectedRequestPending(true)
+            } else {
+                setSelectedRequestPending(false)
+            }
+        } else {
+            setSelectedRequest(null)
+        }
+        
     }
 
     const handleRequest = (status) => {
@@ -99,7 +118,7 @@ export default function AdminDashboard() {
     }
 
     return (
-        <div>
+        <>
             <form className='filter-form d-flex'>
                 <select defaultValue={'Status'} className='form-select w-auto' onChange={handleRequestStatusChange.bind(this)}>
                     {request_status.map((e, i) =>(
@@ -115,28 +134,31 @@ export default function AdminDashboard() {
             <div className="dashboard">
                 <div className="forms">
                     {requests.map((request, i) => (
-                        <div className="form-content" onClick={()=>setSelectedRequest(request)} key={i}>
+                        <div key={i} className={`form-content ${_.isEqual(request, selectedRequest) ? "selected-req" : ""}`} onClick={()=>selectRequest(request)}>
                             <div>
-                            <p style={{ fontSize: '1.5em' }}>{request.type}</p> 
-                            <p>Submitted Date: {request.managementRepDate}</p>
+                                <p className='form-type'>{request.type}</p> 
+                                <p className='submit-info'>Submitter: {request.managementRepName}</p>
+                                <p className='submit-info'>Date: {request.managementRepDate}</p>
                             </div>
-                            <p className="date">Submitted By: {request.managementRepName}</p>
                         </div>
                     ))}
                 </div>
                 <div className="show-form">
                     {selectedRequest ? 
                         <div>
-                            {Object.entries(selectedRequest).map(([key, value], i) => (
-                                <p key={i}>{key}: {value}</p>
-                            ))}
-                            <button type="button" onClick={()=>handleRequest("Approved")}>Approve</button>
-                            <button type="button" onClick={()=>handleRequest("Denied")}>Deny</button>
+                            <div className="admin-form">
+                                <AdminForm request={selectedRequest} />
+                            </div>
+                            {selectedRequestPending ? <div className="button-group">
+                                <button type="button" className="approve" onClick={()=>handleRequest("Approved")}>Approve</button>
+                                <button type="button" className="deny" onClick={()=>handleRequest("Denied")}>Deny</button>
+                            </div> : <p style={{ fontSize: '1.3em', textDecoration: 'underline', color: '#002FA7', textAlign: 'center'}}>This request is <span style={{fontWeight: 'bold'}}>{selectedRequest.status}</span>.</p>}
+                            
                         </div> 
-                            : <p style={{ fontSize: '1.5em' }}>Select a form to read</p>}
+                            : <div className="no-form"><p>Select a form to read</p></div>}
                         
                 </div>
             </div>
-        </div>
+        </>
     )
 }

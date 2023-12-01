@@ -125,8 +125,8 @@ export default function PostAccident() {
       <textarea className="placeholder-gray-300" placeholder="Click to enter" name="notConducted"  value={formData.notConducted} onChange={handleInputChange}></textarea>
     </div>
 
-    <button type="submit">Submit</button>
   </div>
+    <button type="submit">Submit</button>
 </form>
 
 
