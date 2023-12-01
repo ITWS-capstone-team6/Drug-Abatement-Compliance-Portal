@@ -6,7 +6,7 @@ import * as AmazonCognitoIdentity from 'amazon-cognito-identity-js';
 import {useState} from 'react';
 import {useAtom} from 'jotai';
 import jwtDecode from 'jwt-decode'; 
-import {userIdStateAtom, userEmailStateAtom} from '../state/userInfo';
+import {userIdAtom, userEmailAtom, userAwsUserIdAtom} from '../state/userInfo';
 
 import { loggedInAtom, loginStateAtom } from '../state/login';
 const view = {
@@ -30,8 +30,9 @@ export default function SignUp() {
     const [, setLoginState] = useAtom(loginStateAtom);
 
     //global user variable
-    const [, setUserIdState]= useAtom(userIdStateAtom)
-    const [, setUserEmailState]= useAtom(userEmailStateAtom);
+    const [, setUserId]= useAtom(userIdAtom)
+    const [, setUserEmail]= useAtom(userEmailAtom);
+    const [, setUserAwsUserId]= useAtom(userAwsUserIdAtom);
     
     const navigate = useNavigate();
 
@@ -88,14 +89,17 @@ export default function SignUp() {
                         console.log('user credentials have been authenticated')
                         var idToken= result.getIdToken().getJwtToken();
                         userInfoAtom.id= idToken;
-                        setUserIdState(userInfoAtom.id);
+                        setUserId(userInfoAtom.id);
                         userInfoAtom.email= email;
-                        setUserEmailState(email);
+                        setUserEmail(email);
                         setLoggedIn(true);
                         navigate("/");
                         //adding user to db here
                         const decodedToken= jwtDecode(idToken);
                         const awsUserId= decodedToken.sub;
+                        setUserAwsUserId(awsUserId);
+                        console.log("setting aws user id")
+                        console.log(awsUserId)
                         var userFormData={
                             idNumber: awsUserId,
                             emailAddress: email

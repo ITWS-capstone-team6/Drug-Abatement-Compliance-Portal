@@ -6,7 +6,7 @@ import SignUp from "./signUp";
 
 import { useAtom } from 'jotai';
 import { loggedInAtom, loginStateAtom } from '../state/login';
-import {userIdStateAtom, userEmailStateAtom} from '../state/userInfo';
+import {userIdAtom, userEmailAtom, userAwsUserIdAtom} from '../state/userInfo';
 import { useEffect } from "react";
 
 const view = {
@@ -19,18 +19,32 @@ export default function Layout() {
   const [loggedIn] = useAtom(loggedInAtom);
   const [loginState] = useAtom(loginStateAtom);
 
-  const [userId] = useAtom(userIdStateAtom);
-  const [userEmail]= useAtom(userEmailStateAtom);
+  const [userId] = useAtom(userIdAtom);
+  const [awsUserId] = useAtom(userAwsUserIdAtom);
+  const [userEmail]= useAtom(userEmailAtom);
+
+
 
   useEffect(() => {
-    console.log("user is now logged in. this is where we would query for the user info from mongo now")
-    // fetch call to api with the query being the user id
-    //  api returns user info from database
     if (loggedIn) {
-      console.log("logged in user id: " + userId)
-      console.log("logged in user email: " + userEmail)
+      console.log("user is now logged in. this is where we would query for the user info from mongo now")
+      // fetch call to api with the query being the user id
+      //  api returns user info from database
+      // query api to see the user info
+      fetch("http://localhost:5000/isAdmin"+ new URLSearchParams({
+        userId: awsUserId
+      })).then((response) => {
+        return response.json();
+      }).then((data) => {
+        console.log(data)
+        if (data.isAdmin) {
+          console.log("user is admin")
+        } else {
+          console.log("user is not admin")
+        }
+      })
     }
-  }, [loggedIn]);
+  }, [loggedIn, awsUserId]);
 
   const navigate= useNavigate();
 

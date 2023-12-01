@@ -26,7 +26,7 @@ app.use(cors())
 
 // Get MongoDB driver connection
 const dbo = require("./conn.js");
-const client = new MongoClient(uri, {useUnifiedTopology: true,});
+const client = new MongoClient(uri);
 
 app.listen(port, () => {
   dbo.connectToDatabase(function (err) {
@@ -34,6 +34,30 @@ app.listen(port, () => {
  
   });
   console.log(`Server is running on port: ${port}`);
+});
+
+app.get("/isAdmin", async (req, res) => {
+  try {
+    console.log("GET: isAdmin")
+    console.log("Params: ")
+    console.log(req.params)
+    console.log("userId: " + req.query.userId)
+    const userId = req.query.userId;
+    console.log(userId)
+    await client.connect();
+    const collection = client.db("PracticeDB").collection("Users");
+
+    await collection.findOne({awsUserId: userId}, function(err, result) {
+      if (err) throw err;
+      console.log(result);
+      res.json(result["isAdmin"]);
+    });
+   } catch (error) {
+     console.log(error)
+     return res.json({
+       message: 'An error occured!',
+     });
+   }
 });
 
 app.post('/newUser', async(req, res) =>{

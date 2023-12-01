@@ -1,12 +1,12 @@
 import { useNavigate} from 'react-router-dom';
 import { useState } from "react";
-import {userIdStateAtom, userEmailStateAtom} from '../state/userInfo';
+import {userIdAtom, userEmailAtom} from '../state/userInfo';
 import jwtDecode from 'jwt-decode'; 
 import { useAtom } from 'jotai';
 
 export default function PostAccident() {
-    const [userId] = useAtom(userIdStateAtom);
-    const [userEmail]= useAtom(userEmailStateAtom);
+    const [userId] = useAtom(userIdAtom);
+    const [userEmail]= useAtom(userEmailAtom);
     const decodedToken= jwtDecode(userId);
     const awsUserId= decodedToken.sub; //userId
     console.log("aws userid: " + awsUserId);

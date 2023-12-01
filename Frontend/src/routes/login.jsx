@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import UserPool from "../UserPool";
 import * as AmazonCognitoIdentity from 'amazon-cognito-identity-js';
 import { useAtom } from 'jotai';
-import {userIdStateAtom, userEmailStateAtom} from '../state/userInfo';
+import {userIdAtom, userEmailAtom} from '../state/userInfo';
 
 import { loggedInAtom, loginStateAtom } from '../state/login';
 
@@ -29,10 +29,9 @@ export default function Login() {
     const [, setLoginState] = useAtom(loginStateAtom);
 
     //global user variable
-    const [userId]= useAtom(userIdStateAtom);
-    const [, setUserIdState]= useAtom(userIdStateAtom)
-    // const [globalEmail]= useAtom(userEmailStateAtom);
-    const [, setUserEmailState]= useAtom(userEmailStateAtom);
+    const [userId]= useAtom(userIdAtom);
+    const [, setUserId]= useAtom(userIdAtom)
+    const [, setUserEmail]= useAtom(userEmailAtom);
 
     const navigate= useNavigate();
     const toggleLoginState = () => {
@@ -65,9 +64,9 @@ export default function Login() {
                 var idToken= result.getIdToken().getJwtToken();
                 //sets userID to global variable (but only for session) - email as well
                 userInfoAtom.id= idToken;
-                setUserIdState(userInfoAtom.id);
+                setUserId(userInfoAtom.id);
                 userInfoAtom.email= email;
-                setUserEmailState(email);
+                setUserEmail(email);
                 setLoggedIn(true);
                 navigate("/");
             },
