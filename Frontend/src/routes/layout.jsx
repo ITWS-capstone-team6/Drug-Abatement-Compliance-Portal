@@ -13,10 +13,12 @@ const view = {
   LOGIN: true,
   SIGNUP: false,
 };
+
 export default function Layout() {
 
 
   const [loggedIn] = useAtom(loggedInAtom);
+  console.log("logged in: " + loggedIn)
   const [loginState] = useAtom(loginStateAtom);
 
   const [userId] = useAtom(userIdAtom);
@@ -55,6 +57,7 @@ export default function Layout() {
 
   console.log("should show logged in userID: " + userId)
   console.log("email of user: " + userEmail)
+  console.log("logged in: " + loggedIn)
   return (
     <>
       <div className="main-content">

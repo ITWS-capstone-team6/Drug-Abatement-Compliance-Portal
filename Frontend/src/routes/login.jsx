@@ -44,7 +44,11 @@ export default function Login() {
 
     function handleLogin(e) {
         e.preventDefault();
-        console.log(loggedIn);
+
+        console.log("loggedIn: " +loggedIn);
+        console.log("Email:", email);
+        console.log("Password:", password);
+
         
         var authenticationData={
             Username: email,
