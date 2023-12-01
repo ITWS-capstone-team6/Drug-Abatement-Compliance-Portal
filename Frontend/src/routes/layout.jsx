@@ -6,8 +6,10 @@ import SignUp from "./signUp";
 
 import { useAtom } from 'jotai';
 import { loggedInAtom, loginStateAtom } from '../state/login';
-import {userIdAtom, userEmailAtom, userAwsUserIdAtom} from '../state/userInfo';
+import {userIdAtom, userEmailAtom, userAwsUserIdAtom, userIsAdminAtom} from '../state/userInfo';
 import { useEffect } from "react";
+import AdminDashboard from "./adminDashboard";
+
 
 const view = {
   LOGIN: true,
@@ -24,6 +26,7 @@ export default function Layout() {
   const [userId] = useAtom(userIdAtom);
   const [awsUserId] = useAtom(userAwsUserIdAtom);
   const [userEmail]= useAtom(userEmailAtom);
+  const [userIsAdmin, setUserIsAdmin] = useAtom(userIsAdminAtom);
 
 
 
@@ -33,13 +36,14 @@ export default function Layout() {
       // fetch call to api with the query being the user id
       //  api returns user info from database
       // query api to see the user info
-      fetch("http://localhost:5000/isAdmin"+ new URLSearchParams({
-        userId: awsUserId
-      })).then((response) => {
+      fetch(`http://localhost:5000/isAdmin?`+ new URLSearchParams({userId: awsUserId})).then((response) => {
+        console.log("got response from fetch call in layout.jsx")
         return response.json();
       }).then((data) => {
+
         console.log(data)
-        if (data.isAdmin) {
+        setUserIsAdmin(data);
+        if (data) {
           console.log("user is admin")
         } else {
           console.log("user is not admin")
@@ -55,19 +59,17 @@ export default function Layout() {
     navigate("/admin-dashboard")
   }
 
-  console.log("should show logged in userID: " + userId)
-  console.log("email of user: " + userEmail)
-  console.log("logged in: " + loggedIn)
   return (
     <>
       <div className="main-content">
         {
-          loggedIn && (loginState === view.LOGIN ? <Login /> : <SignUp/>)
+          !loggedIn && (loginState === view.LOGIN ? <Login /> : <SignUp/>)
         }
-        {(!loggedIn) &&
+        {(loggedIn) &&
           <>
           <Navbar />
-          <Outlet />
+          {userIsAdmin ? <AdminDashboard /> : <Outlet />}
+          {/* <Outlet /> */}
           <button onClick={test}>test</button>
           </>
         }

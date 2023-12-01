@@ -4,8 +4,10 @@ import { useNavigate} from 'react-router';
 import { useEffect, useState } from 'react';
 import UserPool from "../UserPool";
 import * as AmazonCognitoIdentity from 'amazon-cognito-identity-js';
+import jwtDecode from 'jwt-decode'; 
+
 import { useAtom } from 'jotai';
-import {userIdAtom, userEmailAtom} from '../state/userInfo';
+import {userIdAtom, userEmailAtom, userAwsUserIdAtom} from '../state/userInfo';
 
 import { loggedInAtom, loginStateAtom } from '../state/login';
 
@@ -32,6 +34,7 @@ export default function Login() {
     const [userId]= useAtom(userIdAtom);
     const [, setUserId]= useAtom(userIdAtom)
     const [, setUserEmail]= useAtom(userEmailAtom);
+    const [, setUserAwsUserId]= useAtom(userAwsUserIdAtom);
 
     const navigate= useNavigate();
     const toggleLoginState = () => {
@@ -71,6 +74,10 @@ export default function Login() {
                 setUserId(userInfoAtom.id);
                 userInfoAtom.email= email;
                 setUserEmail(email);
+                const decodedToken= jwtDecode(idToken);
+                const awsUserId= decodedToken.sub;
+                setUserAwsUserId(awsUserId);
+
                 setLoggedIn(true);
                 navigate("/");
             },

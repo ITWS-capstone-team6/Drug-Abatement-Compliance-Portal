@@ -16,7 +16,7 @@ app.use(cors())
    .use(express.json())
    .use(bodyParser.urlencoded({extended:true}))
    .use(function (req, res, next) {
-     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000', 'http://127.0.0.1:5173/');
+     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
      res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
      res.setHeader('Access-Control-Allow-Credentials', true);
@@ -39,19 +39,21 @@ app.listen(port, () => {
 app.get("/isAdmin", async (req, res) => {
   try {
     console.log("GET: isAdmin")
-    console.log("Params: ")
-    console.log(req.params)
     console.log("userId: " + req.query.userId)
     const userId = req.query.userId;
-    console.log(userId)
     await client.connect();
     const collection = client.db("PracticeDB").collection("Users");
 
-    await collection.findOne({awsUserId: userId}, function(err, result) {
-      if (err) throw err;
-      console.log(result);
-      res.json(result["isAdmin"]);
-    });
+    console.log("looking up user")
+    const result = await collection.findOne({awsUserId: userId});
+    console.log(result);
+    if (result == null) {
+      console.log("user not found")
+      return res.json({
+        message: 'User not found!',
+      });
+    }
+    res.json(result["isAdmin"]);
    } catch (error) {
      console.log(error)
      return res.json({
@@ -69,6 +71,7 @@ app.post('/newUser', async(req, res) =>{
    let newForm = {
     awsUserId: req.body.idNumber,
     email: req.body.emailAddress,
+    isAdmin: false, //! change this later
    }
    console.log("newForm: ")
    console.log(newForm)

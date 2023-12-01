@@ -98,8 +98,6 @@ export default function SignUp() {
                         const decodedToken= jwtDecode(idToken);
                         const awsUserId= decodedToken.sub;
                         setUserAwsUserId(awsUserId);
-                        console.log("setting aws user id")
-                        console.log(awsUserId)
                         var userFormData={
                             idNumber: awsUserId,
                             emailAddress: email
