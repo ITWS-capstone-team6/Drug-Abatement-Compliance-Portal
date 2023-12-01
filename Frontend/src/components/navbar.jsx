@@ -12,11 +12,13 @@ export default function Navbar() {
   const [userInfo] = useAtom(userInfoAtom);
   const [userEmail]= useAtom(userEmailStateAtom);
   const [userId] = useAtom(userIdStateAtom);
+  if(userId != null && userId != "undefined" && userId != 123){
+    const decodedToken= jwtDecode(userId);
+    const awsUserId= decodedToken.sub; //userId
+    console.log("aws user id: " + awsUserId);
+    console.log("username: " + userEmail);
+  }
 
-  const decodedToken= jwtDecode(userId);
-  const awsUserId= decodedToken.sub; //userId
-  console.log("aws user id: " + awsUserId);
-  console.log("username: " + userEmail);
 
   return (
     <ul id="navbar">

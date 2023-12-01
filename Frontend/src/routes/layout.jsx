@@ -13,10 +13,12 @@ const view = {
   LOGIN: true,
   SIGNUP: false,
 };
+
 export default function Layout() {
 
 
   const [loggedIn] = useAtom(loggedInAtom);
+  console.log("logged in: " + loggedIn)
   const [loginState] = useAtom(loginStateAtom);
 
   const [userId] = useAtom(userIdStateAtom);
@@ -27,9 +29,10 @@ export default function Layout() {
     // fetch call to api with the query being the user id
     //  api returns user info from database
   }, [loggedIn]);
-  
+
   console.log("should show logged in userID: " + userId)
   console.log("email of user: " + userEmail)
+  console.log("logged in: " + loggedIn)
   return (
     <>
       <div className="main-content">
