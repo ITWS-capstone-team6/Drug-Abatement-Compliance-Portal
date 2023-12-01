@@ -14,11 +14,6 @@ const view = {
     SIGNUP: false,
 };
 
-const userInfoAtom = {
-    id: 123,
-    name: 'First Last',
-    email: 'example@united.com',
-}
 export default function SignUp() {
     // local variables
     const [email, setEmail]= useState("");
@@ -88,9 +83,9 @@ export default function SignUp() {
                     onSuccess: function (result){
                         console.log('user credentials have been authenticated')
                         var idToken= result.getIdToken().getJwtToken();
-                        userInfoAtom.id= idToken;
-                        setUserId(userInfoAtom.id);
-                        userInfoAtom.email= email;
+                        // userInfoAtom.id= idToken;
+                        setUserId(idToken);
+                        // userInfoAtom.email= email;
                         setUserEmail(email);
                         setLoggedIn(true);
                         navigate("/");

@@ -19,7 +19,7 @@ const view = {
 export default function Layout() {
 
 
-  const [loggedIn] = useAtom(loggedInAtom);
+  const [loggedIn, setLoggedIn] = useAtom(loggedInAtom);
   console.log("logged in: " + loggedIn)
   const [loginState] = useAtom(loginStateAtom);
 
@@ -58,6 +58,12 @@ export default function Layout() {
     console.log("test")
     navigate("/admin-dashboard")
   }
+  const logOut = () => {
+    console.log("log out")
+    setLoggedIn(false);
+    setUserIsAdmin(false);
+    navigate("/")
+  }
 
   return (
     <>
@@ -71,6 +77,7 @@ export default function Layout() {
           {userIsAdmin ? <AdminDashboard /> : <Outlet />}
           {/* <Outlet /> */}
           <button onClick={test}>test</button>
+          <button onClick={logOut}>log out</button>
           </>
         }
       </div>

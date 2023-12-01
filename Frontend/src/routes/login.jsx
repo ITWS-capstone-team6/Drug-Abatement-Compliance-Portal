@@ -7,20 +7,13 @@ import * as AmazonCognitoIdentity from 'amazon-cognito-identity-js';
 import jwtDecode from 'jwt-decode'; 
 
 import { useAtom } from 'jotai';
-import {userIdAtom, userEmailAtom, userAwsUserIdAtom} from '../state/userInfo';
+import { userIdAtom, userEmailAtom, userAwsUserIdAtom} from '../state/userInfo';
 
 import { loggedInAtom, loginStateAtom } from '../state/login';
-
 const view = {
     LOGIN: true,
     SIGNUP: false,
 };
-
-const userInfoAtom = {
-    id: 123,
-    name: 'First Last',
-    email: 'example@united.com',
-}
 
 export default function Login() {
     
@@ -70,9 +63,9 @@ export default function Login() {
                 console.log('user credentials have been authenticated')
                 var idToken= result.getIdToken().getJwtToken();
                 //sets userID to global variable (but only for session) - email as well
-                userInfoAtom.id= idToken;
-                setUserId(userInfoAtom.id);
-                userInfoAtom.email= email;
+                // userInfoAtom.id= idToken;
+                setUserId(idToken);
+                // userInfoAtom.email= email;
                 setUserEmail(email);
                 const decodedToken= jwtDecode(idToken);
                 const awsUserId= decodedToken.sub;

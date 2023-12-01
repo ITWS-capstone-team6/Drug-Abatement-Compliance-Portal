@@ -49,9 +49,7 @@ app.get("/isAdmin", async (req, res) => {
     console.log(result);
     if (result == null) {
       console.log("user not found")
-      return res.json({
-        message: 'User not found!',
-      });
+      return res.send(false);
     }
     res.json(result["isAdmin"]);
    } catch (error) {

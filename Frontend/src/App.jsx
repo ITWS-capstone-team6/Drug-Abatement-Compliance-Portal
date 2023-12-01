@@ -10,6 +10,13 @@ import Login from "./routes/login";
 import SignUp from "./routes/signUp";
 import AdminDashboard from "./routes/adminDashboard";
 import "./App.css"
+
+import { useAtom } from 'jotai';
+import { loggedInAtom, loginStateAtom } from './state/login';
+import {userIdAtom, userEmailAtom, userAwsUserIdAtom, userIsAdminAtom} from './state/userInfo';
+
+
+
 export default function App() {
 
   return (
