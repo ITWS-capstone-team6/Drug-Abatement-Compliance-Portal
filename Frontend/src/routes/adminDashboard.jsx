@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import React  from 'react';
 import "./adminDashboard.css"
 
 
@@ -116,7 +115,7 @@ export default function AdminDashboard() {
             <div className="dashboard">
                 <div className="forms">
                     {requests.map((request, i) => (
-                        <div className="form-content" onClick={()=>setSelectedRequest(request)}>
+                        <div className="form-content" onClick={()=>setSelectedRequest(request)} key={i}>
                             <div>
                             <p style={{ fontSize: '1.5em' }}>{request.type}</p> 
                             <p>Submitted Date: {request.managementRepDate}</p>
@@ -128,8 +127,8 @@ export default function AdminDashboard() {
                 <div className="show-form">
                     {selectedRequest ? 
                         <div>
-                            {Object.entries(selectedRequest).map(([key, value]) => (
-                                <p>{key}: {value}</p>
+                            {Object.entries(selectedRequest).map(([key, value], i) => (
+                                <p key={i}>{key}: {value}</p>
                             ))}
                             <button type="button" onClick={()=>handleRequest("Approved")}>Approve</button>
                             <button type="button" onClick={()=>handleRequest("Denied")}>Deny</button>

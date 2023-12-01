@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { useNavigate, Outlet } from "react-router-dom";
 import Navbar from "../components/navbar";
 import './layout.css'
 import Login from "./login";
@@ -26,8 +26,19 @@ export default function Layout() {
     console.log("user is now logged in. this is where we would query for the user info from mongo now")
     // fetch call to api with the query being the user id
     //  api returns user info from database
+    if (loggedIn) {
+      console.log("logged in user id: " + userId)
+      console.log("logged in user email: " + userEmail)
+    }
   }, [loggedIn]);
-  
+
+  const navigate= useNavigate();
+
+  const test = () => {
+    console.log("test")
+    navigate("/admin-dashboard")
+  }
+
   console.log("should show logged in userID: " + userId)
   console.log("email of user: " + userEmail)
   return (
@@ -40,6 +51,7 @@ export default function Layout() {
           <>
           <Navbar />
           <Outlet />
+          <button onClick={test}>test</button>
           </>
         }
       </div>

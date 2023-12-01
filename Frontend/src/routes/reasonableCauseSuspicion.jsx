@@ -1,5 +1,5 @@
-import { useLocation, useNavigate } from 'react-router-dom';
-import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
 import {userIdStateAtom, userEmailStateAtom} from '../state/userInfo';
 import jwtDecode from 'jwt-decode'; // Update the import statement
 import { useAtom } from 'jotai';
@@ -86,39 +86,38 @@ export default function PostInjury() {
         }
       }));
     };
-  const location = useLocation();
 
   return <>
-<form class= "postAccidentForm" className="container mx-auto" onSubmit={handleSubmit}>
+<form className= "postAccidentForm container mx-auto" onSubmit={handleSubmit}>
   <h2 className="text-2xl font-semibold mb-6">Supervisor Report</h2>
 
-  <div class="employeeInfo">
+  <div className="employeeInfo">
   <h3 className="text-xl font-semibold mb-6">Section 1 - General</h3>
-    <div class="flex mb-4">
-      <div class="first-input-container">
-        <label class="block mb-2 font-semibold">Employee Name</label>
+    <div className="flex mb-4">
+      <div className="first-input-container">
+        <label className="block mb-2 font-semibold">Employee Name</label>
         <textarea type="text" placeholder="Click to enter" name="employeeName"  value={formData.employeeName} onChange={handleInputChange}/>
       </div>
-      <div class="second-input-container">
-        <label class="block mb-2 font-semibold">Employee ID Number</label>
+      <div className="second-input-container">
+        <label className="block mb-2 font-semibold">Employee ID Number</label>
         <textarea type="text" placeholder="Click to enter" name="employeeId" value={formData.employeeId} onChange={handleInputChange}/>
       </div>
     </div>
 
-    <div class="flex mb-4">
-      <div class="first-input-container">
-        <label class="block mb-2 font-semibold">Address Code</label>
+    <div className="flex mb-4">
+      <div className="first-input-container">
+        <label className="block mb-2 font-semibold">Address Code</label>
         <textarea type="text" placeholder="Click to enter" name="addressCode"  value={formData.addressCode} onChange={handleInputChange}/>
       </div>
     </div>
 
-    <div class="flex mb-4">
-      <div class="first-input-container">
-        <label class="block mb-2 font-semibold">Date of Incident</label>
+    <div className="flex mb-4">
+      <div className="first-input-container">
+        <label className="block mb-2 font-semibold">Date of Incident</label>
         <textarea type="text" placeholder="Click to enter" name="dateOfAccident" value={formData.dateOfAccident} onChange={handleInputChange} />
       </div>
-      <div class="second-input-container">
-        <label class="block mb-2 font-semibold">Time of Incident</label>
+      <div className="second-input-container">
+        <label className="block mb-2 font-semibold">Time of Incident</label>
         <textarea type="text" placeholder="Click to enter"  name="timeOfAccident" value={formData.timeOfAccident} onChange={handleInputChange}/>
       </div>
     </div>

@@ -1,15 +1,14 @@
 import { Link } from "react-router-dom";
 
 import "./navbar.css"
-import { useEffect, useState } from "react";
 import logo from '../assets/United-Airlines-Logo.png';
 import { useAtom } from 'jotai';
-import { userInfoAtom } from "../state/userInfo";
+// import { userInfoAtom } from "../state/userInfo";
 import {userIdStateAtom, userEmailStateAtom} from '../state/userInfo';
 import jwtDecode from 'jwt-decode'; // Update the import statement
 
 export default function Navbar() {
-  const [userInfo] = useAtom(userInfoAtom);
+  // const [userInfo] = useAtom(userInfoAtom);
   const [userEmail]= useAtom(userEmailStateAtom);
   const [userId] = useAtom(userIdStateAtom);
 

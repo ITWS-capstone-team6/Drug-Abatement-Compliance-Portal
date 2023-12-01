@@ -4,9 +4,8 @@ import { useNavigate} from 'react-router';
 import { useEffect, useState } from 'react';
 import UserPool from "../UserPool";
 import * as AmazonCognitoIdentity from 'amazon-cognito-identity-js';
-import {CognitoUserPool} from "amazon-cognito-identity-js";
 import { useAtom } from 'jotai';
-import {userIdStateAtom, userNameStateAtom, userEmailStateAtom} from '../state/userInfo';
+import {userIdStateAtom, userEmailStateAtom} from '../state/userInfo';
 
 import { loggedInAtom, loginStateAtom } from '../state/login';
 
@@ -32,7 +31,7 @@ export default function Login() {
     //global user variable
     const [userId]= useAtom(userIdStateAtom);
     const [, setUserIdState]= useAtom(userIdStateAtom)
-    const [globalEmail]= useAtom(userEmailStateAtom);
+    // const [globalEmail]= useAtom(userEmailStateAtom);
     const [, setUserEmailState]= useAtom(userEmailStateAtom);
 
     const navigate= useNavigate();
@@ -43,10 +42,6 @@ export default function Login() {
     useEffect(() => {
         console.log(userId);
     }, [userId]);
-    const poolData={
-        UserPoolId: "us-east-2_nfCwrEzsY",
-        ClientId:"3jdtpq0oaklkgg2k2kk1ajkka6"
-    }
 
     function handleLogin(e) {
         e.preventDefault();

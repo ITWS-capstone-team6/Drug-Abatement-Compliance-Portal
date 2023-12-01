@@ -1,4 +1,3 @@
-import { Link, useLocation } from 'react-router-dom';
 import "./root.css";
 
 import FormCard from "../components/formCard";
@@ -26,7 +25,7 @@ export default function Root() {
           
           <div className="formContent">
             {formInfo.map((info, index) => {
-              return <div>
+              return <div key={index}>
                   <FormCard name={info.name} desc={info.desc} index={index} link={info.link} />
                 </div>
             })}

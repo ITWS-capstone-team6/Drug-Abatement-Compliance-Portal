@@ -6,7 +6,7 @@ import * as AmazonCognitoIdentity from 'amazon-cognito-identity-js';
 import {useState} from 'react';
 import {useAtom} from 'jotai';
 import jwtDecode from 'jwt-decode'; 
-import {userIdStateAtom, userNameStateAtom, userEmailStateAtom} from '../state/userInfo';
+import {userIdStateAtom, userEmailStateAtom} from '../state/userInfo';
 
 import { loggedInAtom, loginStateAtom } from '../state/login';
 const view = {
@@ -30,9 +30,7 @@ export default function SignUp() {
     const [, setLoginState] = useAtom(loginStateAtom);
 
     //global user variable
-    const [userId]= useAtom(userIdStateAtom);
     const [, setUserIdState]= useAtom(userIdStateAtom)
-    const [globalEmail]= useAtom(userEmailStateAtom);
     const [, setUserEmailState]= useAtom(userEmailStateAtom);
     
     const navigate = useNavigate();
@@ -62,11 +60,6 @@ export default function SignUp() {
         navigate('/login');
     }
 
-
-    const poolData={
-        UserPoolId: "us-east-2_nfCwrEzsY",
-        ClientId:"3jdtpq0oaklkgg2k2kk1ajkka6"
-    }
 
     function openModal(){
         document.getElementById('confirmationCodeModal').style.display= 'block';
@@ -140,7 +133,7 @@ export default function SignUp() {
                 handleConfirmationCodeSubmit(cognitoUser);
             }
         })
-    };
+    }
 
     return <>
     <div className="content">
