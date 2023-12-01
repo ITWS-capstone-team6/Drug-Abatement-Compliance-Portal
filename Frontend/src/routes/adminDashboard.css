@@ -1,7 +1,12 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    height: 90vh;
+}
+
 .dashboard {
     display: flex;
     flex-direction: row;
-    height: 78vh;
 }
 
 .filter-form {

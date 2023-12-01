@@ -119,44 +119,46 @@ export default function AdminDashboard() {
 
     return (
         <>
-            <form className='filter-form d-flex'>
-                <select defaultValue={'Status'} className='form-select w-auto' onChange={handleRequestStatusChange.bind(this)}>
-                    {request_status.map((e, i) =>(
-                    <option key={i} value={e}>{e}</option>
-                    ))}
-                </select>
-                <select defaultValue={'Type'} className='form-select w-auto' onChange={handleFormTypeChange.bind(this)}>
-                    {form_type.map((e, i) =>(
-                    <option key={i} value={e}>{e}</option>
-                    ))}
-                </select>
-            </form>
-            <div className="dashboard">
-                <div className="forms">
-                    {requests.map((request, i) => (
-                        <div key={i} className={`form-content ${_.isEqual(request, selectedRequest) ? "selected-req" : ""}`} onClick={()=>selectRequest(request)}>
+            <div className="content">
+                <form className='filter-form d-flex'>
+                    <select defaultValue={'Status'} className='form-select w-auto' onChange={handleRequestStatusChange.bind(this)}>
+                        {request_status.map((e, i) =>(
+                        <option key={i} value={e}>{e}</option>
+                        ))}
+                    </select>
+                    <select defaultValue={'Type'} className='form-select w-auto' onChange={handleFormTypeChange.bind(this)}>
+                        {form_type.map((e, i) =>(
+                        <option key={i} value={e}>{e}</option>
+                        ))}
+                    </select>
+                </form>
+                <div className="dashboard">
+                    <div className="forms">
+                        {requests.map((request, i) => (
+                            <div key={i} className={`form-content ${_.isEqual(request, selectedRequest) ? "selected-req" : ""}`} onClick={()=>selectRequest(request)}>
+                                <div>
+                                    <p className='form-type'>{request.type}</p>
+                                    <p className='submit-info'>Submitter: {request.managementRepName}</p>
+                                    <p className='submit-info'>Date: {request.managementRepDate}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="show-form">
+                        {selectedRequest ?
                             <div>
-                                <p className='form-type'>{request.type}</p> 
-                                <p className='submit-info'>Submitter: {request.managementRepName}</p>
-                                <p className='submit-info'>Date: {request.managementRepDate}</p>
+                                <div className="admin-form">
+                                    <AdminForm request={selectedRequest} />
+                                </div>
+                                {selectedRequestPending ? <div className="button-group">
+                                    <button type="button" className="approve" onClick={()=>handleRequest("Approved")}>Approve</button>
+                                    <button type="button" className="deny" onClick={()=>handleRequest("Denied")}>Deny</button>
+                                </div> : <p style={{ fontSize: '1.3em', textDecoration: 'underline', color: '#002FA7', textAlign: 'center'}}>This request is <span style={{fontWeight: 'bold'}}>{selectedRequest.status}</span>.</p>}
+                
                             </div>
-                        </div>
-                    ))}
-                </div>
-                <div className="show-form">
-                    {selectedRequest ? 
-                        <div>
-                            <div className="admin-form">
-                                <AdminForm request={selectedRequest} />
-                            </div>
-                            {selectedRequestPending ? <div className="button-group">
-                                <button type="button" className="approve" onClick={()=>handleRequest("Approved")}>Approve</button>
-                                <button type="button" className="deny" onClick={()=>handleRequest("Denied")}>Deny</button>
-                            </div> : <p style={{ fontSize: '1.3em', textDecoration: 'underline', color: '#002FA7', textAlign: 'center'}}>This request is <span style={{fontWeight: 'bold'}}>{selectedRequest.status}</span>.</p>}
-                            
-                        </div> 
-                            : <div className="no-form"><p>Select a form to read</p></div>}
-                        
+                                : <div className="no-form"><p>Select a form to read</p></div>}
+                
+                    </div>
                 </div>
             </div>
         </>
