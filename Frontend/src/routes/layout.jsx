@@ -37,9 +37,9 @@ export default function Layout() {
     <>
       <div className="main-content">
         {
-          loggedIn && (loginState === view.LOGIN ? <Login /> : <SignUp/>)
+          !loggedIn && (loginState === view.LOGIN ? <Login /> : <SignUp/>)
         }
-        {(!loggedIn) &&
+        {(loggedIn) &&
           <>
           <Navbar />
           <Outlet />

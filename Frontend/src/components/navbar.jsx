@@ -28,7 +28,8 @@ export default function Navbar() {
         </Link>
       </li>
       <li>
-        <h4>Hello, {userEmail}</h4>
+        {/* trying to access somethin that doesnt exist */}
+        <h4>Hello {userEmail}</h4>
       </li>
     </ul>
   );
