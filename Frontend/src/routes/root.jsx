@@ -1,14 +1,21 @@
 import { loggedInAtom, loginStateAtom } from "../state/login";
 import { userIsAdminAtom } from "../state/userInfo";
+import { useState } from "react";
 
 import { useAtom } from "jotai";
 import AdminDashboard from "./adminDashboard";
 import Login from "./login";
 import SignUp from "./signUp";
 
+const view = {
+  LOGIN: true,
+  SIGNUP: false,
+};
+
 import "./root.css";
 
 import FormCard from "../components/formCard";
+import { useEffect } from "react";
 
 const formInfo = [
   {name: "Post-Accident", desc: "Description", link: "postAccident"},
@@ -24,31 +31,25 @@ export default function Root() {
   const [userIsAdmin] = useAtom(userIsAdminAtom);
   const [loggedInState] = useAtom(loginStateAtom);
 
+  const [currentComponent, setCurrentComponent] = useState(<Login/>);
+
+  useEffect(() => {
+    if (!loggedIn) {
+      if (loggedInState == view.LOGIN) {
+        return setCurrentComponent( <Login />)
+      } else {
+        return setCurrentComponent( <SignUp />)
+      }
+    } 
+    if (userIsAdmin) {
+      return setCurrentComponent( <AdminDashboard />)
+    }
+    return setCurrentComponent( <UserComponent />)
+  }, [loggedIn, userIsAdmin, loggedInState])
+
   return (
     <>
-      {loggedIn ? (
-        userIsAdmin ? (
-          <>
-          <div> admin dashboard</div>
-          <AdminDashboard />
-          </>
-        ) : (
-          <>
-          <div> user dashboard</div>
-          <UserComponent />
-          </>
-        )
-      ) : loggedInState ? (
-        <>
-        <div>login</div>
-        <Login />
-        </>
-      ) : (
-        <>
-        <div>signup</div>
-        <SignUp />
-        </>
-      )}
+      {currentComponent}
     </>
   );
 
