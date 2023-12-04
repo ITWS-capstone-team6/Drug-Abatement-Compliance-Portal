@@ -23,9 +23,9 @@ export default function Layout() {
     if (!loggedIn && location !== "/login" && location !== "/signUp") {
 
       console.log("user is not logged in")
-      navigate("/login")
+      // navigate("/login")
     }
-  }, [loggedIn, userIsAdmin, navigate, location]);
+  }, [loggedIn, userIsAdmin]);
 
   useEffect(() => {
     if (loggedIn) {
@@ -39,7 +39,7 @@ export default function Layout() {
         setUserIsAdmin(data);
       })
     }
-  }, [loggedIn, awsUserId, setUserIsAdmin]);
+  }, [loggedIn, awsUserId]);
 
 
   const test = () => {

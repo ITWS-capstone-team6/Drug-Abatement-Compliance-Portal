@@ -32,12 +32,7 @@ export default function Login() {
     const navigate= useNavigate();
     const toggleLoginState = () => {
         setLoginState(view.SIGNUP); 
-        navigate('/signUp');
     };
-    useEffect(() => {
-        console.log(userId);
-    }, [userId]);
-
     function handleLogin(e) {
         e.preventDefault();
 

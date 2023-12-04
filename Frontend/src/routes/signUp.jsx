@@ -53,7 +53,6 @@ export default function SignUp() {
 
     function toggleLoginState() {
         setLoginState(view.LOGIN);
-        navigate('/login');
     }
 
 

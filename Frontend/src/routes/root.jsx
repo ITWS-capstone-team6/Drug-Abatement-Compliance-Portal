@@ -1,3 +1,11 @@
+import { loggedInAtom, loginStateAtom } from "../state/login";
+import { userIsAdminAtom } from "../state/userInfo";
+
+import { useAtom } from "jotai";
+import AdminDashboard from "./adminDashboard";
+import Login from "./login";
+import SignUp from "./signUp";
+
 import "./root.css";
 
 import FormCard from "../components/formCard";
@@ -12,7 +20,42 @@ const formInfo = [
 
 
 export default function Root() {
+  const [loggedIn] = useAtom(loggedInAtom);
+  const [userIsAdmin] = useAtom(userIsAdminAtom);
+  const [loggedInState] = useAtom(loginStateAtom);
 
+  return (
+    <>
+      {loggedIn ? (
+        userIsAdmin ? (
+          <>
+          <div> admin dashboard</div>
+          <AdminDashboard />
+          </>
+        ) : (
+          <>
+          <div> user dashboard</div>
+          <UserComponent />
+          </>
+        )
+      ) : loggedInState ? (
+        <>
+        <div>login</div>
+        <Login />
+        </>
+      ) : (
+        <>
+        <div>signup</div>
+        <SignUp />
+        </>
+      )}
+    </>
+  );
+
+  
+}
+
+function UserComponent() {
   return (
     <>
         <div className="formContainer">
@@ -35,3 +78,4 @@ export default function Root() {
     </>
   );
 }
+

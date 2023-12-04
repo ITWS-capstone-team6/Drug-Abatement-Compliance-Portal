@@ -16,10 +16,12 @@ import { loggedInAtom } from './state/login';
 import { userIsAdminAtom } from './state/userInfo';
 
 const adminRoutes = [
+  {path: "/", element: <Root />},
   {path: "/admin-dashboard", element: <AdminDashboard />}
 ];
 
 const loginRoutes = [
+  {path: "/", element: <Root />},
   {path: "/login", element: <Login />},
   {path: "/signUp", element: <SignUp/>}
 ];

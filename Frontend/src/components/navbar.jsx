@@ -3,11 +3,23 @@ import { Link } from "react-router-dom";
 import "./navbar.css"
 import logo from '../assets/United-Airlines-Logo.png';
 import { useAtom } from 'jotai';
-import { userEmailAtom} from '../state/userInfo';
+import { userEmailAtom, userIsAdminAtom} from '../state/userInfo';
+import { loggedInAtom } from '../state/login';
+import { useNavigate } from "react-router-dom";
+
 
 export default function Navbar() {
   const [userEmail]= useAtom(userEmailAtom);
+  const [userIsAdmin, setUserIsAdmin]= useAtom(userIsAdminAtom);
+  const [loggedIn, setLoggedIn] = useAtom(loggedInAtom);
+  const navigate = useNavigate();
 
+  const logout = () => {
+    console.log("log out")
+    setLoggedIn(false);
+    setUserIsAdmin(false);
+    navigate("/")
+  }
 
   return (
     <ul id="navbar">
@@ -17,7 +29,10 @@ export default function Navbar() {
         </Link>
       </li>
       <li>
-        <h4>Hello, {userEmail}</h4>
+        <div>
+          <h4>Hello, {userEmail}</h4>
+          <button className="mx-auto w-full" onClick={logout}>Log Out</button>
+        </div>
       </li>
     </ul>
   );
