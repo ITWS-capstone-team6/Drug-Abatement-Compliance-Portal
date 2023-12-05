@@ -8,7 +8,7 @@ import jwtDecode from 'jwt-decode';
 
 import { useAtom } from 'jotai';
 import { userIdAtom, userEmailAtom, userAwsUserIdAtom} from '../state/userInfo';
-
+import { userIsAdminAtom} from '../state/userInfo';
 import { loggedInAtom, loginStateAtom } from '../state/login';
 const view = {
     LOGIN: true,
@@ -28,6 +28,8 @@ export default function Login() {
     const [, setUserId]= useAtom(userIdAtom)
     const [, setUserEmail]= useAtom(userEmailAtom);
     const [, setUserAwsUserId]= useAtom(userAwsUserIdAtom);
+    const [userIsAdmin, setUserIsAdmin]= useAtom(userIsAdminAtom);
+
 
     const navigate= useNavigate();
     const toggleLoginState = () => {
@@ -35,7 +37,7 @@ export default function Login() {
     };
     function handleLogin(e) {
         e.preventDefault();
-
+        
         console.log("loggedIn: " +loggedIn);
         console.log("Email:", email);
         console.log("Password:", password);
@@ -63,11 +65,21 @@ export default function Login() {
                 // userInfoAtom.email= email;
                 setUserEmail(email);
                 const decodedToken= jwtDecode(idToken);
+                console.log(decodedToken["cognito:groups"][0]);
                 const awsUserId= decodedToken.sub;
                 setUserAwsUserId(awsUserId);
 
-                setLoggedIn(true);
-                navigate("/");
+                // setLoggedIn(true);
+                if(decodedToken["cognito:groups"] != "undefined" && decodedToken["cognito:groups"] != null){
+                    if(decodedToken["cognito:groups"][0] == "Admin"){
+                        console.log("logging in as admin")
+                        setUserIsAdmin(true);
+                        navigate("/admin-dashboard")
+                    }else{
+                        setUserIsAdmin(false);
+                        navigate("/");
+                    }
+                }
             },
             onFailure: function(err){
                 console.log(err.message);
