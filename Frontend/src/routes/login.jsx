@@ -59,17 +59,14 @@ export default function Login() {
             onSuccess: function (result){
                 console.log('user credentials have been authenticated')
                 var idToken= result.getIdToken().getJwtToken();
-                //sets userID to global variable (but only for session) - email as well
-                // userInfoAtom.id= idToken;
                 setUserId(idToken);
-                // userInfoAtom.email= email;
                 setUserEmail(email);
                 const decodedToken= jwtDecode(idToken);
                 console.log(decodedToken["cognito:groups"][0]);
                 const awsUserId= decodedToken.sub;
                 setUserAwsUserId(awsUserId);
 
-                // setLoggedIn(true);
+                setLoggedIn(true);
                 if(decodedToken["cognito:groups"] != "undefined" && decodedToken["cognito:groups"] != null){
                     if(decodedToken["cognito:groups"][0] == "Admin"){
                         console.log("logging in as admin")
