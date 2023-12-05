@@ -90,6 +90,7 @@ app.post('/postAccident', async(req, res) =>{
    console.log("body: ")
    console.log(req.body)
    let newForm = {
+    type: "Post Accident",
     awsUserId:req.body.idNumber,
     email: req.body.email,
     dot: req.body.dot,
@@ -102,7 +103,8 @@ app.post('/postAccident', async(req, res) =>{
     timeOfAccident : req.body.timeOfAccident,
     accidentInformation : req.body.accidentInformation,
     refusal : req.body.refusal,
-    notConducted: req.body.notConducted
+    notConducted: req.body.notConducted,
+    approved: false
    }
    console.log("newForm: ")
    console.log(newForm)
@@ -123,6 +125,7 @@ app.post('/postIncident', async(req, res) =>{
    console.log("body: ")
    console.log(req.body)
    let newForm = {
+    type: "Post Incident",
     awsUserId: req.body.idNumber,
     email: req.body.email,
     requested : req.body.requested,
@@ -133,7 +136,8 @@ app.post('/postIncident', async(req, res) =>{
     timeOfAccident : req.body.timeOfAccident,
     accidentInformation : req.body.accidentInformation,
     refusal : req.body.refusal,
-    notConducted: req.body.notConducted
+    notConducted: req.body.notConducted,
+    approved: false
    }
    console.log("newForm: ")
    console.log(newForm)
@@ -154,6 +158,7 @@ app.post('/reasonableCause', async(req, res) =>{
    console.log("body: ")
    console.log(req.body)
    let newForm = {
+    type: "Reasonable Cause",
     awsUserId: req.body.idNumber,
     email: req.body.email,
     requested: req.body.requested,
@@ -165,6 +170,7 @@ app.post('/reasonableCause', async(req, res) =>{
     accidentInformation: req.body.accidentInformation,
     refusal: req.body.refusal,
     notConducted: req.body.notConducted,
+    approved: false,
     behaviorCheckboxes: {
       stumbling: req.body.stumbling,
       unsteadyGait: req.body.unsteadyGait,
@@ -202,6 +208,54 @@ app.post('/reasonableCause', async(req, res) =>{
     });
   }
 });
+
+app.get('/adminPostAccident', async (req, res) => {
+  try{
+    await client.connect();
+    const collection = client.db("PracticeDB").collection("PostAccidentForm");
+    if(collection){
+      console.log("found collection")
+    }
+    const cursor = await collection.find().toArray();
+    console.log(cursor);
+    console.log(res.json(cursor));
+    res.json(cursor);
+  }catch(e){
+    console.error(e);
+  }
+})
+
+app.get('/adminPostIncident', async (req, res) => {
+  try{
+    await client.connect();
+    const collection = client.db("PracticeDB").collection("PostIncidentForm");
+    if(collection){
+      console.log("found collection")
+    }
+    const cursor = await collection.find().toArray();
+    console.log(cursor);
+    console.log(res.json(cursor));
+    res.json(cursor);
+  }catch(e){
+    console.error(e);
+  }
+})
+
+app.get('/adminReasonableCause', async (req, res) => {
+  try{
+    await client.connect();
+    const collection = client.db("PracticeDB").collection("reasonableCause");
+    if(collection){
+      console.log("found collection")
+    }
+    const cursor = await collection.find().toArray();
+    console.log(cursor);
+    console.log(res.json(cursor));
+    res.json(cursor);
+  }catch(e){
+    console.error(e);
+  }
+})
 
 app.get('/db', async (req, res) => {
   try {

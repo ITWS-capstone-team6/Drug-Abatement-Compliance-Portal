@@ -62,7 +62,7 @@ export default function Login() {
                 setUserId(idToken);
                 setUserEmail(email);
                 const decodedToken= jwtDecode(idToken);
-                console.log(decodedToken["cognito:groups"][0]);
+                //console.log(decodedToken["cognito:groups"][0]);
                 const awsUserId= decodedToken.sub;
                 setUserAwsUserId(awsUserId);
 

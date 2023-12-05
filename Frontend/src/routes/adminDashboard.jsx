@@ -23,7 +23,7 @@ export default function AdminDashboard() {
 
     // Temp solution, switch to api call
     const getRequests = () => {
-        fetch('/sampleRequests.json')
+        fetch("http://localhost:5000/adminPostAccident'")
         .then((data) => data.json())
         .then((data) => {
             console.log(data)
