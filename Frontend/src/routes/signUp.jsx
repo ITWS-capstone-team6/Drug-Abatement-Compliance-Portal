@@ -6,7 +6,7 @@ import * as AmazonCognitoIdentity from 'amazon-cognito-identity-js';
 import {useState} from 'react';
 import {useAtom} from 'jotai';
 import jwtDecode from 'jwt-decode'; 
-import {userIdStateAtom, userNameStateAtom, userEmailStateAtom} from '../state/userInfo';
+import {userIdAtom, userEmailAtom, userAwsUserIdAtom} from '../state/userInfo';
 
 import { loggedInAtom, loginStateAtom } from '../state/login';
 const view = {
@@ -14,11 +14,6 @@ const view = {
     SIGNUP: false,
 };
 
-const userInfoAtom = {
-    id: 123,
-    name: 'First Last',
-    email: 'example@united.com',
-}
 export default function SignUp() {
     // local variables
     const [email, setEmail]= useState("");
@@ -30,10 +25,9 @@ export default function SignUp() {
     const [, setLoginState] = useAtom(loginStateAtom);
 
     //global user variable
-    const [userId]= useAtom(userIdStateAtom);
-    const [, setUserIdState]= useAtom(userIdStateAtom)
-    const [globalEmail]= useAtom(userEmailStateAtom);
-    const [, setUserEmailState]= useAtom(userEmailStateAtom);
+    const [, setUserId]= useAtom(userIdAtom)
+    const [, setUserEmail]= useAtom(userEmailAtom);
+    const [, setUserAwsUserId]= useAtom(userAwsUserIdAtom);
     
     const navigate = useNavigate();
 
@@ -59,14 +53,8 @@ export default function SignUp() {
 
     function toggleLoginState() {
         setLoginState(view.LOGIN);
-        navigate('/login');
     }
 
-
-    const poolData={
-        UserPoolId: "us-east-2_nfCwrEzsY",
-        ClientId:"3jdtpq0oaklkgg2k2kk1ajkka6"
-    }
 
     function openModal(){
         document.getElementById('confirmationCodeModal').style.display= 'block';
@@ -94,15 +82,16 @@ export default function SignUp() {
                     onSuccess: function (result){
                         console.log('user credentials have been authenticated')
                         var idToken= result.getIdToken().getJwtToken();
-                        userInfoAtom.id= idToken;
-                        setUserIdState(userInfoAtom.id);
-                        userInfoAtom.email= email;
-                        setUserEmailState(email);
+                        // userInfoAtom.id= idToken;
+                        setUserId(idToken);
+                        // userInfoAtom.email= email;
+                        setUserEmail(email);
                         setLoggedIn(true);
                         navigate("/");
                         //adding user to db here
                         const decodedToken= jwtDecode(idToken);
                         const awsUserId= decodedToken.sub;
+                        setUserAwsUserId(awsUserId);
                         var userFormData={
                             idNumber: awsUserId,
                             emailAddress: email
@@ -140,7 +129,7 @@ export default function SignUp() {
                 handleConfirmationCodeSubmit(cognitoUser);
             }
         })
-    };
+    }
 
     return <>
     <div className="content">

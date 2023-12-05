@@ -1,12 +1,12 @@
-import { useLocation, useNavigate} from 'react-router-dom';
-import React, { useState } from "react";
-import {userIdStateAtom, userEmailStateAtom} from '../state/userInfo';
+import { useNavigate} from 'react-router-dom';
+import { useState } from "react";
+import {userIdAtom, userEmailAtom} from '../state/userInfo';
 import jwtDecode from 'jwt-decode'; 
 import { useAtom } from 'jotai';
 
 export default function PostAccident() {
-    const [userId] = useAtom(userIdStateAtom);
-    const [userEmail]= useAtom(userEmailStateAtom);
+    const [userId] = useAtom(userIdAtom);
+    const [userEmail]= useAtom(userEmailAtom);
     const decodedToken= jwtDecode(userId);
     const awsUserId= decodedToken.sub; //userId
     console.log("aws userid: " + awsUserId);
@@ -58,10 +58,9 @@ export default function PostAccident() {
       const { name, value } = e.target;
       setFormData({ ...formData, [name]: value });
     };
-  const location = useLocation();
 
   return <>
-<form class= "postAccidentForm" className="container mx-auto" onSubmit={handleSubmit}>
+<form className= "postAccidentForm container mx-auto" onSubmit={handleSubmit}>
   <h2 className="text-2xl font-semibold mb-6">Drug and Alcohol Test Required for Post Accident Testing</h2>
   <div className="mb-4">
   <label className="block mb-2 font-semibold">Check Requested Test:</label>
@@ -76,33 +75,33 @@ export default function PostAccident() {
       </div>
     </div>
   </div>
-  <div class="employeeInfo">
+  <div className="employeeInfo">
 
-    <div class="flex mb-4">
-      <div class="first-input-container">
-        <label class="block mb-2 font-semibold">Employee Name</label>
+    <div className="flex mb-4">
+      <div className="first-input-container">
+        <label className="block mb-2 font-semibold">Employee Name</label>
         <textarea type="text" placeholder="Click to enter" name="employeeName"  value={formData.employeeName} onChange={handleInputChange}/>
       </div>
-      <div class="second-input-container">
-        <label class="block mb-2 font-semibold">Employee ID Number</label>
+      <div className="second-input-container">
+        <label className="block mb-2 font-semibold">Employee ID Number</label>
         <textarea type="text" placeholder="Click to enter" name="employeeId" value={formData.employeeId} onChange={handleInputChange}/>
       </div>
     </div>
 
-    <div class="flex mb-4">
-      <div class="first-input-container">
-        <label class="block mb-2 font-semibold">Address Code</label>
+    <div className="flex mb-4">
+      <div className="first-input-container">
+        <label className="block mb-2 font-semibold">Address Code</label>
         <textarea type="text" placeholder="Click to enter" name="addressCode"  value={formData.addressCode} onChange={handleInputChange}/>
       </div>
     </div>
 
-    <div class="flex mb-4">
-      <div class="first-input-container">
-        <label class="block mb-2 font-semibold">Date of Incident</label>
+    <div className="flex mb-4">
+      <div className="first-input-container">
+        <label className="block mb-2 font-semibold">Date of Incident</label>
         <textarea type="text" placeholder="Click to enter" name="dateOfAccident" value={formData.dateOfAccident} onChange={handleInputChange} />
       </div>
-      <div class="second-input-container">
-        <label class="block mb-2 font-semibold">Time of Incident</label>
+      <div className="second-input-container">
+        <label className="block mb-2 font-semibold">Time of Incident</label>
         <textarea type="text" placeholder="Click to enter"  name="timeOfAccident" value={formData.timeOfAccident} onChange={handleInputChange}/>
       </div>
     </div>
@@ -110,20 +109,20 @@ export default function PostAccident() {
   </div>
 
 
-  <div class="employeeCircumstance">
-    <div class="mb-6">
-      <label class="block mb-2 font-semibold">Incident Information (Circumstances, Employee Response, Supervisor Actions, and Observations)</label>
+  <div className="employeeCircumstance">
+    <div className="mb-6">
+      <label className="block mb-2 font-semibold">Incident Information (Circumstances, Employee Response, Supervisor Actions, and Observations)</label>
       <textarea placeholder="Click to enter" name= "accidentInformation" value={formData.accidentInformation} onChange={handleInputChange}></textarea>
     </div>
 
-    <div class="mb-4">
-      <label class="block mb-2 font-semibold">If the Employee Refuses to Test, State Why</label>
-      <textarea class="placeholder-gray-300" placeholder="Click to enter" name="refusal" value={formData.refusal} onChange={handleInputChange}></textarea>
+    <div className="mb-4">
+      <label className="block mb-2 font-semibold">If the Employee Refuses to Test, State Why</label>
+      <textarea className="placeholder-gray-300" placeholder="Click to enter" name="refusal" value={formData.refusal} onChange={handleInputChange}></textarea>
     </div>
 
-    <div class="mb-6">
-      <label class="block mb-2 font-semibold">Reason Why Alcohol Testing Could Not Be Conducted Within 8 Hours</label>
-      <textarea class="placeholder-gray-300" placeholder="Click to enter" name="notConducted"  value={formData.notConducted} onChange={handleInputChange}></textarea>
+    <div className="mb-6">
+      <label className="block mb-2 font-semibold">Reason Why Alcohol Testing Could Not Be Conducted Within 8 Hours</label>
+      <textarea className="placeholder-gray-300" placeholder="Click to enter" name="notConducted"  value={formData.notConducted} onChange={handleInputChange}></textarea>
     </div>
 
   </div>

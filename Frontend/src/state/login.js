@@ -5,3 +5,4 @@ const view = {
 };
 export const loggedInAtom = atom(false);
 export const loginStateAtom = atom(view.LOGIN);
+

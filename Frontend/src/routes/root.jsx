@@ -1,7 +1,21 @@
-import { Link, useLocation } from 'react-router-dom';
+import { loggedInAtom, loginStateAtom } from "../state/login";
+import { userIsAdminAtom } from "../state/userInfo";
+import { useState } from "react";
+
+import { useAtom } from "jotai";
+import AdminDashboard from "./adminDashboard";
+import Login from "./login";
+import SignUp from "./signUp";
+
+const view = {
+  LOGIN: true,
+  SIGNUP: false,
+};
+
 import "./root.css";
 
 import FormCard from "../components/formCard";
+import { useEffect } from "react";
 
 const formInfo = [
   {name: "Post-Accident", desc: "Description", link: "postAccident"},
@@ -13,7 +27,36 @@ const formInfo = [
 
 
 export default function Root() {
+  const [loggedIn] = useAtom(loggedInAtom);
+  const [userIsAdmin] = useAtom(userIsAdminAtom);
+  const [loggedInState] = useAtom(loginStateAtom);
 
+  const [currentComponent, setCurrentComponent] = useState(<Login/>);
+
+  useEffect(() => {
+    if (!loggedIn) {
+      if (loggedInState == view.LOGIN) {
+        return setCurrentComponent( <Login />)
+      } else {
+        return setCurrentComponent( <SignUp />)
+      }
+    } 
+    if (userIsAdmin) {
+      return setCurrentComponent( <AdminDashboard />)
+    }
+    return setCurrentComponent( <UserComponent />)
+  }, [loggedIn, userIsAdmin, loggedInState])
+
+  return (
+    <>
+      {currentComponent}
+    </>
+  );
+
+  
+}
+
+function UserComponent() {
   return (
     <>
         <div className="formContainer">
@@ -26,7 +69,7 @@ export default function Root() {
           
           <div className="formContent">
             {formInfo.map((info, index) => {
-              return <div>
+              return <div key={index}>
                   <FormCard name={info.name} desc={info.desc} index={index} link={info.link} />
                 </div>
             })}
@@ -36,3 +79,4 @@ export default function Root() {
     </>
   );
 }
+

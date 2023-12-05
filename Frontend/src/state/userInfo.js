@@ -1,11 +1,13 @@
 import { atom } from 'jotai';
 
 export const userInfoAtom = atom({
-    id: 123,
-    name: 'First Last',
+    userId: "123",
+    awsUserId: '456',
     email: 'example@united.com',
+    isAdmin: false,
 })
 
-export const userIdStateAtom= atom(userInfoAtom.id);
-export const userNameStateAtom= atom(userInfoAtom.name);
-export const userEmailStateAtom=atom(userInfoAtom.email);
+export const userIdAtom= atom(userInfoAtom.userId);
+export const userAwsUserIdAtom=atom(userInfoAtom.awsUserId);
+export const userEmailAtom=atom(userInfoAtom.email);
+export const userIsAdminAtom=atom(userInfoAtom.isAdmin);

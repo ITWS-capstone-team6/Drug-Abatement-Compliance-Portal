@@ -16,7 +16,7 @@ app.use(cors())
    .use(express.json())
    .use(bodyParser.urlencoded({extended:true}))
    .use(function (req, res, next) {
-     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000', 'http://127.0.0.1:5173/');
+     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
      res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
      res.setHeader('Access-Control-Allow-Credentials', true);
@@ -26,7 +26,7 @@ app.use(cors())
 
 // Get MongoDB driver connection
 const dbo = require("./conn.js");
-const client = new MongoClient(uri, {useUnifiedTopology: true,});
+const client = new MongoClient(uri);
 
 app.listen(port, () => {
   dbo.connectToDatabase(function (err) {
@@ -34,6 +34,30 @@ app.listen(port, () => {
  
   });
   console.log(`Server is running on port: ${port}`);
+});
+
+app.get("/isAdmin", async (req, res) => {
+  try {
+    console.log("GET: isAdmin")
+    console.log("userId: " + req.query.userId)
+    const userId = req.query.userId;
+    await client.connect();
+    const collection = client.db("PracticeDB").collection("Users");
+
+    console.log("looking up user")
+    const result = await collection.findOne({awsUserId: userId});
+    console.log(result);
+    if (result == null) {
+      console.log("user not found")
+      return res.send(false);
+    }
+    res.json(result["isAdmin"]);
+   } catch (error) {
+     console.log(error)
+     return res.json({
+       message: 'An error occured!',
+     });
+   }
 });
 
 app.post('/newUser', async(req, res) =>{
@@ -45,6 +69,7 @@ app.post('/newUser', async(req, res) =>{
    let newForm = {
     awsUserId: req.body.idNumber,
     email: req.body.emailAddress,
+    isAdmin: false, //! change this later
    }
    console.log("newForm: ")
    console.log(newForm)

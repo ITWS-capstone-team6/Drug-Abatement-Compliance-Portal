@@ -4,22 +4,16 @@ import { useNavigate} from 'react-router';
 import { useEffect, useState } from 'react';
 import UserPool from "../UserPool";
 import * as AmazonCognitoIdentity from 'amazon-cognito-identity-js';
-import {CognitoUserPool} from "amazon-cognito-identity-js";
+import jwtDecode from 'jwt-decode'; 
+
 import { useAtom } from 'jotai';
-import {userIdStateAtom, userNameStateAtom, userEmailStateAtom} from '../state/userInfo';
+import { userIdAtom, userEmailAtom, userAwsUserIdAtom} from '../state/userInfo';
 
 import { loggedInAtom, loginStateAtom } from '../state/login';
-
 const view = {
     LOGIN: true,
     SIGNUP: false,
 };
-
-const userInfoAtom = {
-    id: 123,
-    name: 'First Last',
-    email: 'example@united.com',
-}
 
 export default function Login() {
     
@@ -30,27 +24,22 @@ export default function Login() {
     const [, setLoginState] = useAtom(loginStateAtom);
 
     //global user variable
-    const [userId]= useAtom(userIdStateAtom);
-    const [, setUserIdState]= useAtom(userIdStateAtom)
-    const [globalEmail]= useAtom(userEmailStateAtom);
-    const [, setUserEmailState]= useAtom(userEmailStateAtom);
+    const [userId]= useAtom(userIdAtom);
+    const [, setUserId]= useAtom(userIdAtom)
+    const [, setUserEmail]= useAtom(userEmailAtom);
+    const [, setUserAwsUserId]= useAtom(userAwsUserIdAtom);
 
     const navigate= useNavigate();
     const toggleLoginState = () => {
         setLoginState(view.SIGNUP); 
-        navigate('/signUp');
     };
-    useEffect(() => {
-        console.log(userId);
-    }, [userId]);
-    const poolData={
-        UserPoolId: "us-east-2_nfCwrEzsY",
-        ClientId:"3jdtpq0oaklkgg2k2kk1ajkka6"
-    }
-
     function handleLogin(e) {
         e.preventDefault();
-        console.log(loggedIn);
+
+        console.log("loggedIn: " +loggedIn);
+        console.log("Email:", email);
+        console.log("Password:", password);
+
         
         var authenticationData={
             Username: email,
@@ -69,10 +58,14 @@ export default function Login() {
                 console.log('user credentials have been authenticated')
                 var idToken= result.getIdToken().getJwtToken();
                 //sets userID to global variable (but only for session) - email as well
-                userInfoAtom.id= idToken;
-                setUserIdState(userInfoAtom.id);
-                userInfoAtom.email= email;
-                setUserEmailState(email);
+                // userInfoAtom.id= idToken;
+                setUserId(idToken);
+                // userInfoAtom.email= email;
+                setUserEmail(email);
+                const decodedToken= jwtDecode(idToken);
+                const awsUserId= decodedToken.sub;
+                setUserAwsUserId(awsUserId);
+
                 setLoggedIn(true);
                 navigate("/");
             },
