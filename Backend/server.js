@@ -92,8 +92,9 @@ app.post('/postAccident', async(req, res) =>{
    let newForm = {
     awsUserId:req.body.idNumber,
     email: req.body.email,
+    type: "Post Accident",
     dot: req.body.dot,
-    nondot: req.body.nondot,
+    // nondot: req.body.nondot,
     requested : req.body.requested,
     employeeName : req.body.employeeName,
     employeeId : req.body.employeeId,
@@ -102,7 +103,13 @@ app.post('/postAccident', async(req, res) =>{
     timeOfAccident : req.body.timeOfAccident,
     accidentInformation : req.body.accidentInformation,
     refusal : req.body.refusal,
-    notConducted: req.body.notConducted
+    // notConducted: req.body.notConducted,
+    reasonNotWithinTwoHours: req.body.reasonNotWithinTwoHours,
+    reasonNotWithinEightHours: req.body.reasonNotWithinEightHours,
+    managementRepName: req.body.managementRepName,
+    managementRepId: req.body.managementRepId,
+    managementRepDate: req.body.managementRepDate,
+    managementRepPhone: req.body.managementRepPhone
    }
    console.log("newForm: ")
    console.log(newForm)
@@ -125,6 +132,7 @@ app.post('/postIncident', async(req, res) =>{
    let newForm = {
     awsUserId: req.body.idNumber,
     email: req.body.email,
+    type: "Post-Injury Incident",
     requested : req.body.requested,
     employeeName : req.body.employeeName,
     employeeId : req.body.employeeId,
@@ -133,7 +141,11 @@ app.post('/postIncident', async(req, res) =>{
     timeOfAccident : req.body.timeOfAccident,
     accidentInformation : req.body.accidentInformation,
     refusal : req.body.refusal,
-    notConducted: req.body.notConducted
+    reasonNotWithinEightHours: req.body.reasonNotWithinEightHours,
+    managementRepName: req.body.managementRepName,
+    managementRepId: req.body.managementRepId,
+    managementRepDate: req.body.managementRepDate,
+    managementRepPhone: req.body.managementRepPhone
    }
    console.log("newForm: ")
    console.log(newForm)
