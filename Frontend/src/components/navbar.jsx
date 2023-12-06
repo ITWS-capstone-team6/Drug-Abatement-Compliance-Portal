@@ -31,7 +31,7 @@ export default function Navbar() {
       <li>
         <div>
           <h4>Hello, {userEmail}</h4>
-          <button className="mx-auto w-full" onClick={logout}>Log Out</button>
+          {/* <button className="mx-auto w-full" onClick={logout}>Log Out</button> */}
         </div>
       </li>
     </ul>

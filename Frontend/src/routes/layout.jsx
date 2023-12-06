@@ -51,8 +51,8 @@ export default function Layout() {
         { loggedIn && <Navbar /> }
         <Outlet />
 
-        <button onClick={test}>test</button>
-        <button onClick={logOut}>log out</button>
+        {/* <button onClick={test}>test</button>
+        <button onClick={logOut}>log out</button> */}
       </div>
     </>
   );
