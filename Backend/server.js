@@ -60,6 +60,22 @@ app.get("/isAdmin", async (req, res) => {
    }
 });
 
+app.get('/findPostAccident', async(req, res) =>{
+  try {
+   await client.connect();
+   const collection = client.db("PracticeDB").collection("PostAccidentForm");
+   const cursor = await collection.find().toArray();
+   console.log(cursor);
+   console.log(res.json(cursor));
+   res.json(cursor);
+  } catch (error) {
+    console.log(error)
+    return res.json({
+      message: 'An error occured!',
+    });
+  }
+});
+
 app.post('/newUser', async(req, res) =>{
   try {
    await client.connect();
