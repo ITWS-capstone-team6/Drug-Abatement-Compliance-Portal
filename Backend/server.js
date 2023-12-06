@@ -90,6 +90,21 @@ app.get('/findPostIncident', async(req, res) =>{
   }
 });
 
+app.get('/findReasonableCause', async(req, res) =>{
+  try {
+   await client.connect();
+   const collection = client.db("PracticeDB").collection("reasonableCause");
+   const cursor = await collection.find().toArray();
+   console.log(cursor)
+   res.json(cursor);
+  } catch (error) {
+    console.log(error)
+    return res.json({
+      message: 'An error occured!',
+    });
+  }
+});
+
 app.post('/newUser', async(req, res) =>{
   try {
    await client.connect();
@@ -233,6 +248,8 @@ app.post('/reasonableCause', async(req, res) =>{
     awsUserId: req.body.idNumber,
     email: req.body.email,
     requested: req.body.requested,
+    type: "Reasonable Cause/Suspicion",
+    status: "Pending",
     employeeName: req.body.employeeName,
     employeeId: req.body.employeeId,
     addressCode: req.body.addressCode,

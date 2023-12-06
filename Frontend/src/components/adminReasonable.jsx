@@ -50,9 +50,9 @@ export default function AdminReasonable({request}) {
                         </div>
                     </div>
                     <div className="insideField">
-                        <p className='key'>Apperence:</p>
+                        <p className='key'>Appaerence:</p>
                         <div className='indicator'>
-                            {request.apperance.length ? request.apperance.map((b, i) => 
+                            {request.appearance.length ? request.appearance.map((b, i) => 
                                 <p>{b}</p>
                             ) : 'None' }
                         </div>

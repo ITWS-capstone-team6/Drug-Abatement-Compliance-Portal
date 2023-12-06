@@ -35,22 +35,27 @@ export default function AdminDashboard() {
     const getRequests = () => {
         const incidentEndpoint = 'http://localhost:5000/findPostIncident';
         const accidentEndpoint = 'http://localhost:5000/findPostAccident';
-    
+        const reasonableCauseEndpoint = 'http://localhost:5000/findReasonableCause';
         fetch(incidentEndpoint)
             .then((response) => response.json())
             .then((incidentData) => {
                 fetch(accidentEndpoint)
                     .then((response) => response.json())
                     .then((accidentData) => {
-                        const combinedData = [...incidentData, ...accidentData];
-                        console.log(combinedData);
-                        setRequests(combinedData);
-                        setOrigRequest(combinedData);
+                        fetch(reasonableCauseEndpoint)
+                            .then((response) => response.json())
+                            .then((reasonableCauseData) => {
+                                const combinedData = [...incidentData, ...accidentData, ...reasonableCauseData];
+                                console.log(combinedData);
+                                setRequests(combinedData);
+                                setOrigRequest(combinedData);
+                            })
+                            .catch((error) => console.error('Error fetching /findReasonableCause:', error));
                     })
                     .catch((error) => console.error('Error fetching /findPostAccident:', error));
             })
             .catch((error) => console.error('Error fetching /findPostIncident:', error));
-    };
+    }
 
     const handleRequestStatusChange = (e) => {
         let status = e.target.value;
