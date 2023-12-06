@@ -32,12 +32,13 @@ export default function Layout() {
       // fetch call to api with the query being the user id
       //  api returns user info from database
       // query api to see the user info
-      fetch(`http://localhost:5000/isAdmin?`+ new URLSearchParams({userId: awsUserId}))
-      .then((response) => {
-        return response.json();
-      }).then((data) => {
-        setUserIsAdmin(data);
-      })
+      // fetch(`http://localhost:5000/isAdmin?`+ new URLSearchParams({userId: awsUserId}))
+      // .then((response) => {
+      //   return response.json();
+      // }).then((data) => {
+      //   setUserIsAdmin(data);
+      // })
+      console.log("is noged in - checks admin a iff way now")
     }
   }, [loggedIn, awsUserId]);
 

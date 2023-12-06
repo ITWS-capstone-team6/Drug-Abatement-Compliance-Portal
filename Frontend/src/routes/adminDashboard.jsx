@@ -21,16 +21,36 @@ export default function AdminDashboard() {
         getRequests()
     }, [])
 
-    // Temp solution, switch to api call
+    // // Temp solution, switch to api call
+    // const getRequests = () => {
+    //     fetch('/sampleRequests.json')
+    //     .then((data) => data.json())
+    //     .then((data) => {
+    //         console.log(data)
+    //         setRequests(data)
+    //         setOrigRequest(data)
+    //     })
+    // }
+
     const getRequests = () => {
-        fetch('/sampleRequests.json')
-        .then((data) => data.json())
-        .then((data) => {
-            console.log(data)
-            setRequests(data)
-            setOrigRequest(data)
-        })
-    }
+        const incidentEndpoint = 'http://localhost:5000/findPostIncident';
+        const accidentEndpoint = 'http://localhost:5000/findPostAccident';
+    
+        fetch(incidentEndpoint)
+            .then((response) => response.json())
+            .then((incidentData) => {
+                fetch(accidentEndpoint)
+                    .then((response) => response.json())
+                    .then((accidentData) => {
+                        const combinedData = [...incidentData, ...accidentData];
+                        console.log(combinedData);
+                        setRequests(combinedData);
+                        setOrigRequest(combinedData);
+                    })
+                    .catch((error) => console.error('Error fetching /findPostAccident:', error));
+            })
+            .catch((error) => console.error('Error fetching /findPostIncident:', error));
+    };
 
     const handleRequestStatusChange = (e) => {
         let status = e.target.value;

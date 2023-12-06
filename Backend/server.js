@@ -16,7 +16,7 @@ app.use(cors())
    .use(express.json())
    .use(bodyParser.urlencoded({extended:true}))
    .use(function (req, res, next) {
-     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
+    res.setHeader('Access-Control-Allow-Origin', '*');
      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
      res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
      res.setHeader('Access-Control-Allow-Credentials', true);
@@ -66,7 +66,21 @@ app.get('/findPostAccident', async(req, res) =>{
    const collection = client.db("PracticeDB").collection("PostAccidentForm");
    const cursor = await collection.find().toArray();
    console.log(cursor);
-   console.log(res.json(cursor));
+   res.json(cursor);
+  } catch (error) {
+    console.log(error)
+    return res.json({
+      message: 'An error occured!',
+    });
+  }
+});
+
+app.get('/findPostIncident', async(req, res) =>{
+  try {
+   await client.connect();
+   const collection = client.db("PracticeDB").collection("PostIncidentForm");
+   const cursor = await collection.find().toArray();
+   console.log(cursor);
    res.json(cursor);
   } catch (error) {
     console.log(error)
