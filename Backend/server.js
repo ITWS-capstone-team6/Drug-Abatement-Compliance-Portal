@@ -92,8 +92,9 @@ app.post('/postAccident', async(req, res) =>{
    let newForm = {
     awsUserId:req.body.idNumber,
     email: req.body.email,
+    type: "Post Accident",
     dot: req.body.dot,
-    nondot: req.body.nondot,
+    // nondot: req.body.nondot,
     requested : req.body.requested,
     employeeName : req.body.employeeName,
     employeeId : req.body.employeeId,
@@ -102,7 +103,13 @@ app.post('/postAccident', async(req, res) =>{
     timeOfAccident : req.body.timeOfAccident,
     accidentInformation : req.body.accidentInformation,
     refusal : req.body.refusal,
-    notConducted: req.body.notConducted
+    // notConducted: req.body.notConducted,
+    reasonNotWithinTwoHours: req.body.reasonNotWithinTwoHours,
+    reasonNotWithinEightHours: req.body.reasonNotWithinEightHours,
+    managementRepName: req.body.managementRepName,
+    managementRepId: req.body.managementRepId,
+    managementRepDate: req.body.managementRepDate,
+    managementRepPhone: req.body.managementRepPhone
    }
    console.log("newForm: ")
    console.log(newForm)
@@ -125,6 +132,7 @@ app.post('/postIncident', async(req, res) =>{
    let newForm = {
     awsUserId: req.body.idNumber,
     email: req.body.email,
+    type: "Post-Injury Incident",
     requested : req.body.requested,
     employeeName : req.body.employeeName,
     employeeId : req.body.employeeId,
@@ -133,7 +141,11 @@ app.post('/postIncident', async(req, res) =>{
     timeOfAccident : req.body.timeOfAccident,
     accidentInformation : req.body.accidentInformation,
     refusal : req.body.refusal,
-    notConducted: req.body.notConducted
+    reasonNotWithinEightHours: req.body.reasonNotWithinEightHours,
+    managementRepName: req.body.managementRepName,
+    managementRepId: req.body.managementRepId,
+    managementRepDate: req.body.managementRepDate,
+    managementRepPhone: req.body.managementRepPhone
    }
    console.log("newForm: ")
    console.log(newForm)
@@ -153,6 +165,38 @@ app.post('/reasonableCause', async(req, res) =>{
    const collection = client.db("PracticeDB").collection("reasonableCause");
    console.log("body: ")
    console.log(req.body)
+   const behaviorCheckboxes = req.body.behaviorCheckboxes
+   const appearanceCheckboxes = req.body.appearanceCheckboxes
+   const speechCheckboxes = req.body.speechCheckboxes
+   const bodyOdorCheckboxes = req.body.bodyOdorCheckboxes
+   let behavior = []
+   let appearance = []
+   let speech = []
+   let bodyOdor = []
+   for (const checked in behaviorCheckboxes) {
+    if (behaviorCheckboxes[checked]) {
+      behavior.push(checked)
+    }
+   }
+   for (const checked in appearanceCheckboxes) {
+    if (appearanceCheckboxes[checked]) {
+      appearance.push(checked)
+    }
+   }
+   for (const checked in speechCheckboxes) {
+    if (speechCheckboxes[checked]) {
+      speech.push(checked)
+    }
+   }
+   for (const checked in bodyOdorCheckboxes) {
+    if (bodyOdorCheckboxes[checked]) {
+      bodyOdor.push(checked)
+    }
+   }
+   console.log(behavior)
+   console.log(appearance)
+   console.log(speech)
+   console.log(bodyOdor)
    let newForm = {
     awsUserId: req.body.idNumber,
     email: req.body.email,
@@ -165,35 +209,52 @@ app.post('/reasonableCause', async(req, res) =>{
     accidentInformation: req.body.accidentInformation,
     refusal: req.body.refusal,
     notConducted: req.body.notConducted,
-    behaviorCheckboxes: {
-      stumbling: req.body.stumbling,
-      unsteadyGait: req.body.unsteadyGait,
-      drowsy: req.body.drowsy,
-      agitated: req.body.agitated,
-      hostile: req.body.hostile,
-      irritable: req.body.irritable,
-      depressed: req.body.depressed,
-      unresponsive: req.body.unresponsive,
-      clumsy: req.body.clumsy
-    },
-    appearanceCheckboxes: {
-      flushedComplexion: req.body.flushedComplexion,
-      excessiveSweating: req.body.excessiveSweating,
-      coldClammySweats: req.body.coldClammySweats,
-      bloodshotEyes: req.body.bloodshotEyes,
-      tearyWateryEyes: req.body.tearyWateryEyes,
-      dilatedPupils: req.body.dilatedPupils,
-      constrictedPupils: req.body.constrictedPupils,
-      unfocusedStare: req.body.unfocusedStare
-    },
-    bodyOdorCheckboxes: {
-      alcohol: req.body.alcohol,
-      marijuana: req.body.marijuana
-    }
+    behaviors: behavior,
+    appearance: appearance,
+    speech: speech,
+    bodyOdors: bodyOdor,
+    dot: req.body.dot,
+    onDuty: req.body.onDuty,
+    reasonNotWithinTwoHours: req.body.reasonNotWithinTwoHours,
+    reasonNotWithinEightHours: req.body.reasonNotWithinEightHours,
+    managementRepName: req.body.managementRepName,
+    managementRepId: req.body.managementRepId,
+    managementRepDate: req.body.managementRepDate,
+    managementRepPhone: req.body.managementRepPhone,
+    secondaryManagementTrained: req.body.secondaryManagementRepTrained,
+    secondaryManagementRepName: req.body.secondaryManagementRepName,
+    secondaryManagementRepId: req.body.secondaryManagementRepId,
+    secondaryManagementRepDate: req.body.secondaryManagementRepDate,
+    secondaryManagementRepPhone: req.body.secondaryManagementRepPhone,
+    // behaviorCheckboxes: {
+    //   stumbling: req.body.stumbling,
+    //   unsteadyGait: req.body.unsteadyGait,
+    //   drowsy: req.body.drowsy,
+    //   agitated: req.body.agitated,
+    //   hostile: req.body.hostile,
+    //   irritable: req.body.irritable,
+    //   depressed: req.body.depressed,
+    //   unresponsive: req.body.unresponsive,
+    //   clumsy: req.body.clumsy
+    // },
+    // appearanceCheckboxes: {
+    //   flushedComplexion: req.body.flushedComplexion,
+    //   excessiveSweating: req.body.excessiveSweating,
+    //   coldClammySweats: req.body.coldClammySweats,
+    //   bloodshotEyes: req.body.bloodshotEyes,
+    //   tearyWateryEyes: req.body.tearyWateryEyes,
+    //   dilatedPupils: req.body.dilatedPupils,
+    //   constrictedPupils: req.body.constrictedPupils,
+    //   unfocusedStare: req.body.unfocusedStare
+    // },
+    // bodyOdorCheckboxes: {
+    //   alcohol: req.body.alcohol,
+    //   marijuana: req.body.marijuana
+    // }
    }
   //  console.log("newForm: ")
   //  console.log(newForm)
-   await collection.insertOne(req.body)
+   await collection.insertOne(newForm)
    res.json(200)
   } catch (error) {
     console.log(error)

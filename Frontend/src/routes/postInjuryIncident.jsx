@@ -24,7 +24,11 @@ export default function PostInjury() {
       timeOfAccident: "",
       accidentInformation: "",
       refusal: "",
-      notConducted: ""
+      reasonNotWithinEightHours: "",
+      managementRepName: "",
+      managementRepId: "",
+      managementRepDate: "",
+      managementRepPhone: ""
     });
 
     const handleSubmit = async (e) => {
@@ -106,11 +110,37 @@ export default function PostInjury() {
 
     <div className="mb-6">
       <label className="block mb-2 font-semibold">Reason Why Alcohol Testing Could Not Be Conducted Within 8 Hours</label>
-      <textarea className="placeholder-gray-300" placeholder="Click to enter" name="notConducted"  value={formData.notConducted} onChange={handleInputChange}></textarea>
+      <textarea className="placeholder-gray-300" placeholder="Click to enter" name="reasonNotWithinEightHours"  value={formData.reasonNotWithinEightHours} onChange={handleInputChange}></textarea>
+    </div>
+  </div>
+
+  <div className="managementInfo">
+    <h3 className="text-1xl font-bold mb-2 underline">Authorizing Management Representative:</h3>
+    <div className="flex mb-4">
+      <div className="first-input-container">
+        <label className="block mb-2 font-semibold">Name</label>
+        <textarea type="text" placeholder="Click to enter" name="managementRepName"  value={formData.managementRepName} onChange={handleInputChange}/>
+      </div>
+      <div className="second-input-container">
+        <label className="block mb-2 font-semibold">ID Number</label>
+        <textarea type="text" placeholder="Click to enter" name="managementRepId" value={formData.managementRepId} onChange={handleInputChange}/>
+      </div>
     </div>
 
-    <button type="submit">Submit</button>
+    <div className="flex mb-4">
+      <div className="first-input-container">
+        <label className="block mb-2 font-semibold">Date</label>
+        <textarea type="text" placeholder="Click to enter" name="managementRepDate" value={formData.managementRepDate} onChange={handleInputChange} />
+      </div>
+      <div className="second-input-container">
+        <label className="block mb-2 font-semibold">Phone Number</label>
+        <textarea type="text" placeholder="Click to enter"  name="managementRepPhone" value={formData.managementRepPhone} onChange={handleInputChange}/>
+      </div>
+    </div>
+    
   </div>
+
+  <button type="submit">Submit</button>
 </form>
 
 

@@ -18,9 +18,9 @@ import FormCard from "../components/formCard";
 import { useEffect } from "react";
 
 const formInfo = [
-  {name: "Post-Accident", desc: "Description", link: "postAccident"},
-  {name: "Post-Injury Incident", desc: "Description", link: "postInjuryIncident"},
-  {name: "Reasonable Cause/Suspicion", desc: "Description", link: "reasonableCauseSuspicion"}
+  {name: "Post-Accident", desc: "Documented when an event causes physical damage by an employee.", link: "postAccident"},
+  {name: "Post-Injury Incident", desc: "Applies to Airport Operations and Catering Operations Division.", link: "postInjuryIncident"},
+  {name: "Reasonable Cause/Suspicion", desc: "Conducted when an employee is reasonably suspected of using prohibited drugs or alcohol.", link: "reasonableCauseSuspicion"}
 
 ]
 
@@ -62,7 +62,7 @@ function UserComponent() {
         <div className="formContainer">
           <h1>Forms</h1>
           <div className='note'>
-            <p>All sections of the Reasonable Cause/Suspicion Test Request must be completed for each employee and 
+            <p>All sections of the request must be completed for each employee and 
             <span> emailed immediately</span> to <a href='mailto:AfterHoursDA@United.com'>AfterHoursDA@United.com</a> <span>before</span> a test can be authorized.</p>
             <p>Once you have emailed this form, call Drug Abatement at (800) 421-6260.</p>
           </div>
