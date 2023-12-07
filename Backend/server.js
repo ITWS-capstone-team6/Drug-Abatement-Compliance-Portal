@@ -4,7 +4,7 @@ const {MongoClient, MongoKerberosError}= require('mongodb');
 const bodyParser= require("body-parser");
 const mongoose = require('mongoose');
 const uuid = require('uuid');
-
+const ObjectId = require('mongodb').ObjectId;
 const uri="mongodb+srv://chloej1699:SnowBird11@cluster0.8ihubjl.mongodb.net/"
 const port = process.env.PORT || 5000;
 
@@ -65,7 +65,7 @@ app.get('/findPostAccident', async(req, res) =>{
    await client.connect();
    const collection = client.db("PracticeDB").collection("PostAccidentForm");
    const cursor = await collection.find().toArray();
-   console.log(cursor);
+  //  console.log(cursor);
    res.json(cursor);
   } catch (error) {
     console.log(error)
@@ -80,7 +80,7 @@ app.get('/findPostIncident', async(req, res) =>{
    await client.connect();
    const collection = client.db("PracticeDB").collection("PostIncidentForm");
    const cursor = await collection.find().toArray();
-   console.log(cursor);
+  //  console.log(cursor);
    res.json(cursor);
   } catch (error) {
     console.log(error)
@@ -95,7 +95,7 @@ app.get('/findReasonableCause', async(req, res) =>{
    await client.connect();
    const collection = client.db("PracticeDB").collection("reasonableCause");
    const cursor = await collection.find().toArray();
-   console.log(cursor)
+  //  console.log(cursor)
    res.json(cursor);
   } catch (error) {
     console.log(error)
@@ -109,15 +109,15 @@ app.post('/newUser', async(req, res) =>{
   try {
    await client.connect();
    const collection = client.db("PracticeDB").collection("Users");
-   console.log("body: ")
-   console.log(req.body)
+  //  console.log("body: ")
+  //  console.log(req.body)
    let newForm = {
     awsUserId: req.body.idNumber,
     email: req.body.emailAddress,
     isAdmin: false, //! change this later
    }
-   console.log("newForm: ")
-   console.log(newForm)
+  //  console.log("newForm: ")
+  //  console.log(newForm)
    await collection.insertOne(newForm)
    res.json(200)
   } catch (error) {
@@ -128,7 +128,9 @@ app.post('/newUser', async(req, res) =>{
   }
 });
 
+
 app.post('/postAccident', async(req, res) =>{
+  console.log("hi?")
   try {
    await client.connect();
    const collection = client.db("PracticeDB").collection("PostAccidentForm");
@@ -169,6 +171,32 @@ app.post('/postAccident', async(req, res) =>{
   }
 });
 
+
+app.post('/postAccident/:updateStatus', async(req, res) => {
+  try {
+    await client.connect();
+    const collection = client.db("PracticeDB").collection("PostAccidentForm");
+    console.log(req.body)
+    const formId = req.body.id;
+    const filter = {_id: new ObjectId(formId)}
+    console.log(formId)
+    console.log(req.query.updateStatus)
+    const updateForm = {
+      $set: {
+        status: req.query.updateStatus
+      }
+    }
+    const response = await collection.updateOne(filter, updateForm);
+    console.log(response)
+    res.json(200);
+  } catch (error) {
+    console.log(error)
+    return res.json({
+      message: 'An error occured!',
+    });
+  }
+});
+
 app.post('/postIncident', async(req, res) =>{
   try {
    await client.connect();
@@ -198,6 +226,32 @@ app.post('/postIncident', async(req, res) =>{
    console.log(newForm)
    await collection.insertOne(newForm)
    res.json(200)
+  } catch (error) {
+    console.log(error)
+    return res.json({
+      message: 'An error occured!',
+    });
+  }
+});
+
+app.post('/postIncident/:updateStatus', async(req, res) => {
+  console.log("hi")
+  try {
+    await client.connect();
+    const collection = client.db("PracticeDB").collection("PostIncidentForm");
+    console.log(req.body)
+    const formId = req.body.id;
+    const filter = {_id: new ObjectId(formId)}
+    console.log(formId)
+    console.log(req.query.updateStatus)
+    const updateForm = {
+      $set: {
+        status: req.query.updateStatus
+      }
+    }
+    const response = await collection.updateOne(filter, updateForm);
+    console.log(response)
+    res.json(200);
   } catch (error) {
     console.log(error)
     return res.json({
@@ -274,37 +328,36 @@ app.post('/reasonableCause', async(req, res) =>{
     secondaryManagementRepName: req.body.secondaryManagementRepName,
     secondaryManagementRepId: req.body.secondaryManagementRepId,
     secondaryManagementRepDate: req.body.secondaryManagementRepDate,
-    secondaryManagementRepPhone: req.body.secondaryManagementRepPhone,
-    // behaviorCheckboxes: {
-    //   stumbling: req.body.stumbling,
-    //   unsteadyGait: req.body.unsteadyGait,
-    //   drowsy: req.body.drowsy,
-    //   agitated: req.body.agitated,
-    //   hostile: req.body.hostile,
-    //   irritable: req.body.irritable,
-    //   depressed: req.body.depressed,
-    //   unresponsive: req.body.unresponsive,
-    //   clumsy: req.body.clumsy
-    // },
-    // appearanceCheckboxes: {
-    //   flushedComplexion: req.body.flushedComplexion,
-    //   excessiveSweating: req.body.excessiveSweating,
-    //   coldClammySweats: req.body.coldClammySweats,
-    //   bloodshotEyes: req.body.bloodshotEyes,
-    //   tearyWateryEyes: req.body.tearyWateryEyes,
-    //   dilatedPupils: req.body.dilatedPupils,
-    //   constrictedPupils: req.body.constrictedPupils,
-    //   unfocusedStare: req.body.unfocusedStare
-    // },
-    // bodyOdorCheckboxes: {
-    //   alcohol: req.body.alcohol,
-    //   marijuana: req.body.marijuana
-    // }
+    secondaryManagementRepPhone: req.body.secondaryManagementRepPhone
    }
-  //  console.log("newForm: ")
-  //  console.log(newForm)
    await collection.insertOne(newForm)
    res.json(200)
+  } catch (error) {
+    console.log(error)
+    return res.json({
+      message: 'An error occured!',
+    });
+  }
+});
+
+app.post('/reasonableCause/:updateStatus', async(req, res) => {
+  console.log("hi")
+  try {
+    await client.connect();
+    const collection = client.db("PracticeDB").collection("reasonableCause");
+    console.log(req.body)
+    const formId = req.body.id;
+    const filter = {_id: new ObjectId(formId)}
+    console.log(formId)
+    console.log(req.query.updateStatus)
+    const updateForm = {
+      $set: {
+        status: req.query.updateStatus
+      }
+    }
+    const response = await collection.updateOne(filter, updateForm);
+    console.log(response)
+    res.json(200);
   } catch (error) {
     console.log(error)
     return res.json({

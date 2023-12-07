@@ -11,7 +11,7 @@ export default function AdminDashboard() {
     // switch to useState to fetch filter fields from db?
     const request_status = ["Status", "Pending", "Approved", "Denied"];
     const form_type = ["Type", "Post Accident", "Post-Injury Incident", "Reasonable Cause/Suspicion"];
-
+    const form_link = {"Post Accident": "postAccident", "Post-Injury Incident": "postIncident", "Reasonable Cause/Suspicion": "reasonableCause"}
     const [selectedStatus, setSelectedStatus] = useState(null);
     const [selectedType, setSelectedType] = useState(null);
     const [selectedRequest, setSelectedRequest] = useState(null);
@@ -128,18 +128,29 @@ export default function AdminDashboard() {
         
     }
 
-    const handleRequest = (status) => {
-        let temp = JSON.parse(JSON.stringify(selectedRequest))
-        let temp2 = [...requests]
-        temp.status = status
-        for (let i=0; i < temp2; i++) {
-            if (temp2[i].id === selectedRequest.id) {
-                temp2[i].status = status
-                break
+    const handleRequest = async (status) => {
+        const id = selectedRequest._id
+        let formType = form_link[selectedRequest.type]
+        try {
+            const response = await fetch(`http://localhost:5000/${formType}/1?updateStatus=${status}`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({id: id})
+            });
+      
+            if (response.ok) {
+                console.log("Form status changed successfully!");
+                alert("Thanks for updating!");
+                getRequests();
+                setSelectedRequest(null);
+            } else {
+              console.error("Error updating form");
             }
-        }
-        setRequests(temp2)
-        setSelectedRequest(temp)
+          } catch (error) {
+            console.error("Network error:", error);
+          }
     }
 
     return (
