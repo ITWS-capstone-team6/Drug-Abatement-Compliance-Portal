@@ -183,7 +183,7 @@ export default function PostAccident() {
     </div>
     
   </div>
-    <button type="submit">Submit</button>
+    <button type="submit" style={{backgroundColor: "var(--united-blue)", color: "white"}}>Submit</button>
 </form>
 
 

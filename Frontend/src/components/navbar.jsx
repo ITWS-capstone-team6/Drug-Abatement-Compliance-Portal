@@ -24,7 +24,7 @@ export default function Navbar() {
   return (
     <ul id="navbar">
       <li className="logo">
-        <Link to="">
+        <Link to="" style={{display: "block", width: "12vw"}}>
           <img src={logo} alt="United Airlines logo"/>
         </Link>
       </li>

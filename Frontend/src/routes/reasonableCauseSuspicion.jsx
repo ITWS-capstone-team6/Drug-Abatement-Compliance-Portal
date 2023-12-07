@@ -172,16 +172,6 @@ export default function PostInjury() {
     } else {
       setFormData({ ...formData, [name]: value });
     }
-    // setFormData(prevState => ({
-    //   ...formData,
-    //   [category]: {
-    //     ...prevState[category],
-    //     [checkbox]: checked
-    //   }
-    // }));
-    // const { name, value } = e.target;
-    // setFormData({ ...formData, [name]: value });
-    // console.log(formData)
   };
 
   const handleCheckboxChange = (e) => {
@@ -432,7 +422,7 @@ export default function PostInjury() {
         </div>
       </div>
     </div>
-    <button type="submit">Submit</button>
+    <button type="submit" style={{backgroundColor: "var(--united-blue)", color: "white"}}>Submit</button>
   </form>
 
 

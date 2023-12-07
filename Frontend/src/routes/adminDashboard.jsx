@@ -122,10 +122,10 @@ export default function AdminDashboard() {
             } else {
                 setSelectedRequestPending(false)
             }
+            console.log(request)
         } else {
             setSelectedRequest(null)
         }
-        
     }
 
     const handleRequest = async (status) => {
