@@ -18,7 +18,7 @@ import FormCard from "../components/formCard";
 import { useEffect } from "react";
 
 const formInfo = [
-  {name: "Post-Accident", desc: "Documented when an event causes physical damage by an employee.", link: "postAccident"},
+  {name: "Post-Accident", desc: "Documented when an event causes physical damage by an employee. Post injury is only applicable to airport operations.", link: "postAccident"},
   {name: "Post-Injury Incident", desc: "Applies to Airport Operations and Catering Operations Division.", link: "postInjuryIncident"},
   {name: "Reasonable Cause/Suspicion", desc: "Conducted when an employee is reasonably suspected of using prohibited drugs or alcohol.", link: "reasonableCauseSuspicion"}
 

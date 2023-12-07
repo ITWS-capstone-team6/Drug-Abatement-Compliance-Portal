@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import UserPool from "../UserPool";
 import * as AmazonCognitoIdentity from 'amazon-cognito-identity-js';
 import jwtDecode from 'jwt-decode'; 
+import { userIsAdminAtom} from '../state/userInfo';
 
 import { useAtom } from 'jotai';
 import { userIdAtom, userEmailAtom, userAwsUserIdAtom} from '../state/userInfo';
@@ -28,6 +29,7 @@ export default function Login() {
     const [, setUserId]= useAtom(userIdAtom)
     const [, setUserEmail]= useAtom(userEmailAtom);
     const [, setUserAwsUserId]= useAtom(userAwsUserIdAtom);
+    const [userIsAdmin, setUserIsAdmin]= useAtom(userIsAdminAtom);
 
     const navigate= useNavigate();
     const toggleLoginState = () => {
@@ -57,17 +59,23 @@ export default function Login() {
             onSuccess: function (result){
                 console.log('user credentials have been authenticated')
                 var idToken= result.getIdToken().getJwtToken();
-                //sets userID to global variable (but only for session) - email as well
-                // userInfoAtom.id= idToken;
                 setUserId(idToken);
-                // userInfoAtom.email= email;
                 setUserEmail(email);
                 const decodedToken= jwtDecode(idToken);
                 const awsUserId= decodedToken.sub;
                 setUserAwsUserId(awsUserId);
 
                 setLoggedIn(true);
-                navigate("/");
+                if(decodedToken["cognito:groups"] != "undefined" && decodedToken["cognito:groups"] != null){
+                    if(decodedToken["cognito:groups"][0] == "Admin"){
+                        console.log("logging in as admin")
+                        setUserIsAdmin(true);
+                        navigate("/admin-dashboard")
+                    }else{
+                        setUserIsAdmin(false);
+                        navigate("/");
+                    }
+                }
             },
             onFailure: function(err){
                 console.log(err.message);

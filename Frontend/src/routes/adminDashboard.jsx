@@ -11,7 +11,7 @@ export default function AdminDashboard() {
     // switch to useState to fetch filter fields from db?
     const request_status = ["Status", "Pending", "Approved", "Denied"];
     const form_type = ["Type", "Post Accident", "Post-Injury Incident", "Reasonable Cause/Suspicion"];
-
+    const form_link = {"Post Accident": "postAccident", "Post-Injury Incident": "postIncident", "Reasonable Cause/Suspicion": "reasonableCause"}
     const [selectedStatus, setSelectedStatus] = useState(null);
     const [selectedType, setSelectedType] = useState(null);
     const [selectedRequest, setSelectedRequest] = useState(null);
@@ -21,15 +21,40 @@ export default function AdminDashboard() {
         getRequests()
     }, [])
 
-    // Temp solution, switch to api call
+    // // Temp solution, switch to api call
+    // const getRequests = () => {
+    //     fetch('/sampleRequests.json')
+    //     .then((data) => data.json())
+    //     .then((data) => {
+    //         console.log(data)
+    //         setRequests(data)
+    //         setOrigRequest(data)
+    //     })
+    // }
+
     const getRequests = () => {
-        fetch('/sampleRequests.json')
-        .then((data) => data.json())
-        .then((data) => {
-            console.log(data)
-            setRequests(data)
-            setOrigRequest(data)
-        })
+        const incidentEndpoint = 'http://localhost:5000/findPostIncident';
+        const accidentEndpoint = 'http://localhost:5000/findPostAccident';
+        const reasonableCauseEndpoint = 'http://localhost:5000/findReasonableCause';
+        fetch(incidentEndpoint)
+            .then((response) => response.json())
+            .then((incidentData) => {
+                fetch(accidentEndpoint)
+                    .then((response) => response.json())
+                    .then((accidentData) => {
+                        fetch(reasonableCauseEndpoint)
+                            .then((response) => response.json())
+                            .then((reasonableCauseData) => {
+                                const combinedData = [...incidentData, ...accidentData, ...reasonableCauseData];
+                                console.log(combinedData);
+                                setRequests(combinedData);
+                                setOrigRequest(combinedData);
+                            })
+                            .catch((error) => console.error('Error fetching /findReasonableCause:', error));
+                    })
+                    .catch((error) => console.error('Error fetching /findPostAccident:', error));
+            })
+            .catch((error) => console.error('Error fetching /findPostIncident:', error));
     }
 
     const handleRequestStatusChange = (e) => {
@@ -103,18 +128,29 @@ export default function AdminDashboard() {
         
     }
 
-    const handleRequest = (status) => {
-        let temp = JSON.parse(JSON.stringify(selectedRequest))
-        let temp2 = [...requests]
-        temp.status = status
-        for (let i=0; i < temp2; i++) {
-            if (temp2[i].id === selectedRequest.id) {
-                temp2[i].status = status
-                break
+    const handleRequest = async (status) => {
+        const id = selectedRequest._id
+        let formType = form_link[selectedRequest.type]
+        try {
+            const response = await fetch(`http://localhost:5000/${formType}/1?updateStatus=${status}`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({id: id})
+            });
+      
+            if (response.ok) {
+                console.log("Form status changed successfully!");
+                alert("Thanks for updating!");
+                getRequests();
+                setSelectedRequest(null);
+            } else {
+              console.error("Error updating form");
             }
-        }
-        setRequests(temp2)
-        setSelectedRequest(temp)
+          } catch (error) {
+            console.error("Network error:", error);
+          }
     }
 
     return (
