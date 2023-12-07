@@ -3,7 +3,13 @@ import { useEffect, useState } from "react"
 import _ from 'lodash';
 import "./adminDashboard.css"
 import AdminForm from "../components/adminForm"
-
+import {
+    Button,
+    Dialog,
+    DialogHeader,
+    DialogBody,
+    DialogFooter,
+  } from "@material-tailwind/react";
 export default function AdminDashboard() {
     
     const [requests, setRequests] = useState([])
@@ -16,6 +22,8 @@ export default function AdminDashboard() {
     const [selectedType, setSelectedType] = useState(null);
     const [selectedRequest, setSelectedRequest] = useState(null);
     const [selectedRequestPending, setSelectedRequestPending] = useState(null);
+    const [open, setOpen] = useState(false);
+    const [decision, setDecision] = useState(null);
 
     useEffect(() => {
         getRequests()
@@ -128,9 +136,35 @@ export default function AdminDashboard() {
         }
     }
 
-    const handleRequest = async (status) => {
+    const handleOpen = (status) => {
+        if (status !== null && status !== "") {
+            let formatStatus = ""
+            if (status === "Approved") {
+                formatStatus = "approve"
+            } else {
+                formatStatus = "deny"
+            }
+            setDecision(formatStatus);
+        }
+        else if (status === "") {
+            handleRequest();
+        }
+        else if (status === null) {
+            setDecision(null);
+        }
+        setOpen(!open)
+    }
+
+    const handleRequest = async () => {
         const id = selectedRequest._id
         let formType = form_link[selectedRequest.type]
+        let status = ""
+        if (decision === "approve") {
+            status = "Approved"
+        } else if (decision === "deny") {
+            status = "Denied"
+        }
+        
         try {
             const response = await fetch(`http://localhost:5000/${formType}/1?updateStatus=${status}`, {
               method: "POST",
@@ -142,7 +176,7 @@ export default function AdminDashboard() {
       
             if (response.ok) {
                 console.log("Form status changed successfully!");
-                alert("Thanks for updating!");
+                // alert("Thanks for updating!");
                 getRequests();
                 setSelectedRequest(null);
             } else {
@@ -187,14 +221,35 @@ export default function AdminDashboard() {
                                     <AdminForm request={selectedRequest} />
                                 </div>
                                 {selectedRequestPending ? <div className="button-group">
-                                    <button type="button" className="approve" onClick={()=>handleRequest("Approved")}>Approve</button>
-                                    <button type="button" className="deny" onClick={()=>handleRequest("Denied")}>Deny</button>
+                                    <button type="button" className="approve" onClick={()=>handleOpen("Approved")}>Approve</button>
+                                    <button type="button" className="deny" onClick={()=>handleOpen("Denied")}>Deny</button>
                                 </div> : <p style={{ fontSize: '1.3em', textDecoration: 'underline', color: '#002FA7', textAlign: 'center'}}>This request is <span style={{fontWeight: 'bold'}}>{selectedRequest.status}</span>.</p>}
                 
                             </div>
                                 : <div className="no-form"><p>Select a form to read</p></div>}
                 
                     </div>
+                    <Dialog className="confirm" open={open} handler={()=>handleOpen(null)}>
+                        <div className="confirmDialog">
+                        {/* <DialogHeader>Its a simple dialog.</DialogHeader> */}
+                        <DialogBody style={{textAlign: "center"}}>
+                        Are you sure you want to <span style={{fontWeight: "bold"}}>{decision}</span> this request?
+                        </DialogBody>
+                        <DialogFooter style={{justifyContent: "center", marginTop: "1vh"}}>
+                            <Button
+                                variant="text"
+                                onClick={()=>handleOpen(null)}
+                                className="mr-1"
+                                style={{backgroundColor: "grey", border: "none"}}
+                            >
+                                <span style={{color: "white"}}>Cancel</span>
+                            </Button>
+                            <Button style={{backgroundColor: "green", border: "none"}} onClick={()=>handleOpen("")}>
+                                <span style={{color: "white"}}>Confirm</span>
+                            </Button>
+                        </DialogFooter>
+                        </div>
+                    </Dialog>
                 </div>
             </div>
         </>
