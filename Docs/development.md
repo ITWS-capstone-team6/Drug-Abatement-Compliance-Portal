@@ -51,6 +51,8 @@ The backend directory contains all the code related to the backend of the applic
 #### `server.js`
 This file contains the majority of the driver code for the backend API. 
 
+A more in-depth explanation of the endpoints are available at [this file](./endpoints.md)
+
 
 #### `package.json`
 Like the `package.json` file in the `Frontend/` directory, this file contains all of the instructions on how to start the backend API.
