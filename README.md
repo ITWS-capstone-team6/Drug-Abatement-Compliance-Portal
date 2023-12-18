@@ -8,7 +8,7 @@ With a commitment to maintaining a safe and secure workplace, United Airlines' D
 United Airlines, a global leader in air travel, houses various departments crucial to its seamless functioning. The Drug Abatement Team under Digital Technology focuses on enforcing company policies related to substance abuse in the workplace. This project addresses challenges in the current drug screening request system, aiming for a more standardized and user-friendly approach.
 
 
-## Project Team
+## Our Team
 The project is a collaborative effort by four undergraduate students from Rensselaer Polytechnic Institute, each bringing unique skill sets to the project:<br />
 
 Emily Ngo: Project Manager<br />
