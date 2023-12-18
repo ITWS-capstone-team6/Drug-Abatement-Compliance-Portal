@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from "react";
 import {userIdAtom, userEmailAtom} from '../state/userInfo';
-import jwtDecode from 'jwt-decode'; // Update the import statement
+import jwtDecode from 'jwt-decode'; 
 import { useAtom } from 'jotai';
 
 
@@ -9,7 +9,7 @@ export default function PostInjury() {
   const [userId] = useAtom(userIdAtom);
   const [userEmail]= useAtom(userEmailAtom);
   const decodedToken= jwtDecode(userId);
-  const awsUserId= decodedToken.sub; //userId
+  const awsUserId= decodedToken.sub;
   console.log("aws userid: " + awsUserId);
   const navigate = useNavigate();
 
@@ -264,7 +264,6 @@ export default function PostInjury() {
 
     <div className="employeeCircumstance">
       <h3 className="text-xl font-semibold mb-6">Section 2 - Reasonable Suspicion/Cause Indicators (Check those that apply)</h3>
-      {/* <div className="flex justify-between"> */}
         <div className="column">
           <h4 className="text-lg font-semibold mb-4">Behavior</h4>
           <div style={{display: "flex", flexDirection: "column", maxHeight: "40vh", flexWrap:"wrap"}}>
@@ -312,7 +311,6 @@ export default function PostInjury() {
           </div>
           
         </div>
-    {/* </div> */}
     </div>
 
     <div className="mb-4">

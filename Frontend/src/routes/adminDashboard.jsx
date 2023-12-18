@@ -14,7 +14,6 @@ export default function AdminDashboard() {
     
     const [requests, setRequests] = useState([])
     const [orig_requests, setOrigRequest] = useState([])
-    // switch to useState to fetch filter fields from db?
     const request_status = ["Status", "Pending", "Approved", "Denied"];
     const form_type = ["Type", "Post Accident", "Post-Injury Incident", "Reasonable Cause/Suspicion"];
     const form_link = {"Post Accident": "postAccident", "Post-Injury Incident": "postIncident", "Reasonable Cause/Suspicion": "reasonableCause"}
@@ -28,17 +27,6 @@ export default function AdminDashboard() {
     useEffect(() => {
         getRequests()
     }, [])
-
-    // // Temp solution, switch to api call
-    // const getRequests = () => {
-    //     fetch('/sampleRequests.json')
-    //     .then((data) => data.json())
-    //     .then((data) => {
-    //         console.log(data)
-    //         setRequests(data)
-    //         setOrigRequest(data)
-    //     })
-    // }
 
     const getRequests = () => {
         const incidentEndpoint = 'http://localhost:5000/findPostIncident';
@@ -176,7 +164,6 @@ export default function AdminDashboard() {
       
             if (response.ok) {
                 console.log("Form status changed successfully!");
-                // alert("Thanks for updating!");
                 getRequests();
                 setSelectedRequest(null);
             } else {
