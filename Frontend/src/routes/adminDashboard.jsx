@@ -231,11 +231,10 @@ export default function AdminDashboard() {
                     </div>
                     <Dialog className="confirm" open={open} handler={()=>handleOpen(null)}>
                         <div className="confirmDialog">
-                        {/* <DialogHeader>Its a simple dialog.</DialogHeader> */}
                         <DialogBody style={{textAlign: "center"}}>
                         Are you sure you want to <span style={{fontWeight: "bold"}}>{decision}</span> this request?
                         </DialogBody>
-                        <DialogFooter style={{justifyContent: "center", marginTop: "1vh"}}>
+                        <DialogFooter className="dialogButtons">
                             <Button
                                 variant="text"
                                 onClick={()=>handleOpen(null)}
