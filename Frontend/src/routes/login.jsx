@@ -24,7 +24,6 @@ export default function Login() {
     const [loggedIn, setLoggedIn] = useAtom(loggedInAtom);
     const [, setLoginState] = useAtom(loginStateAtom);
 
-    //global user variable
     const [userId]= useAtom(userIdAtom);
     const [, setUserId]= useAtom(userIdAtom)
     const [, setUserEmail]= useAtom(userEmailAtom);

@@ -8,7 +8,7 @@ export default function PostAccident() {
     const [userId] = useAtom(userIdAtom);
     const [userEmail]= useAtom(userEmailAtom);
     const decodedToken= jwtDecode(userId);
-    const awsUserId= decodedToken.sub; //userId
+    const awsUserId= decodedToken.sub; 
     console.log("aws userid: " + awsUserId);
     const navigate = useNavigate();
 

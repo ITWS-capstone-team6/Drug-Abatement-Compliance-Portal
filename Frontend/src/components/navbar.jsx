@@ -24,14 +24,13 @@ export default function Navbar() {
   return (
     <ul id="navbar">
       <li className="logo">
-        <Link to="" style={{display: "block", width: "12vw"}}>
+        <Link to="" className="backToHome">
           <img src={logo} alt="United Airlines logo"/>
         </Link>
       </li>
       <li>
         <div>
           <h4>Hello, {userEmail}</h4>
-          {/* <button className="mx-auto w-full" onClick={logout}>Log Out</button> */}
         </div>
       </li>
     </ul>

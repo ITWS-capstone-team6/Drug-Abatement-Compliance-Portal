@@ -30,7 +30,6 @@ export default function SignUp() {
 
     function handleLogin(e) {
         e.preventDefault();
-        // To-do: validate credentials
         var userData={
             Username: email,
             Pool: UserPool
@@ -42,7 +41,6 @@ export default function SignUp() {
                 console.log(err);
             }
             else{
-                //const confirmationCode= prompt("Please enter the confirmation code that has been sent to your email.")
                 openModal(cognitoUser);
             }
         })
@@ -53,7 +51,6 @@ export default function SignUp() {
         
         <div className="loginForm">
             <img src={logo} alt="United Airlines logo"/>
-            {/* <!-- HTML structure for confirmation code input --> */}
             <div id="confirmationCodeModal" className="modal">
                 <div className="modal-content">
                     <span className="close" onClick="closeModal()">&times;</span>

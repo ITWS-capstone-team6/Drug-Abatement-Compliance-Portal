@@ -16,6 +16,11 @@
   flex-grow: 1;
 }
 
+.backToHome {
+  display: block;
+  width: 12vw;
+}
+
 .logo img {
   width: 12vw;
   height: auto;
@@ -23,6 +28,9 @@
 
 @media only screen and (max-width: 812px) {
   .logo img {
+    width: 35vw;
+  }
+  .backToHome {
     width: 35vw;
   }
 }

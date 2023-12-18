@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from "react";
 import {userIdAtom, userEmailAtom} from '../state/userInfo';
-import jwtDecode from 'jwt-decode'; // Update the import statement
+import jwtDecode from 'jwt-decode'; 
 import { useAtom } from 'jotai';
 
 
@@ -9,7 +9,7 @@ export default function PostInjury() {
   const [userId] = useAtom(userIdAtom);
   const [userEmail]= useAtom(userEmailAtom);
   const decodedToken= jwtDecode(userId);
-  const awsUserId= decodedToken.sub; //userId
+  const awsUserId= decodedToken.sub; 
   console.log("aws userid: " + awsUserId);
   const navigate = useNavigate();
 

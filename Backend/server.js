@@ -20,11 +20,10 @@ app.use(cors())
      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
      res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
      res.setHeader('Access-Control-Allow-Credentials', true);
-     // Pass to next layer of middleware
      next();
    });
 
-// Get MongoDB driver connection
+
 const dbo = require("./conn.js");
 const client = new MongoClient(uri);
 
@@ -65,7 +64,6 @@ app.get('/findPostAccident', async(req, res) =>{
    await client.connect();
    const collection = client.db("PracticeDB").collection("PostAccidentForm");
    const cursor = await collection.find().toArray();
-  //  console.log(cursor);
    res.json(cursor);
   } catch (error) {
     console.log(error)
@@ -80,7 +78,6 @@ app.get('/findPostIncident', async(req, res) =>{
    await client.connect();
    const collection = client.db("PracticeDB").collection("PostIncidentForm");
    const cursor = await collection.find().toArray();
-  //  console.log(cursor);
    res.json(cursor);
   } catch (error) {
     console.log(error)
@@ -95,7 +92,6 @@ app.get('/findReasonableCause', async(req, res) =>{
    await client.connect();
    const collection = client.db("PracticeDB").collection("reasonableCause");
    const cursor = await collection.find().toArray();
-  //  console.log(cursor)
    res.json(cursor);
   } catch (error) {
     console.log(error)
@@ -109,15 +105,12 @@ app.post('/newUser', async(req, res) =>{
   try {
    await client.connect();
    const collection = client.db("PracticeDB").collection("Users");
-  //  console.log("body: ")
-  //  console.log(req.body)
    let newForm = {
     awsUserId: req.body.idNumber,
     email: req.body.emailAddress,
-    isAdmin: false, //! change this later
+    isAdmin: false,
    }
-  //  console.log("newForm: ")
-  //  console.log(newForm)
+
    await collection.insertOne(newForm)
    res.json(200)
   } catch (error) {
@@ -142,7 +135,6 @@ app.post('/postAccident', async(req, res) =>{
     type: "Post Accident",
     status: "Pending",
     dot: req.body.dot,
-    // nondot: req.body.nondot,
     requested : req.body.requested,
     employeeName : req.body.employeeName,
     employeeId : req.body.employeeId,
@@ -151,7 +143,6 @@ app.post('/postAccident', async(req, res) =>{
     timeOfAccident : req.body.timeOfAccident,
     accidentInformation : req.body.accidentInformation,
     refusal : req.body.refusal,
-    // notConducted: req.body.notConducted,
     reasonNotWithinTwoHours: req.body.reasonNotWithinTwoHours,
     reasonNotWithinEightHours: req.body.reasonNotWithinEightHours,
     managementRepName: req.body.managementRepName,
