@@ -97,6 +97,7 @@
     left: 50%;
     padding: 2vw;
 }
+
 @media only screen and (max-width: 812px) {
     .dashboard {
         height: 85vh;
@@ -128,5 +129,17 @@
 
     .submit-info {
         font-size: 3vw;
+    }
+    .confirmDialog {
+        width: 35vw;
+        height: 25vh;
+        padding: 2vw;
+    }
+
+    .dialogButtons {
+        display: flex;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+        height: 11vh;
     }
 }
