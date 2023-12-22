@@ -46,11 +46,7 @@ Basic username and password authentication.<br />
 
 
 ## Getting Started
-Clone the repository.<br />
-Navigate to the project directory.<br />
-Install dependencies using npm install.<br />
-Start the development server with npm start.<br />
-Access the application through the provided URL.<br />
+For more information on local development, view [this file](Docs/development.md).
 
 
 ## Feedback and Support
