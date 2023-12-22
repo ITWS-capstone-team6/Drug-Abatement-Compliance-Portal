@@ -3,21 +3,31 @@ import { Link } from "react-router-dom";
 import "./navbar.css"
 import logo from '../assets/United-Airlines-Logo.png';
 import { useAtom } from 'jotai';
-import { userEmailAtom, userIsAdminAtom} from '../state/userInfo';
+import { userEmailAtom, userIsAdminAtom, userInfoAtom } from '../state/userInfo';
 import { loggedInAtom } from '../state/login';
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 
 export default function Navbar() {
+
   const [userEmail]= useAtom(userEmailAtom);
   const [, setUserIsAdmin]= useAtom(userIsAdminAtom);
-  const [, setLoggedIn] = useAtom(loggedInAtom);
+  const [loggedIn, setLoggedIn] = useAtom(loggedInAtom);
   const navigate = useNavigate();
 
   const logout = () => {
-    console.log("log out")
     setLoggedIn(false);
     setUserIsAdmin(false);
+    
+    // flush session storage too
+    console.log("flushing sesion storage now")
+    window.sessionStorage.setItem("userId", "");
+    window.sessionStorage.setItem("userAwsUserId", "");
+    window.sessionStorage.setItem("userEmail", "");
+    window.sessionStorage.setItem("userIsAdmin", false);
+    window.sessionStorage.setItem("loggedIn", false)
+
     navigate("/")
   }
 
