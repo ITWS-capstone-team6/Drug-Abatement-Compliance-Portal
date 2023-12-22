@@ -1,36 +1,4 @@
 
-import PropTypes from 'prop-types';
-
-AdminReasonable.propTypes = {
-    request: PropTypes.shape({
-        type: PropTypes.string.isRequired,
-        dot: PropTypes.bool.isRequired,
-        employeeName: PropTypes.string.isRequired,
-        employeeId: PropTypes.string.isRequired,
-        addressCode: PropTypes.string.isRequired,
-        dateOfAccident: PropTypes.string.isRequired,
-        timeOfAccident: PropTypes.string.isRequired,
-        behaviors: PropTypes.arrayOf(PropTypes.string).isRequired,
-        appearance: PropTypes.arrayOf(PropTypes.string).isRequired,
-        bodyOdors: PropTypes.arrayOf(PropTypes.string).isRequired,
-        speech: PropTypes.arrayOf(PropTypes.string).isRequired,
-        onDuty: PropTypes.bool.isRequired,
-        accidentInformation: PropTypes.string.isRequired,
-        refusal: PropTypes.string.isRequired,
-        reasonNotWithinTwoHours: PropTypes.string,
-        reasonNotWithinEightHours: PropTypes.string,
-        managementRepName: PropTypes.string.isRequired,
-        managementRepId: PropTypes.string.isRequired,
-        managementRepDate: PropTypes.string.isRequired,
-        managementRepPhone: PropTypes.string.isRequired,
-        secondaryManagementTrained: PropTypes.bool.isRequired,
-        secondaryManagementRepName: PropTypes.string,
-        secondaryManagementRepId: PropTypes.string,
-        secondaryManagementRepDate: PropTypes.string,
-        secondaryManagementRepPhone: PropTypes.string
-    }).isRequired
-};
-
 
 export default function AdminReasonable({request}) {
     const behavior = {

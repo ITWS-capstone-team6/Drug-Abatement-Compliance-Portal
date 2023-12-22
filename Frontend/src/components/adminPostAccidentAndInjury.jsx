@@ -1,28 +1,5 @@
 import { useState, useEffect } from 'react';
 
-import PropTypes from 'prop-types';
-
-// could go into this and make sure that everything is properly set to be
-//  required/optional
-AdminPostAccidentAndInjury.propTypes = {
-    request: PropTypes.shape({
-        type: PropTypes.string.isRequired,
-        dot: PropTypes.bool.isRequired,
-        employeeName: PropTypes.string.isRequired,
-        employeeId: PropTypes.string.isRequired,
-        addressCode: PropTypes.string.isRequired,
-        dateOfAccident: PropTypes.string.isRequired,
-        timeOfAccident: PropTypes.string.isRequired,
-        accidentInformation: PropTypes.string.isRequired,
-        refusal: PropTypes.string.isRequired,
-        reasonNotWithinTwoHours: PropTypes.string,
-        reasonNotWithinEightHours: PropTypes.string,
-        managementRepName: PropTypes.string.isRequired,
-        managementRepId: PropTypes.string.isRequired,
-        managementRepDate: PropTypes.string.isRequired,
-        managementRepPhone: PropTypes.string.isRequired
-    }).isRequired
-}
 
 export default function AdminPostAccidentAndInjury({ request }) {
     const [injury, setInjury] = useState(false);
