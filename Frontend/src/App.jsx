@@ -67,7 +67,7 @@ export default function App() {
         setUserId(window.sessionStorage.getItem("userId"));
         setUserAwsUserId(window.sessionStorage.getItem("userAwsUserId"));
         setUserEmail(window.sessionStorage.getItem("userEmail"));
-        setUserIsAdmin(window.sessionStorage.getItem("userIsAdmin"));
+        setUserIsAdmin(window.sessionStorage.getItem("userIsAdmin") === "true");
       }
       
       

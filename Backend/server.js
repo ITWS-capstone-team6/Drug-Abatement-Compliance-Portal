@@ -11,11 +11,11 @@ const limiter = RateLimit({
   max: 100, // max 100 requests per windowMs
 });
 
+require("dotenv").config({ path: "./config.env" });
 
 const port = process.env.PORT || 5000;
 const uri = process.env.DB_URI;
 
-require("dotenv").config({ path: "./config.env" });
 const app = express();
 
 app.use(cors())
@@ -53,7 +53,6 @@ app.get("/isAdmin", async (req, res) => {
 
     console.log("looking up user")
     const result = await collection.findOne({awsUserId: userId});
-    console.log(result);
     if (result == null) {
       console.log("user not found")
       return res.send(false);
