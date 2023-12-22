@@ -1,7 +1,7 @@
 import './login.css'
 import logo from '../assets/United-Airlines-Logo.png';
 import { useNavigate} from 'react-router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import UserPool from "../UserPool";
 import * as AmazonCognitoIdentity from 'amazon-cognito-identity-js';
 import jwtDecode from 'jwt-decode'; 
@@ -24,11 +24,10 @@ export default function Login() {
     const [loggedIn, setLoggedIn] = useAtom(loggedInAtom);
     const [, setLoginState] = useAtom(loginStateAtom);
 
-    const [userId]= useAtom(userIdAtom);
     const [, setUserId]= useAtom(userIdAtom)
     const [, setUserEmail]= useAtom(userEmailAtom);
     const [, setUserAwsUserId]= useAtom(userAwsUserIdAtom);
-    const [userIsAdmin, setUserIsAdmin]= useAtom(userIsAdminAtom);
+    const [, setUserIsAdmin]= useAtom(userIsAdminAtom);
 
     const navigate= useNavigate();
     const toggleLoginState = () => {
@@ -63,15 +62,22 @@ export default function Login() {
                 const decodedToken= jwtDecode(idToken);
                 const awsUserId= decodedToken.sub;
                 setUserAwsUserId(awsUserId);
-
+                window.sessionStorage.setItem("userId", idToken);
+                window.sessionStorage.setItem("userAwsUserId", awsUserId);
+                window.sessionStorage.setItem("userEmail", email);
+                window.sessionStorage.setItem("loggedIn", true)
+                window.sessionStorage.setItem("timeout", Date.now() + 3_600_000*12 ) // set timeout to be 12 hours from now
                 setLoggedIn(true);
                 if(decodedToken["cognito:groups"] != "undefined" && decodedToken["cognito:groups"] != null){
                     if(decodedToken["cognito:groups"][0] == "Admin"){
                         console.log("logging in as admin")
                         setUserIsAdmin(true);
+
+                        window.sessionStorage.setItem("userIsAdmin", true);
                         navigate("/admin-dashboard")
                     }else{
                         setUserIsAdmin(false);
+                        window.sessionStorage.setItem("userIsAdmin", false);
                         navigate("/");
                     }
                 }

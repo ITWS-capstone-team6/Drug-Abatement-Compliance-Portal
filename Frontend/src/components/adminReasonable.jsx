@@ -1,4 +1,5 @@
 
+
 export default function AdminReasonable({request}) {
     const behavior = {
         stumbling: "Stumbling, unsteady gait", 
@@ -91,7 +92,7 @@ export default function AdminReasonable({request}) {
                         <p className='key'>Behavior:</p>
                         <div className='indicator'>
                             {request.behaviors.length ? request.behaviors.map((b, i) => 
-                                <p>{behavior[b]}</p>
+                                <p key={i}>{behavior[b]}</p>
                             ): 'None'}
                         </div>
                     </div>
@@ -99,7 +100,7 @@ export default function AdminReasonable({request}) {
                         <p className='key'>Appaerence:</p>
                         <div className='indicator'>
                             {request.appearance.length ? request.appearance.map((b, i) => 
-                                <p>{appearance[b]}</p>
+                                <p key={i}>{appearance[b]}</p>
                             ) : 'None' }
                         </div>
                     </div>
@@ -107,7 +108,7 @@ export default function AdminReasonable({request}) {
                         <p className='key'>Body Odors:</p>
                         <div className='indicator'>
                             {request.bodyOdors.length ? request.bodyOdors.map((b, i) => 
-                                <p>{bodyOdors[b]}</p>
+                                <p key={i}>{bodyOdors[b]}</p>
                             ) : 'None'}
                         </div>
                     </div>
@@ -115,7 +116,7 @@ export default function AdminReasonable({request}) {
                         <p className='key'>Speech:</p>
                         <div className='indicator'>
                             {request.speech.length ? request.speech.map((b, i) => 
-                                <p>{speech[b]}</p>
+                                <p key={i}>{speech[b]}</p>
                             ) : 'None'}
                         </div>
                     </div>
@@ -200,4 +201,4 @@ export default function AdminReasonable({request}) {
             </div>
         </div>
     </>
-};
+}

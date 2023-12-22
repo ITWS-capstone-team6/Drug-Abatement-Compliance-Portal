@@ -87,6 +87,11 @@ export default function SignUp() {
                         // userInfoAtom.email= email;
                         setUserEmail(email);
                         setLoggedIn(true);
+                        window.sessionStorage.setItem("userId", idToken);
+                        window.sessionStorage.setItem("userAwsUserId", awsUserId);
+                        window.sessionStorage.setItem("userEmail", email);
+                        window.sessionStorage.setItem("loggedIn", true)
+                        window.sessionStorage.setItem("timeout", Date.now() + 3_600_000*12 ) // set timeout to be 12 hours from now
                         navigate("/");
                         //adding user to db here
                         const decodedToken= jwtDecode(idToken);

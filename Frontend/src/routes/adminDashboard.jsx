@@ -6,7 +6,6 @@ import AdminForm from "../components/adminForm"
 import {
     Button,
     Dialog,
-    DialogHeader,
     DialogBody,
     DialogFooter,
   } from "@material-tailwind/react";

@@ -26,6 +26,11 @@
   height: auto;
 }
 
+.logoutButton {
+  width: 100%;
+  margin: 0 auto;
+}
+
 @media only screen and (max-width: 812px) {
   .logo img {
     width: 35vw;

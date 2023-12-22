@@ -7,7 +7,7 @@ export const userInfoAtom = atom({
     isAdmin: false,
 })
 
-export const userIdAtom= atom(userInfoAtom.userId);
-export const userAwsUserIdAtom=atom(userInfoAtom.awsUserId);
-export const userEmailAtom=atom(userInfoAtom.email);
-export const userIsAdminAtom=atom(userInfoAtom.isAdmin);
+export const userIdAtom = atom("");
+export const userAwsUserIdAtom = atom("");
+export const userEmailAtom = atom("");
+export const userIsAdminAtom = atom(false);

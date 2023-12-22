@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 
-export default function AdminPostAccidentAndInjury({request}) {
+
+export default function AdminPostAccidentAndInjury({ request }) {
     const [injury, setInjury] = useState(false);
 
     useEffect(() => {
@@ -95,4 +96,4 @@ export default function AdminPostAccidentAndInjury({request}) {
             </div>
         </div>
     </>
-};
+}
