@@ -1,4 +1,37 @@
 
+import PropTypes from 'prop-types';
+
+AdminReasonable.propTypes = {
+    request: PropTypes.shape({
+        type: PropTypes.string.isRequired,
+        dot: PropTypes.bool.isRequired,
+        employeeName: PropTypes.string.isRequired,
+        employeeId: PropTypes.string.isRequired,
+        addressCode: PropTypes.string.isRequired,
+        dateOfAccident: PropTypes.string.isRequired,
+        timeOfAccident: PropTypes.string.isRequired,
+        behaviors: PropTypes.arrayOf(PropTypes.string).isRequired,
+        appearance: PropTypes.arrayOf(PropTypes.string).isRequired,
+        bodyOdors: PropTypes.arrayOf(PropTypes.string).isRequired,
+        speech: PropTypes.arrayOf(PropTypes.string).isRequired,
+        onDuty: PropTypes.bool.isRequired,
+        accidentInformation: PropTypes.string.isRequired,
+        refusal: PropTypes.string.isRequired,
+        reasonNotWithinTwoHours: PropTypes.string,
+        reasonNotWithinEightHours: PropTypes.string,
+        managementRepName: PropTypes.string.isRequired,
+        managementRepId: PropTypes.string.isRequired,
+        managementRepDate: PropTypes.string.isRequired,
+        managementRepPhone: PropTypes.string.isRequired,
+        secondaryManagementTrained: PropTypes.bool.isRequired,
+        secondaryManagementRepName: PropTypes.string,
+        secondaryManagementRepId: PropTypes.string,
+        secondaryManagementRepDate: PropTypes.string,
+        secondaryManagementRepPhone: PropTypes.string
+    }).isRequired
+};
+
+
 export default function AdminReasonable({request}) {
     const behavior = {
         stumbling: "Stumbling, unsteady gait", 
@@ -91,7 +124,7 @@ export default function AdminReasonable({request}) {
                         <p className='key'>Behavior:</p>
                         <div className='indicator'>
                             {request.behaviors.length ? request.behaviors.map((b, i) => 
-                                <p>{behavior[b]}</p>
+                                <p key={i}>{behavior[b]}</p>
                             ): 'None'}
                         </div>
                     </div>
@@ -99,7 +132,7 @@ export default function AdminReasonable({request}) {
                         <p className='key'>Appaerence:</p>
                         <div className='indicator'>
                             {request.appearance.length ? request.appearance.map((b, i) => 
-                                <p>{appearance[b]}</p>
+                                <p key={i}>{appearance[b]}</p>
                             ) : 'None' }
                         </div>
                     </div>
@@ -107,7 +140,7 @@ export default function AdminReasonable({request}) {
                         <p className='key'>Body Odors:</p>
                         <div className='indicator'>
                             {request.bodyOdors.length ? request.bodyOdors.map((b, i) => 
-                                <p>{bodyOdors[b]}</p>
+                                <p key={i}>{bodyOdors[b]}</p>
                             ) : 'None'}
                         </div>
                     </div>
@@ -115,7 +148,7 @@ export default function AdminReasonable({request}) {
                         <p className='key'>Speech:</p>
                         <div className='indicator'>
                             {request.speech.length ? request.speech.map((b, i) => 
-                                <p>{speech[b]}</p>
+                                <p key={i}>{speech[b]}</p>
                             ) : 'None'}
                         </div>
                     </div>
@@ -200,4 +233,4 @@ export default function AdminReasonable({request}) {
             </div>
         </div>
     </>
-};
+}

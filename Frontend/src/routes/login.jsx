@@ -1,7 +1,7 @@
 import './login.css'
 import logo from '../assets/United-Airlines-Logo.png';
 import { useNavigate} from 'react-router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import UserPool from "../UserPool";
 import * as AmazonCognitoIdentity from 'amazon-cognito-identity-js';
 import jwtDecode from 'jwt-decode'; 
@@ -24,11 +24,10 @@ export default function Login() {
     const [loggedIn, setLoggedIn] = useAtom(loggedInAtom);
     const [, setLoginState] = useAtom(loginStateAtom);
 
-    const [userId]= useAtom(userIdAtom);
     const [, setUserId]= useAtom(userIdAtom)
     const [, setUserEmail]= useAtom(userEmailAtom);
     const [, setUserAwsUserId]= useAtom(userAwsUserIdAtom);
-    const [userIsAdmin, setUserIsAdmin]= useAtom(userIsAdminAtom);
+    const [, setUserIsAdmin]= useAtom(userIsAdminAtom);
 
     const navigate= useNavigate();
     const toggleLoginState = () => {

@@ -1,4 +1,5 @@
-import { useNavigate, Outlet, useLocation } from "react-router-dom";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "../components/navbar";
 import './layout.css'
 
@@ -10,12 +11,11 @@ import { useEffect } from "react";
 export default function Layout() {
 
 
-  const [loggedIn, setLoggedIn] = useAtom(loggedInAtom);
+  const [loggedIn] = useAtom(loggedInAtom);
 
   const [awsUserId] = useAtom(userAwsUserIdAtom);
-  const [userIsAdmin, setUserIsAdmin] = useAtom(userIsAdminAtom);
+  const [userIsAdmin] = useAtom(userIsAdminAtom);
 
-  const navigate = useNavigate();
   const location = useLocation();
 
 
@@ -33,16 +33,6 @@ export default function Layout() {
   }, [loggedIn, awsUserId]);
 
 
-  const test = () => {
-    console.log("test")
-    navigate("/admin-dashboard")
-  }
-  const logOut = () => {
-    console.log("log out")
-    setLoggedIn(false);
-    setUserIsAdmin(false);
-    navigate("/")
-  }
 
   return (
     <>

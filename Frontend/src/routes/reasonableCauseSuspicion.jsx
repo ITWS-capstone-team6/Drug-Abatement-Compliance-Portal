@@ -10,7 +10,6 @@ export default function PostInjury() {
   const [userEmail]= useAtom(userEmailAtom);
   const decodedToken= jwtDecode(userId);
   const awsUserId= decodedToken.sub;
-  console.log("aws userid: " + awsUserId);
   const navigate = useNavigate();
 
   const [dotChecked, setDotChecked] = useState(false);
@@ -194,7 +193,7 @@ export default function PostInjury() {
     else if (id === "onDuty" || id === "notOnDuty") {
       if (id === "onDuty") {
         setOnDutyChecked(!onDutyChecked);
-        if (notOnDutytChecked) {
+        if (notOnDutyChecked) {
           setNotOnDutyChecked(!notOnDutyChecked)
         }
         setFormData({ ...formData, [name]: true });

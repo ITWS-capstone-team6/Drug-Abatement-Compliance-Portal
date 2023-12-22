@@ -10,8 +10,8 @@ import { useNavigate } from "react-router-dom";
 
 export default function Navbar() {
   const [userEmail]= useAtom(userEmailAtom);
-  const [userIsAdmin, setUserIsAdmin]= useAtom(userIsAdminAtom);
-  const [loggedIn, setLoggedIn] = useAtom(loggedInAtom);
+  const [, setUserIsAdmin]= useAtom(userIsAdminAtom);
+  const [, setLoggedIn] = useAtom(loggedInAtom);
   const navigate = useNavigate();
 
   const logout = () => {
