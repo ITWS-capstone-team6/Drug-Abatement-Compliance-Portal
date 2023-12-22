@@ -1,12 +1,19 @@
 const express = require("express");
 const cors = require("cors");
-const {MongoClient, MongoKerberosError}= require('mongodb');
+const {MongoClient}= require('mongodb');
 const bodyParser= require("body-parser");
-const mongoose = require('mongoose');
-const uuid = require('uuid');
 const ObjectId = require('mongodb').ObjectId;
-const uri="mongodb+srv://chloej1699:SnowBird11@cluster0.8ihubjl.mongodb.net/"
+
+// set up rate limiter: maximum of five requests per minute
+const RateLimit = require('express-rate-limit');
+const limiter = RateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 100, // max 100 requests per windowMs
+});
+
+
 const port = process.env.PORT || 5000;
+const uri = process.env.DB_URI;
 
 require("dotenv").config({ path: "./config.env" });
 const app = express();
@@ -15,6 +22,7 @@ app.use(cors())
    .use(bodyParser.json())
    .use(express.json())
    .use(bodyParser.urlencoded({extended:true}))
+   .use(limiter)
    .use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
