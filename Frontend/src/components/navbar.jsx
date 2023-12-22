@@ -31,6 +31,7 @@ export default function Navbar() {
       <li>
         <div>
           <h4>Hello, {userEmail}</h4>
+          <button className="logoutButton" onClick={logout}>Log Out</button>
         </div>
       </li>
     </ul>
